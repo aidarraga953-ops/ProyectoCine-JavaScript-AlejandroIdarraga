@@ -46,11 +46,14 @@
 }
 
 .intro__logo {
-    margin:
-        1.2rem 0;
+    position: relative;
+
+    margin: 1.2rem 0;
 
     font-size:
         clamp(3rem, 8vw, 7rem);
+
+    font-weight: 700;
 
     letter-spacing:
         0.55em;
@@ -63,6 +66,55 @@
 
     animation:
         noir-logo 1.4s ease forwards;
+}
+
+
+/* COPIAS CROMÁTICAS DEL LOGO */
+
+.intro__logo::before,
+.intro__logo::after {
+    content:
+        attr(data-text);
+
+    position:
+        absolute;
+
+    top:
+        0;
+
+    left:
+        0;
+
+    width:
+        100%;
+
+    pointer-events:
+        none;
+
+    opacity:
+        0;
+}
+
+
+.intro__logo::before {
+    color:
+        rgba(0, 220, 255, 0.65);
+
+    animation:
+        noir-chromatic-left
+        700ms ease
+        500ms;
+}
+
+
+.intro__logo::after {
+    color:
+        rgba(255, 70, 95, 0.65);
+
+    animation:
+        noir-chromatic-right
+        700ms ease
+        500ms;
 }
 
 .intro__subtitle {
@@ -159,6 +211,95 @@
 
         transform:
             translateY(10px);
+    }
+
+    to {
+        opacity:
+            1;
+
+        transform:
+            translateY(0);
+    }
+
+}
+@keyframes noir-chromatic-left {
+
+    0% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+
+    30% {
+        opacity: 0.7;
+        transform: translateX(-6px);
+    }
+
+    60% {
+        opacity: 0.35;
+        transform: translateX(-2px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+
+}
+
+
+@keyframes noir-chromatic-right {
+
+    0% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+
+    30% {
+        opacity: 0.7;
+        transform: translateX(6px);
+    }
+
+    60% {
+        opacity: 0.35;
+        transform: translateX(2px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+
+}
+
+@keyframes hero-image-enter {
+
+    from {
+        transform:
+            scale(1.1);
+
+        filter:
+            brightness(0.4);
+    }
+
+    to {
+        transform:
+            scale(1.04);
+
+        filter:
+            brightness(1);
+    }
+
+}
+
+
+@keyframes hero-content-enter {
+
+    from {
+        opacity:
+            0;
+
+        transform:
+            translateY(25px);
     }
 
     to {

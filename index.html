@@ -33,6 +33,8 @@
          INTRO CINEMATOGRÁFICA
     ========================== -->
 
+    <div class="film-grain"></div>
+
     <section
         class="intro"
         id="intro"
@@ -42,7 +44,7 @@
 
             <span class="intro__line intro__line--top"></span>
 
-            <h1 class="intro__logo">
+            <h1 class="intro__logo" data-text="NOIR">
                 NOIR
             </h1>
 
@@ -80,6 +82,7 @@
                 <a
                     href="./index.html"
                     class="header__logo"
+                    data-text="NOIR"
                 >
                     NOIR
                 </a>
@@ -245,26 +248,35 @@
 
             <section class="hero">
 
-                <div class="hero__backdrop"></div>
+                <div class="hero__backdrop">
+
+                    <img
+                        src="./assets/img/hero-placeholder.webp"
+                        alt=""
+                        class="hero__image"
+                    >
+
+                </div>
 
 
                 <div class="hero__content">
 
                     <span class="hero__eyebrow">
-                        Featured Film
+                        Featured Film / 01
                     </span>
 
                     <h2 class="hero__title">
-                        NOIR
+                        DUNE
                     </h2>
 
                     <p class="hero__metadata">
-                        Cinema / Film / Television
+                        2024&nbsp;&nbsp;·&nbsp;&nbsp;166 MIN&nbsp;&nbsp;·&nbsp;&nbsp;SCIENCE FICTION
                     </p>
 
                     <p class="hero__description">
-                        Discover films, television and
-                        the people behind them.
+                        Paul Atreides unites with Chani and the Fremen
+                        while seeking revenge against the conspirators
+                        who destroyed his family.
                     </p>
 
 
@@ -301,10 +313,7 @@
                  TRENDING
             ========================== -->
 
-            <section
-                class="section"
-                id="trending"
-            >
+            <section class="section" id="trending">
 
                 <header class="section__header">
 
@@ -336,10 +345,99 @@
                 </header>
 
 
-                <div
-                    class="movies-grid"
-                    id="trendingMovies"
-                >
+                <div class="movies-grid" id="trendingMovies">
+                    <article class="movie-card">
+
+                        <a href="#" class="movie-card__image-link">
+
+                            <img
+                                src="./assets/images/movie-01.jpg"
+                                alt="Dune Part Two"
+                                class="movie-card__image"
+                            >
+
+                            <span class="movie-card__rating">
+                                8.4
+                            </span>
+
+                        </a>
+
+                        <div class="movie-card__info">
+
+                            <h3 class="movie-card__title">
+                                Dune: Part Two
+                            </h3>
+
+                            <span class="movie-card__year">
+                                2024
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="movie-card">
+
+                        <a href="#" class="movie-card__image-link">
+
+                            <img
+                                src="./assets/images/movie-02.jpg"
+                                alt="The Batman"
+                                class="movie-card__image"
+                            >
+
+                            <span class="movie-card__rating">
+                                7.7
+                            </span>
+
+                        </a>
+
+                        <div class="movie-card__info">
+
+                            <h3 class="movie-card__title">
+                                The Batman
+                            </h3>
+
+                            <span class="movie-card__year">
+                                2022
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="movie-card">
+
+                        <a href="#" class="movie-card__image-link">
+
+                            <img
+                                src="./assets/images/movie-03.jpg"
+                                alt="Poor Things"
+                                class="movie-card__image"
+                            >
+
+                            <span class="movie-card__rating">
+                                7.8
+                            </span>
+
+                        </a>
+
+                        <div class="movie-card__info">
+
+                            <h3 class="movie-card__title">
+                                Poor Things
+                            </h3>
+
+                            <span class="movie-card__year">
+                                2023
+                            </span>
+
+                        </div>
+
+                    </article>
+ 
                 </div>
 
             </section>
@@ -372,10 +470,123 @@
                 </header>
 
 
-                <div
-                    class="popular-list"
-                    id="popularMovies"
-                >
+                <div class="popular-list" id="popularMovies">
+
+                    <article class="popular-item">
+
+                        <span class="popular-item__number">
+                            01
+                        </span>
+
+                        <div class="popular-item__main">
+
+                            <h3>
+                                Dune: Part Two
+                            </h3>
+
+                            <span>
+                                Denis Villeneuve
+                            </span>
+
+                        </div>
+
+                        <span class="popular-item__year">
+                            2024
+                        </span>
+
+                        <span class="popular-item__rating">
+                            8.4
+                        </span>
+
+                    </article>
+
+
+                    <article class="popular-item">
+
+                        <span class="popular-item__number">
+                            02
+                        </span>
+
+                        <div class="popular-item__main">
+
+                            <h3>
+                                Oppenheimer
+                            </h3>
+
+                            <span>
+                                Christopher Nolan
+                            </span>
+
+                        </div>
+
+                        <span class="popular-item__year">
+                            2023
+                        </span>
+
+                        <span class="popular-item__rating">
+                            8.1
+                        </span>
+
+                    </article>
+
+
+                    <article class="popular-item">
+
+                        <span class="popular-item__number">
+                            03
+                        </span>
+
+                        <div class="popular-item__main">
+
+                            <h3>
+                                Poor Things
+                            </h3>
+
+                            <span>
+                                Yorgos Lanthimos
+                            </span>
+
+                        </div>
+
+                        <span class="popular-item__year">
+                            2023
+                        </span>
+
+                        <span class="popular-item__rating">
+                            7.8
+                        </span>
+
+                    </article>
+
+
+                    <article class="popular-item">
+
+                        <span class="popular-item__number">
+                            04
+                        </span>
+
+                        <div class="popular-item__main">
+
+                            <h3>
+                                The Batman
+                            </h3>
+
+                            <span>
+                                Matt Reeves
+                            </span>
+
+                        </div>
+
+                        <span class="popular-item__year">
+                            2022
+                        </span>
+
+                        <span class="popular-item__rating">
+                            7.7
+                        </span>
+
+                    </article>
+
                 </div>
 
             </section>
@@ -444,10 +655,83 @@
                 </header>
 
 
-                <div
-                    class="genres"
-                    id="genresList"
-                >
+                <div class="genres" id="genresList">
+                    <a href="#" class="genre-item">
+
+                        <span class="genre-item__name">
+                            Drama
+                        </span>
+
+                        <span class="genre-item__number">
+                            01
+                        </span>
+
+                    </a>
+
+
+                    <a href="#" class="genre-item">
+
+                        <span class="genre-item__name">
+                            Horror
+                        </span>
+
+                        <span class="genre-item__number">
+                            02
+                        </span>
+
+                    </a>
+
+
+                    <a href="#" class="genre-item">
+
+                        <span class="genre-item__name">
+                            Science Fiction
+                        </span>
+
+                        <span class="genre-item__number">
+                            03
+                        </span>
+
+                    </a>
+
+
+                    <a href="#" class="genre-item">
+
+                        <span class="genre-item__name">
+                            Thriller
+                        </span>
+
+                        <span class="genre-item__number">
+                            04
+                        </span>
+
+                    </a>
+
+
+                    <a href="#" class="genre-item">
+
+                        <span class="genre-item__name">
+                            Animation
+                        </span>
+
+                        <span class="genre-item__number">
+                            05
+                        </span>
+
+                    </a>
+
+
+                    <a href="#" class="genre-item">
+
+                        <span class="genre-item__name">
+                            Documentary
+                        </span>
+
+                        <span class="genre-item__number">
+                            06
+                        </span>
+
+                    </a>
                 </div>
 
             </section>
@@ -480,10 +764,39 @@
                 </header>
 
 
-                <div
-                    class="upcoming-feature"
-                    id="upcomingMovie"
-                >
+                <div class="upcoming-feature" id="upcomingMovie">
+                    <article class="upcoming-card">
+
+                        <img
+                            src="./assets/images/upcoming.jpg"
+                            alt=""
+                            class="upcoming-card__image"
+                        >
+
+                        <div class="upcoming-card__overlay"></div>
+
+
+                        <div class="upcoming-card__content">
+
+                            <span class="upcoming-card__eyebrow">
+                                Coming Soon
+                            </span>
+
+                            <h3>
+                                Upcoming Film
+                            </h3>
+
+                            <p>
+                                October 2026
+                            </p>
+
+                            <a href="#">
+                                View Film →
+                            </a>
+
+                        </div>
+
+                    </article>
                 </div>
 
             </section>
@@ -499,17 +812,55 @@
 
         <footer class="footer">
 
-            <h2>
-                NOIR
-            </h2>
+            <div class="footer__top">
 
-            <p>
-                A cinematic database.
-            </p>
+                <div>
 
-            <small>
-                Data provided by TMDB.
-            </small>
+                    <h2 data-text="NOIR">
+                        NOIR
+                    </h2>
+
+                    <p>
+                        A cinematic database.
+                    </p>
+
+                </div>
+
+
+                <nav class="footer__navigation">
+
+                    <a href="./pages/movies.html">
+                        Movies
+                    </a>
+
+                    <a href="./pages/tv.html">
+                        TV
+                    </a>
+
+                    <a href="./pages/people.html">
+                        People
+                    </a>
+
+                    <a href="./pages/awards.html">
+                        Awards
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+            <div class="footer__bottom">
+
+                <span>
+                    NOIR / 2026
+                </span>
+
+                <span>
+                    Data provided by TMDB.
+                </span>
+
+            </div>
 
         </footer>
 
