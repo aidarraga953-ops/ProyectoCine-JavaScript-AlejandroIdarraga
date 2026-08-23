@@ -254,6 +254,7 @@
                         src="./assets/img/hero-placeholder.webp"
                         alt=""
                         class="hero__image"
+                        id="heroImage"
                     >
 
                 </div>
@@ -261,19 +262,19 @@
 
                 <div class="hero__content">
 
-                    <span class="hero__eyebrow">
+                    <span class="hero__eyebrow" id="heroEyebrow">
                         Featured Film / 01
                     </span>
 
-                    <h2 class="hero__title">
+                    <h2 class="hero__title" id="heroTitle">
                         DUNE
                     </h2>
 
-                    <p class="hero__metadata">
+                    <p class="hero__metadata" id="heroMetadata">
                         2024&nbsp;&nbsp;·&nbsp;&nbsp;166 MIN&nbsp;&nbsp;·&nbsp;&nbsp;SCIENCE FICTION
                     </p>
 
-                    <p class="hero__description">
+                    <p class="hero__description" id="heroDescription">
                         Paul Atreides unites with Chani and the Fremen
                         while seeking revenge against the conspirators
                         who destroyed his family.
@@ -282,13 +283,21 @@
 
                     <div class="hero__actions">
 
-                        <button class="button button--primary">
+                        <button
+                            class="button button--primary"
+                            type="button"
+                            id="heroTrailerButton"
+                        >
                             Watch Trailer
                         </button>
 
-                        <button class="button button--secondary">
+                        <a
+                            href="./pages/movie.html"
+                            class="button button--secondary"
+                            id="heroViewFilm"
+                        >
                             View Film
-                        </button>
+                        </a>
 
                     </div>
 
@@ -297,11 +306,11 @@
 
                 <div class="hero__pagination">
 
-                    <span>01</span>
+                    <span id="heroCurrent">01</span>
 
                     <span class="hero__pagination-line"></span>
 
-                    <span>05</span>
+                    <span id="heroTotal">05</span>
 
                 </div>
 
@@ -332,11 +341,19 @@
 
                     <div class="section__filters">
 
-                        <button>
+                        <button
+                            class="section__filter is-active"
+                            type="button"
+                            data-trending-period="day"
+                        >
                             Today
                         </button>
 
-                        <button>
+                        <button
+                            class="section__filter"
+                            type="button"
+                            data-trending-period="week"
+                        >
                             This Week
                         </button>
 
@@ -346,98 +363,9 @@
 
 
                 <div class="movies-grid" id="trendingMovies">
-                    <article class="movie-card">
-
-                        <a href="#" class="movie-card__image-link">
-
-                            <img
-                                src="./assets/images/movie-01.jpg"
-                                alt="Dune Part Two"
-                                class="movie-card__image"
-                            >
-
-                            <span class="movie-card__rating">
-                                8.4
-                            </span>
-
-                        </a>
-
-                        <div class="movie-card__info">
-
-                            <h3 class="movie-card__title">
-                                Dune: Part Two
-                            </h3>
-
-                            <span class="movie-card__year">
-                                2024
-                            </span>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="movie-card">
-
-                        <a href="#" class="movie-card__image-link">
-
-                            <img
-                                src="./assets/images/movie-02.jpg"
-                                alt="The Batman"
-                                class="movie-card__image"
-                            >
-
-                            <span class="movie-card__rating">
-                                7.7
-                            </span>
-
-                        </a>
-
-                        <div class="movie-card__info">
-
-                            <h3 class="movie-card__title">
-                                The Batman
-                            </h3>
-
-                            <span class="movie-card__year">
-                                2022
-                            </span>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="movie-card">
-
-                        <a href="#" class="movie-card__image-link">
-
-                            <img
-                                src="./assets/images/movie-03.jpg"
-                                alt="Poor Things"
-                                class="movie-card__image"
-                            >
-
-                            <span class="movie-card__rating">
-                                7.8
-                            </span>
-
-                        </a>
-
-                        <div class="movie-card__info">
-
-                            <h3 class="movie-card__title">
-                                Poor Things
-                            </h3>
-
-                            <span class="movie-card__year">
-                                2023
-                            </span>
-
-                        </div>
-
-                    </article>
- 
+                    <p class="section__state">
+                        Loading films...
+                    </p>
                 </div>
 
             </section>
@@ -471,122 +399,9 @@
 
 
                 <div class="popular-list" id="popularMovies">
-
-                    <article class="popular-item">
-
-                        <span class="popular-item__number">
-                            01
-                        </span>
-
-                        <div class="popular-item__main">
-
-                            <h3>
-                                Dune: Part Two
-                            </h3>
-
-                            <span>
-                                Denis Villeneuve
-                            </span>
-
-                        </div>
-
-                        <span class="popular-item__year">
-                            2024
-                        </span>
-
-                        <span class="popular-item__rating">
-                            8.4
-                        </span>
-
-                    </article>
-
-
-                    <article class="popular-item">
-
-                        <span class="popular-item__number">
-                            02
-                        </span>
-
-                        <div class="popular-item__main">
-
-                            <h3>
-                                Oppenheimer
-                            </h3>
-
-                            <span>
-                                Christopher Nolan
-                            </span>
-
-                        </div>
-
-                        <span class="popular-item__year">
-                            2023
-                        </span>
-
-                        <span class="popular-item__rating">
-                            8.1
-                        </span>
-
-                    </article>
-
-
-                    <article class="popular-item">
-
-                        <span class="popular-item__number">
-                            03
-                        </span>
-
-                        <div class="popular-item__main">
-
-                            <h3>
-                                Poor Things
-                            </h3>
-
-                            <span>
-                                Yorgos Lanthimos
-                            </span>
-
-                        </div>
-
-                        <span class="popular-item__year">
-                            2023
-                        </span>
-
-                        <span class="popular-item__rating">
-                            7.8
-                        </span>
-
-                    </article>
-
-
-                    <article class="popular-item">
-
-                        <span class="popular-item__number">
-                            04
-                        </span>
-
-                        <div class="popular-item__main">
-
-                            <h3>
-                                The Batman
-                            </h3>
-
-                            <span>
-                                Matt Reeves
-                            </span>
-
-                        </div>
-
-                        <span class="popular-item__year">
-                            2022
-                        </span>
-
-                        <span class="popular-item__rating">
-                            7.7
-                        </span>
-
-                    </article>
-
+                    <p class="section__state">
+                        Loading films...
+                    </p>
                 </div>
 
             </section>
@@ -623,6 +438,9 @@
                     class="movies-grid"
                     id="nowPlayingMovies"
                 >
+                    <p class="section__state">
+                        Loading films...
+                    </p>
                 </div>
 
             </section>
@@ -656,82 +474,9 @@
 
 
                 <div class="genres" id="genresList">
-                    <a href="#" class="genre-item">
-
-                        <span class="genre-item__name">
-                            Drama
-                        </span>
-
-                        <span class="genre-item__number">
-                            01
-                        </span>
-
-                    </a>
-
-
-                    <a href="#" class="genre-item">
-
-                        <span class="genre-item__name">
-                            Horror
-                        </span>
-
-                        <span class="genre-item__number">
-                            02
-                        </span>
-
-                    </a>
-
-
-                    <a href="#" class="genre-item">
-
-                        <span class="genre-item__name">
-                            Science Fiction
-                        </span>
-
-                        <span class="genre-item__number">
-                            03
-                        </span>
-
-                    </a>
-
-
-                    <a href="#" class="genre-item">
-
-                        <span class="genre-item__name">
-                            Thriller
-                        </span>
-
-                        <span class="genre-item__number">
-                            04
-                        </span>
-
-                    </a>
-
-
-                    <a href="#" class="genre-item">
-
-                        <span class="genre-item__name">
-                            Animation
-                        </span>
-
-                        <span class="genre-item__number">
-                            05
-                        </span>
-
-                    </a>
-
-
-                    <a href="#" class="genre-item">
-
-                        <span class="genre-item__name">
-                            Documentary
-                        </span>
-
-                        <span class="genre-item__number">
-                            06
-                        </span>
-
-                    </a>
+                    <p class="section__state">
+                        Loading genres...
+                    </p>
                 </div>
 
             </section>
@@ -768,9 +513,10 @@
                     <article class="upcoming-card">
 
                         <img
-                            src="./assets/images/upcoming.jpg"
+                            src="./assets/img/hero-placeholder.webp"
                             alt=""
                             class="upcoming-card__image"
+                            id="upcomingImage"
                         >
 
                         <div class="upcoming-card__overlay"></div>
@@ -782,21 +528,143 @@
                                 Coming Soon
                             </span>
 
-                            <h3>
+                            <h3 id="upcomingTitle">
                                 Upcoming Film
                             </h3>
 
-                            <p>
+                            <p id="upcomingDate">
                                 October 2026
                             </p>
 
-                            <a href="#">
+                            <a href="./pages/movie.html" id="upcomingLink">
                                 View Film →
                             </a>
 
                         </div>
 
                     </article>
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 WHAT'S POPULAR
+            ========================== -->
+
+            <section class="section" id="whatsPopular">
+
+                <header class="section__header">
+
+                    <div>
+
+                        <span class="section__eyebrow">
+                            NOIR / Discover
+                        </span>
+
+                        <h2>
+                            What's Popular
+                        </h2>
+
+                    </div>
+
+
+                    <div class="section__filters section__filters--scroll">
+
+                        <button
+                            class="section__filter is-active"
+                            type="button"
+                            data-popular-category="streaming"
+                        >
+                            Streaming
+                        </button>
+
+                        <button
+                            class="section__filter"
+                            type="button"
+                            data-popular-category="on-tv"
+                        >
+                            On TV
+                        </button>
+
+                        <button
+                            class="section__filter"
+                            type="button"
+                            data-popular-category="for-rent"
+                        >
+                            For Rent
+                        </button>
+
+                        <button
+                            class="section__filter"
+                            type="button"
+                            data-popular-category="in-theaters"
+                        >
+                            In Theaters
+                        </button>
+
+                    </div>
+
+                </header>
+
+
+                <div class="movies-grid movies-grid--rail" id="whatsPopularList">
+                    <p class="section__state">
+                        Loading...
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 FREE TO WATCH
+            ========================== -->
+
+            <section class="section" id="freeToWatch">
+
+                <header class="section__header">
+
+                    <div>
+
+                        <span class="section__eyebrow">
+                            NOIR / Access
+                        </span>
+
+                        <h2>
+                            Free To Watch
+                        </h2>
+
+                    </div>
+
+
+                    <div class="section__filters">
+
+                        <button
+                            class="section__filter is-active"
+                            type="button"
+                            data-free-category="movie"
+                        >
+                            Movies
+                        </button>
+
+                        <button
+                            class="section__filter"
+                            type="button"
+                            data-free-category="tv"
+                        >
+                            TV
+                        </button>
+
+                    </div>
+
+                </header>
+
+
+                <div class="movies-grid movies-grid--rail" id="freeToWatchList">
+                    <p class="section__state">
+                        Loading...
+                    </p>
                 </div>
 
             </section>
@@ -864,6 +732,54 @@
 
         </footer>
 
+
+    </div>
+
+
+    <!-- TRAILER MODAL -->
+
+    <div
+        class="trailer-modal"
+        id="trailerModal"
+        aria-hidden="true"
+    >
+
+        <div class="trailer-modal__overlay" data-trailer-close></div>
+
+        <section
+            class="trailer-modal__content"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="trailerModalTitle"
+        >
+
+            <button
+                class="trailer-modal__close"
+                type="button"
+                aria-label="Close trailer"
+                data-trailer-close
+            >
+                ×
+            </button>
+
+            <span class="trailer-modal__eyebrow">
+                Trailer
+            </span>
+
+            <h2 id="trailerModalTitle">
+                NOIR Trailer
+            </h2>
+
+            <div class="trailer-modal__frame">
+                <iframe
+                    id="trailerFrame"
+                    title="YouTube trailer"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                ></iframe>
+            </div>
+
+        </section>
 
     </div>
 

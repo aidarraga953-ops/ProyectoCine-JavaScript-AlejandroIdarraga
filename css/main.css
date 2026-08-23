@@ -11,6 +11,11 @@ body {
         var(--font-main);
 }
 
+body.modal-open {
+    overflow:
+        hidden;
+}
+
 
 /* =========================
    SITE
@@ -547,6 +552,14 @@ body {
         scaleX(0.45);
 }
 
+.button:disabled {
+    cursor:
+        wait;
+
+    opacity:
+        0.65;
+}
+
 
 .button--primary::before {
     content:
@@ -572,6 +585,17 @@ body {
 
     gap:
         1.5rem;
+}
+
+.section__filters--scroll {
+    overflow-x:
+        auto;
+
+    max-width:
+        100%;
+
+    padding-bottom:
+        0.2rem;
 }
 
 .section__filters button {
@@ -603,12 +627,12 @@ body {
         pointer;
 }
 
-.section__filters button:first-child {
+.section__filters button.is-active {
     color:
         var(--color-text);
 }
 
-.section__filters button:first-child::after {
+.section__filters button.is-active::after {
     content:
         "";
 
@@ -735,6 +759,26 @@ body {
         0.2rem;
 }
 
+.section__state {
+    margin:
+        0;
+
+    grid-column:
+        1 / -1;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.75rem;
+
+    letter-spacing:
+        0.14em;
+
+    text-transform:
+        uppercase;
+}
+
 
 /* TEMPORARY GRID */
 
@@ -752,12 +796,65 @@ body {
         400px;
 }
 
+.movies-grid--rail {
+    display:
+        flex;
+
+    gap:
+        1.25rem;
+
+    min-height:
+        0;
+
+    overflow-x:
+        auto;
+
+    overflow-y:
+        hidden;
+
+    padding-bottom:
+        1.5rem;
+
+    scroll-behavior:
+        smooth;
+
+    scroll-snap-type:
+        x proximity;
+}
+
+.movies-grid--rail::-webkit-scrollbar,
+.section__filters--scroll::-webkit-scrollbar {
+    height:
+        4px;
+}
+
+.movies-grid--rail::-webkit-scrollbar-track,
+.section__filters--scroll::-webkit-scrollbar-track {
+    background:
+        transparent;
+}
+
+.movies-grid--rail::-webkit-scrollbar-thumb,
+.section__filters--scroll::-webkit-scrollbar-thumb {
+    background:
+        var(--color-line);
+}
+
 /* =========================
    MOVIE CARD
 ========================= */
 
 .movie-card {
-    min-width: 0;
+    min-width:
+        0;
+}
+
+.movies-grid--rail .movie-card {
+    flex:
+        0 0 clamp(150px, 16vw, 220px);
+
+    scroll-snap-align:
+        start;
 }
 
 .movie-card__image-link {
@@ -903,6 +1000,18 @@ body {
     transition:
         padding var(--transition-fast),
         background var(--transition-fast);
+}
+
+.popular-item:focus-visible,
+.genre-item:focus-visible,
+.movie-card__image-link:focus-visible,
+.button:focus-visible {
+    outline:
+        1px solid
+        var(--color-text);
+
+    outline-offset:
+        4px;
 }
 
 .popular-item__number {
@@ -1161,6 +1270,168 @@ body {
 }
 
 /* =========================
+   TRAILER MODAL
+========================= */
+
+.trailer-modal {
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        2000;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    padding:
+        24px;
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
+
+    visibility:
+        hidden;
+
+    transition:
+        opacity var(--transition-normal),
+        visibility var(--transition-normal);
+}
+
+.trailer-modal.is-open {
+    opacity:
+        1;
+
+    pointer-events:
+        auto;
+
+    visibility:
+        visible;
+}
+
+.trailer-modal__overlay {
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    background:
+        rgba(0, 0, 0, 0.82);
+}
+
+.trailer-modal__content {
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    width:
+        min(100%, 980px);
+
+    padding:
+        clamp(1.25rem, 4vw, 2.5rem);
+
+    border:
+        1px solid
+        var(--color-line);
+
+    background:
+        var(--color-background);
+
+    transform:
+        translateY(18px);
+
+    transition:
+        transform var(--transition-normal);
+}
+
+.trailer-modal.is-open
+.trailer-modal__content {
+    transform:
+        translateY(0);
+}
+
+.trailer-modal__close {
+    position:
+        absolute;
+
+    top:
+        1rem;
+
+    right:
+        1rem;
+
+    border:
+        none;
+
+    background:
+        transparent;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        1.5rem;
+
+    cursor:
+        pointer;
+}
+
+.trailer-modal__eyebrow {
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.72rem;
+
+    letter-spacing:
+        0.2em;
+
+    text-transform:
+        uppercase;
+}
+
+.trailer-modal h2 {
+    margin:
+        0.7rem 2rem 1.5rem 0;
+
+    font-size:
+        clamp(1.4rem, 4vw, 3rem);
+
+    font-weight:
+        500;
+}
+
+.trailer-modal__frame {
+    aspect-ratio:
+        16 / 9;
+
+    background:
+        #000;
+}
+
+.trailer-modal__frame iframe {
+    width:
+        100%;
+
+    height:
+        100%;
+
+    border:
+        0;
+}
+
+/* =========================
    FOOTER
 ========================= */
 
@@ -1287,6 +1558,16 @@ body {
             repeat(2, 1fr);
     }
 
+    .movies-grid--rail {
+        display:
+            flex;
+    }
+
+    .popular-item {
+        grid-template-columns:
+            52px 1fr 64px 52px;
+    }
+
 }
 
 
@@ -1310,6 +1591,67 @@ body {
     .movies-grid {
         grid-template-columns:
             1fr;
+    }
+
+    .movies-grid--rail {
+        display:
+            flex;
+    }
+
+    .movies-grid--rail .movie-card {
+        flex-basis:
+            155px;
+    }
+
+    .section__filters {
+        width:
+            100%;
+
+        overflow-x:
+            auto;
+    }
+
+    .section__filters button {
+        flex:
+            0 0 auto;
+    }
+
+    .section__header {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+        gap:
+            1.5rem;
+    }
+
+    .popular-item {
+        grid-template-columns:
+            42px 1fr 48px;
+
+        min-height:
+            86px;
+    }
+
+    .popular-item__rating {
+        display:
+            none;
+    }
+
+    .footer__top,
+    .footer__bottom {
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+    }
+
+    .footer__navigation {
+        align-items:
+            flex-start;
     }
 
 }
