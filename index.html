@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NOIR — Cinema Database</title>
+
+
+    <!-- Variables generales -->
+    <link rel="stylesheet" href="./css/variables.css">
+
+    <!-- Normalización de estilos -->
+    <link rel="stylesheet" href="./css/reset.css">
+
+    <!-- Animaciones -->
+    <link rel="stylesheet" href="./css/animations.css">
+
+    <!-- Estilos principales -->
+    <link rel="stylesheet" href="./css/main.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         INTRO CINEMATOGRÁFICA
+    ========================== -->
+
+    <section
+        class="intro"
+        id="intro"
+    >
+
+        <div class="intro__content">
+
+            <span class="intro__line intro__line--top"></span>
+
+            <h1 class="intro__logo">
+                NOIR
+            </h1>
+
+            <span class="intro__line intro__line--bottom"></span>
+
+            <p class="intro__subtitle">
+                Cinema Database
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         APLICACIÓN
+    ========================== -->
+
+    <div
+        class="site"
+        id="site"
+    >
+
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div class="header__container">
+
+
+                <!-- LOGO -->
+
+                <a
+                    href="./index.html"
+                    class="header__logo"
+                >
+                    NOIR
+                </a>
+
+
+
+                <!-- NAVEGACIÓN -->
+
+                <nav class="navigation">
+
+
+                    <!-- MOVIES -->
+
+                    <div class="navigation__group">
+
+                        <button class="navigation__button">
+                            Movies
+                        </button>
+
+                        <ul class="navigation__menu">
+
+                            <li>
+                                <a href="./pages/movies.html?category=popular">
+                                    Popular
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="./pages/movies.html?category=now-playing">
+                                    Now Playing
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="./pages/movies.html?category=upcoming">
+                                    Upcoming
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="./pages/movies.html?category=top-rated">
+                                    Top Rated
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+
+                    <!-- TV SHOWS -->
+
+                    <div class="navigation__group">
+
+                        <button class="navigation__button">
+                            TV Shows
+                        </button>
+
+                        <ul class="navigation__menu">
+
+                            <li>
+                                <a href="./pages/tv.html?category=popular">
+                                    Popular
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="./pages/tv.html?category=airing-today">
+                                    Airing Today
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="./pages/tv.html?category=on-tv">
+                                    On TV
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="./pages/tv.html?category=top-rated">
+                                    Top Rated
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+
+                    <!-- PEOPLE -->
+
+                    <div class="navigation__group">
+
+                        <button class="navigation__button">
+                            People
+                        </button>
+
+                        <ul class="navigation__menu">
+
+                            <li>
+                                <a href="./pages/people.html">
+                                    Popular
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+
+                    <!-- AWARDS -->
+
+                    <div class="navigation__group">
+
+                        <button class="navigation__button">
+                            Awards
+                        </button>
+
+                        <ul class="navigation__menu">
+
+                            <li>
+                                <a href="./pages/awards.html?category=popular">
+                                    Popular
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="./pages/awards.html?category=upcoming">
+                                    Upcoming
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </nav>
+
+
+
+                <!-- SEARCH -->
+
+                <button class="header__search">
+                    Search
+                </button>
+
+
+            </div>
+
+        </header>
+
+
+
+        <main>
+
+
+            <!-- =========================
+                 HERO
+            ========================== -->
+
+            <section class="hero">
+
+                <div class="hero__backdrop"></div>
+
+
+                <div class="hero__content">
+
+                    <span class="hero__eyebrow">
+                        Featured Film
+                    </span>
+
+                    <h2 class="hero__title">
+                        NOIR
+                    </h2>
+
+                    <p class="hero__metadata">
+                        Cinema / Film / Television
+                    </p>
+
+                    <p class="hero__description">
+                        Discover films, television and
+                        the people behind them.
+                    </p>
+
+
+                    <div class="hero__actions">
+
+                        <button class="button button--primary">
+                            Watch Trailer
+                        </button>
+
+                        <button class="button button--secondary">
+                            View Film
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero__pagination">
+
+                    <span>01</span>
+
+                    <span class="hero__pagination-line"></span>
+
+                    <span>05</span>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 TRENDING
+            ========================== -->
+
+            <section
+                class="section"
+                id="trending"
+            >
+
+                <header class="section__header">
+
+                    <div>
+
+                        <span class="section__eyebrow">
+                            NOIR / Discover
+                        </span>
+
+                        <h2>
+                            Trending Now
+                        </h2>
+
+                    </div>
+
+
+                    <div class="section__filters">
+
+                        <button>
+                            Today
+                        </button>
+
+                        <button>
+                            This Week
+                        </button>
+
+                    </div>
+
+                </header>
+
+
+                <div
+                    class="movies-grid"
+                    id="trendingMovies"
+                >
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 POPULAR
+            ========================== -->
+
+            <section
+                class="section section--popular"
+                id="popular"
+            >
+
+                <header class="section__header">
+
+                    <div>
+
+                        <span class="section__eyebrow">
+                            NOIR / Selection
+                        </span>
+
+                        <h2>
+                            Popular This Week
+                        </h2>
+
+                    </div>
+
+                </header>
+
+
+                <div
+                    class="popular-list"
+                    id="popularMovies"
+                >
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 NOW PLAYING
+            ========================== -->
+
+            <section
+                class="section"
+                id="nowPlaying"
+            >
+
+                <header class="section__header">
+
+                    <div>
+
+                        <span class="section__eyebrow">
+                            In Theaters
+                        </span>
+
+                        <h2>
+                            Now Playing
+                        </h2>
+
+                    </div>
+
+                </header>
+
+
+                <div
+                    class="movies-grid"
+                    id="nowPlayingMovies"
+                >
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 GENRES
+            ========================== -->
+
+            <section
+                class="section"
+                id="genres"
+            >
+
+                <header class="section__header">
+
+                    <div>
+
+                        <span class="section__eyebrow">
+                            Explore
+                        </span>
+
+                        <h2>
+                            Cinema by Genre
+                        </h2>
+
+                    </div>
+
+                </header>
+
+
+                <div
+                    class="genres"
+                    id="genresList"
+                >
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 UPCOMING
+            ========================== -->
+
+            <section
+                class="section"
+                id="upcoming"
+            >
+
+                <header class="section__header">
+
+                    <div>
+
+                        <span class="section__eyebrow">
+                            Coming Soon
+                        </span>
+
+                        <h2>
+                            Upcoming
+                        </h2>
+
+                    </div>
+
+                </header>
+
+
+                <div
+                    class="upcoming-feature"
+                    id="upcomingMovie"
+                >
+                </div>
+
+            </section>
+
+
+        </main>
+
+
+
+        <!-- =========================
+             FOOTER
+        ========================== -->
+
+        <footer class="footer">
+
+            <h2>
+                NOIR
+            </h2>
+
+            <p>
+                A cinematic database.
+            </p>
+
+            <small>
+                Data provided by TMDB.
+            </small>
+
+        </footer>
+
+
+    </div>
+
+
+
+    <script
+        type="module"
+        src="./js/app.js"
+    ></script>
+
+</body>
+
+</html>

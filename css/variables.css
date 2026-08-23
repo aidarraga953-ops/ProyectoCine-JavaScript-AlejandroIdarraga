@@ -1,0 +1,55 @@
+:root {
+    /* =========================
+       COLORES PRINCIPALES
+    ========================= */
+
+    --color-background: #080808;
+    --color-surface: #101010;
+
+    --color-text: #f1efea;
+    --color-text-muted: #929292;
+
+    --color-line: #292929;
+
+    /*
+     * Este color cambiará posteriormente
+     * dependiendo de la película destacada.
+     */
+    --color-accent: #ffffff;
+
+
+    /* =========================
+       TIPOGRAFÍA
+    ========================= */
+
+    --font-main: Arial, Helvetica, sans-serif;
+
+
+    /* =========================
+       TAMAÑOS
+    ========================= */
+
+    --container-width: 1400px;
+
+    --header-height: 72px;
+
+
+    /* =========================
+       ESPACIADOS
+    ========================= */
+
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 2rem;
+    --space-lg: 4rem;
+    --space-xl: 7rem;
+
+
+    /* =========================
+       TRANSICIONES
+    ========================= */
+
+    --transition-fast: 200ms ease;
+    --transition-normal: 400ms ease;
+    --transition-slow: 800ms ease;
+}
