@@ -13,6 +13,10 @@ import {
     formatMovieYear
 } from "../components/movie-card.js";
 
+import {
+    selectYouTubeTrailer
+} from "../components/trailer.js";
+
 
 const MOVIE_LIMIT =
     16;
@@ -637,19 +641,7 @@ async function getMovieTrailer(movieId) {
             language: "en-US"
         });
 
-    const youtubeVideos =
-        (data.results || []).filter((video) => {
-            return video.site === "YouTube";
-        });
-
-    return youtubeVideos.find((video) => {
-        return video.type === "Trailer" && video.official;
-    }) ||
-        youtubeVideos.find((video) => {
-            return video.type === "Trailer";
-        }) ||
-        youtubeVideos[0] ||
-        null;
+    return selectYouTubeTrailer(data);
 
 }
 

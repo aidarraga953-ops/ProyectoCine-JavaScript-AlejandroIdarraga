@@ -11,7 +11,7 @@ export {
 
 
 export const FALLBACK_IMAGE =
-    "./assets/img/hero-placeholder.webp";
+    new URL("../../assets/img/hero-placeholder.webp", import.meta.url).href;
 
 
 /**
@@ -66,5 +66,70 @@ export async function requestTMDB(endpoint, parameters = {}) {
 
     // .json() transforma la respuesta HTTP en datos JavaScript utilizables.
     return response.json();
+
+}
+
+
+const dataCache =
+    new Map();
+
+
+export async function requestCachedTMDB(endpoint, parameters = {}) {
+
+    const cacheKey =
+        `${endpoint}:${JSON.stringify(parameters)}`;
+
+    if (!dataCache.has(cacheKey)) {
+        dataCache.set(
+            cacheKey,
+            requestTMDB(endpoint, parameters).catch((error) => {
+                dataCache.delete(cacheKey);
+                throw error;
+            })
+        );
+    }
+
+    return dataCache.get(cacheKey);
+
+}
+
+
+export const MOVIE_CATEGORIES =
+    {
+        popular: {
+            title: "POPULAR MOVIES",
+            endpoint: "/movie/popular",
+            parameters: {
+                sort_by: "popularity.desc"
+            }
+        },
+        "now-playing": {
+            title: "NOW PLAYING",
+            endpoint: "/movie/now_playing",
+            parameters: {
+                sort_by: "popularity.desc"
+            }
+        },
+        upcoming: {
+            title: "UPCOMING MOVIES",
+            endpoint: "/movie/upcoming",
+            parameters: {
+                sort_by: "primary_release_date.asc"
+            }
+        },
+        "top-rated": {
+            title: "TOP RATED MOVIES",
+            endpoint: "/movie/top_rated",
+            parameters: {
+                sort_by: "vote_average.desc",
+                "vote_count.gte": 300
+            }
+        }
+    };
+
+
+export function getMovieCategory(category) {
+
+    return MOVIE_CATEGORIES[category] || MOVIE_CATEGORIES.popular;
 
 }

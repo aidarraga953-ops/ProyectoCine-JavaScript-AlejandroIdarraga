@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOIR - People</title>
+    <title>NOIR - Movie Detail</title>
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/animations.css">
@@ -37,17 +37,45 @@
             </div>
         </header>
 
-        <main class="catalog-page">
-            <section class="page-heading">
-                <span class="section__eyebrow">NOIR / PEOPLE</span>
-                <h1>POPULAR PEOPLE</h1>
-            </section>
-            <section class="section">
-                <div class="people-grid" id="peopleGrid">
-                    <p class="section__state">Loading people...</p>
+        <main id="movieDetail" class="detail-page">
+            <p class="section__state">Loading movie...</p>
+        </main>
+
+        <div
+            class="trailer-modal"
+            id="trailerModal"
+            aria-hidden="true"
+        >
+            <div class="trailer-modal__overlay" data-trailer-close></div>
+
+            <section
+                class="trailer-modal__content"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="trailerModalTitle"
+            >
+                <button
+                    class="trailer-modal__close"
+                    type="button"
+                    aria-label="Close trailer"
+                    data-trailer-close
+                >
+                    x
+                </button>
+
+                <span class="trailer-modal__eyebrow">Trailer</span>
+                <h2 id="trailerModalTitle">NOIR Trailer</h2>
+
+                <div class="trailer-modal__frame">
+                    <iframe
+                        id="trailerFrame"
+                        title="YouTube trailer"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen
+                    ></iframe>
                 </div>
             </section>
-        </main>
+        </div>
 
         <footer class="footer">
             <div class="footer__bottom">
@@ -57,7 +85,7 @@
         </footer>
     </div>
 
-    <script type="module" src="../js/pages/people.js"></script>
+    <script type="module" src="../js/pages/movie-detail.js"></script>
 </body>
 
 </html>

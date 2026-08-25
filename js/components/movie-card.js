@@ -44,11 +44,20 @@ function getMediaHref(item, mediaType = "movie") {
     const type =
         mediaType || item.media_type || "movie";
 
+    const prefix =
+        window.location.pathname.includes("/pages/")
+            ? "."
+            : "./pages";
+
     if (type === "tv") {
-        return `./pages/tv-details.html?id=${item.id}`;
+        return `${prefix}/tv-details.html?id=${item.id}`;
     }
 
-    return `./pages/movie.html?id=${item.id}`;
+    if (type === "person") {
+        return `${prefix}/person.html?id=${item.id}`;
+    }
+
+    return `${prefix}/movie.html?id=${item.id}`;
 
 }
 
