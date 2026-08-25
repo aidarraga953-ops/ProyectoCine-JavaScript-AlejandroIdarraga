@@ -20,6 +20,9 @@ const MOVIE_LIMIT =
 const HERO_LIMIT =
     5;
 
+const SEARCH_DEBOUNCE_MS =
+    350;
+
 const dataCache =
     new Map();
 
@@ -33,6 +36,21 @@ let heroIntervalId =
     null;
 
 let currentHeroMovie =
+    null;
+
+let trailerCollection =
+    [];
+
+let activeTrailerIndex =
+    0;
+
+let isTrailerSectionVisible =
+    false;
+
+let trailerObserver =
+    null;
+
+let searchDebounceId =
     null;
 
 const popularCategoryConfig =
@@ -141,6 +159,83 @@ function renderMovieGrid(container, movies) {
     movies.forEach((movie) => {
         container.append(createMovieCard(movie));
     });
+
+}
+
+
+function renderPopularItem(movie, index) {
+
+    const link =
+        document.createElement("a");
+
+    const backdropPath =
+        movie.backdrop_path || "";
+
+    link.className =
+        "popular-item";
+
+    link.href =
+        `./pages/movie.html?id=${movie.id}`;
+
+    if (backdropPath) {
+        link.style.setProperty(
+            "--backdrop-image",
+            `url("${getImageUrl(backdropPath, "w780")}")`
+        );
+    }
+
+    const number =
+        document.createElement("span");
+
+    number.className =
+        "popular-item__number";
+
+    number.textContent =
+        String(index + 1).padStart(2, "0");
+
+    const main =
+        document.createElement("div");
+
+    main.className =
+        "popular-item__main";
+
+    const title =
+        document.createElement("h3");
+
+    title.textContent =
+        movie.title || "Untitled";
+
+    const meta =
+        document.createElement("span");
+
+    meta.textContent =
+        movie.original_language
+            ? movie.original_language.toUpperCase()
+            : "FILM";
+
+    main.append(title, meta);
+
+    const year =
+        document.createElement("span");
+
+    year.className =
+        "popular-item__year";
+
+    year.textContent =
+        formatMovieYear(movie.release_date);
+
+    const rating =
+        document.createElement("span");
+
+    rating.className =
+        "popular-item__rating";
+
+    rating.textContent =
+        formatMovieScore(movie.vote_average);
+
+    link.append(number, main, year, rating);
+
+    return link;
 
 }
 
@@ -275,6 +370,149 @@ function renderMediaRail(container, items, mediaType) {
 }
 
 
+function getSearchResultTitle(item) {
+
+    if (item.media_type === "movie") {
+        return item.title || "Untitled";
+    }
+
+    if (item.media_type === "tv") {
+        return item.name || "Untitled";
+    }
+
+    return item.name || "Untitled";
+
+}
+
+
+function getSearchResultDate(item) {
+
+    if (item.media_type === "movie") {
+        return item.release_date || "";
+    }
+
+    if (item.media_type === "tv") {
+        return item.first_air_date || "";
+    }
+
+    return "";
+
+}
+
+
+function getSearchResultHref(item) {
+
+    if (item.media_type === "tv") {
+        return `./pages/tv-details.html?id=${item.id}`;
+    }
+
+    if (item.media_type === "person") {
+        return `./pages/person.html?id=${item.id}`;
+    }
+
+    return `./pages/movie.html?id=${item.id}`;
+
+}
+
+
+function renderSearchResults(results) {
+
+    const container =
+        getElement("#searchResults");
+
+    if (!container) {
+        return;
+    }
+
+    if (!results.length) {
+        container.replaceChildren();
+
+        const state =
+            document.createElement("p");
+
+        state.className =
+            "search-modal__state";
+
+        state.textContent =
+            "NO RESULTS FOUND";
+
+        container.append(state);
+        return;
+    }
+
+    container.replaceChildren();
+
+    results.forEach((item) => {
+        const link =
+            document.createElement("a");
+
+        link.className =
+            "search-result";
+
+        link.href =
+            getSearchResultHref(item);
+
+        const poster =
+            document.createElement("img");
+
+        poster.className =
+            "search-result__poster";
+
+        poster.src =
+            item.poster_path || item.profile_path
+                ? getImageUrl(item.poster_path || item.profile_path, "w185")
+                : FALLBACK_IMAGE;
+
+        poster.alt =
+            getSearchResultTitle(item);
+
+        const body =
+            document.createElement("div");
+
+        body.className =
+            "search-result__body";
+
+        const title =
+            document.createElement("h3");
+
+        title.className =
+            "search-result__title";
+
+        title.textContent =
+            getSearchResultTitle(item);
+
+        const meta =
+            document.createElement("p");
+
+        meta.className =
+            "search-result__meta";
+
+        const dateText =
+            getSearchResultDate(item);
+
+        meta.textContent =
+            item.media_type === "person"
+                ? item.known_for?.[0]?.title || item.known_for?.[0]?.name || "Person"
+                : dateText ? dateText.slice(0, 4) : "TBA";
+
+        body.append(title, meta);
+
+        const type =
+            document.createElement("span");
+
+        type.className =
+            "search-result__type";
+
+        type.textContent =
+            item.media_type || "title";
+
+        link.append(poster, body, type);
+        container.append(link);
+    });
+
+}
+
+
 function setActiveButton(selector, activeValue, dataKey) {
 
     document
@@ -382,66 +620,7 @@ export async function loadPopular() {
         container.replaceChildren();
 
         movies.forEach((movie, index) => {
-            const link =
-                document.createElement("a");
-
-            link.className =
-                "popular-item";
-
-            link.href =
-                `./pages/movie.html?id=${movie.id}`;
-
-            const number =
-                document.createElement("span");
-
-            number.className =
-                "popular-item__number";
-
-            number.textContent =
-                String(index + 1).padStart(2, "0");
-
-            const main =
-                document.createElement("div");
-
-            main.className =
-                "popular-item__main";
-
-            const title =
-                document.createElement("h3");
-
-            title.textContent =
-                movie.title || "Untitled";
-
-            const meta =
-                document.createElement("span");
-
-            meta.textContent =
-                movie.original_language
-                    ? movie.original_language.toUpperCase()
-                    : "FILM";
-
-            main.append(title, meta);
-
-            const year =
-                document.createElement("span");
-
-            year.className =
-                "popular-item__year";
-
-            year.textContent =
-                formatMovieYear(movie.release_date);
-
-            const rating =
-                document.createElement("span");
-
-            rating.className =
-                "popular-item__rating";
-
-            rating.textContent =
-                formatMovieScore(movie.vote_average);
-
-            link.append(number, main, year, rating);
-            container.append(link);
+            container.append(renderPopularItem(movie, index));
         });
     } catch (error) {
         console.error("No se pudo cargar Popular.", error);
@@ -496,7 +675,7 @@ function openTrailerModal(video, movie) {
     }
 
     frame.src =
-        `https://www.youtube.com/embed/${video.key}?autoplay=1`;
+        `https://www.youtube.com/embed/${video.key}?autoplay=1&rel=0&enablejsapi=1&playsinline=1`;
 
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
@@ -550,6 +729,241 @@ function showTrailerMessage(message) {
         button.textContent =
             previousText;
     }, 2200);
+
+}
+
+
+function getActiveTrailerFrame() {
+
+    return getElement("#trailerCarouselFrame");
+
+}
+
+
+function sendTrailerCommand(command) {
+
+    const frame =
+        getActiveTrailerFrame();
+
+    if (!frame || !frame.contentWindow) {
+        return;
+    }
+
+    // YouTube escucha estos mensajes cuando el iframe se carga con enablejsapi=1.
+    frame.contentWindow.postMessage(
+        JSON.stringify({
+            event: "command",
+            func: command,
+            args: []
+        }),
+        "*"
+    );
+
+}
+
+
+function playActiveTrailer() {
+
+    sendTrailerCommand("playVideo");
+
+}
+
+
+function pauseActiveTrailer() {
+
+    sendTrailerCommand("pauseVideo");
+
+}
+
+
+function getTrailerEmbedUrl(videoKey, shouldAutoplay = false) {
+
+    const autoplayValue =
+        shouldAutoplay
+            ? "1"
+            : "0";
+
+    return `https://www.youtube.com/embed/${videoKey}?rel=0&enablejsapi=1&playsinline=1&mute=1&autoplay=${autoplayValue}`;
+
+}
+
+
+function renderTrailer() {
+
+    const frame =
+        getElement("#trailerCarouselFrame");
+
+    const title =
+        getElement("#trailerCarouselTitle");
+
+    const meta =
+        getElement("#trailerCarouselMeta");
+
+    const counter =
+        getElement("#trailerCounter");
+
+    const total =
+        getElement("#trailerTotal");
+
+    if (!trailerCollection.length || !frame) {
+        return;
+    }
+
+    const activeItem =
+        trailerCollection[activeTrailerIndex];
+
+    if (!activeItem) {
+        return;
+    }
+
+    if (title) {
+        title.textContent =
+            activeItem.movie.title || "Untitled";
+    }
+
+    if (meta) {
+        meta.textContent =
+            `${formatMovieYear(activeItem.movie.release_date) || "TBA"} / Official trailer`;
+    }
+
+    if (counter) {
+        counter.textContent =
+            String(activeTrailerIndex + 1).padStart(2, "0");
+    }
+
+    if (total) {
+        total.textContent =
+            String(trailerCollection.length).padStart(2, "0");
+    }
+
+    frame.src =
+        getTrailerEmbedUrl(
+            activeItem.trailer.key,
+            isTrailerSectionVisible
+        );
+
+}
+
+
+function showNextTrailer() {
+
+    if (!trailerCollection.length) {
+        return;
+    }
+
+    pauseActiveTrailer();
+
+    activeTrailerIndex =
+        (activeTrailerIndex + 1) % trailerCollection.length;
+
+    renderTrailer();
+
+    if (isTrailerSectionVisible) {
+        playActiveTrailer();
+    }
+
+}
+
+
+function showPreviousTrailer() {
+
+    if (!trailerCollection.length) {
+        return;
+    }
+
+    pauseActiveTrailer();
+
+    activeTrailerIndex =
+        (activeTrailerIndex - 1 + trailerCollection.length) % trailerCollection.length;
+
+    renderTrailer();
+
+    if (isTrailerSectionVisible) {
+        playActiveTrailer();
+    }
+
+}
+
+
+function observeTrailerSection() {
+
+    const section =
+        getElement("#trailersSection");
+
+    if (!section || trailerObserver) {
+        return;
+    }
+
+    // IntersectionObserver evita escuchar cada scroll y solo reacciona cuando
+    // cerca de la mitad de la seccion de trailers entra o sale de pantalla.
+    trailerObserver =
+        new IntersectionObserver((entries) => {
+            const entry =
+                entries[0];
+
+            isTrailerSectionVisible =
+                entry.isIntersecting && entry.intersectionRatio >= 0.5;
+
+            if (isTrailerSectionVisible) {
+                playActiveTrailer();
+                return;
+            }
+
+            pauseActiveTrailer();
+        }, {
+            threshold: 0.5
+        });
+
+    trailerObserver.observe(section);
+
+}
+
+
+async function loadTrailerCollection() {
+
+    const trailerFrame =
+        getElement("#trailerCarouselFrame");
+
+    const sourceMovies =
+        heroMovies.slice(0, 5);
+
+    if (!sourceMovies.length) {
+        return;
+    }
+
+    try {
+        const moviesWithTrailer =
+            await Promise.all(
+                sourceMovies.map(async (movie) => {
+                    const trailer =
+                        await getMovieTrailer(movie.id);
+
+                    return trailer
+                        ? {
+                            movie,
+                            trailer
+                        }
+                        : null;
+                })
+            );
+
+        trailerCollection =
+            moviesWithTrailer.filter(Boolean);
+
+        activeTrailerIndex =
+            0;
+
+        if (!trailerCollection.length) {
+            if (trailerFrame) {
+                trailerFrame.removeAttribute("src");
+            }
+            return;
+        }
+
+        renderTrailer();
+    } catch (error) {
+        console.error("No se pudo cargar la coleccion de trailers.", error);
+    }
 
 }
 
@@ -816,6 +1230,138 @@ export async function loadUpcoming() {
 }
 
 
+function handleSearchInput(event) {
+
+    const query =
+        event.target.value.trim();
+
+    clearTimeout(searchDebounceId);
+
+    if (!query) {
+        renderSearchResults([]);
+        return;
+    }
+
+    const container =
+        getElement("#searchResults");
+
+    if (container) {
+        container.replaceChildren();
+
+        const state =
+            document.createElement("p");
+
+        state.className =
+            "search-modal__state";
+
+        state.textContent =
+            "SEARCHING...";
+
+        container.append(state);
+    }
+
+    searchDebounceId =
+        setTimeout(() => {
+            searchTMDB(query);
+        }, SEARCH_DEBOUNCE_MS);
+
+}
+
+
+async function searchTMDB(query) {
+
+    const container =
+        getElement("#searchResults");
+
+    if (!container) {
+        return;
+    }
+
+    try {
+        const data =
+            await requestTMDB("/search/multi", {
+                query,
+                page: 1,
+                include_adult: false
+            });
+
+        const validResults =
+            (data.results || [])
+                .filter((item) => {
+                    return ["movie", "tv", "person"].includes(item.media_type);
+                })
+                .slice(0, 8);
+
+        renderSearchResults(validResults);
+    } catch (error) {
+        console.error("Search unavailable.", error);
+
+        container.replaceChildren();
+
+        const state =
+            document.createElement("p");
+
+        state.className =
+            "search-modal__state";
+
+        state.textContent =
+            "SEARCH UNAVAILABLE";
+
+        container.append(state);
+    }
+
+}
+
+
+function openSearchModal() {
+
+    const modal =
+        getElement("#searchModal");
+
+    const input =
+        getElement("#searchInput");
+
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+
+    if (input) {
+        setTimeout(() => {
+            input.focus();
+        }, 50);
+    }
+
+}
+
+
+function closeSearchModal() {
+
+    const modal =
+        getElement("#searchModal");
+
+    const input =
+        getElement("#searchInput");
+
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+
+    if (input) {
+        input.value = "";
+        renderSearchResults([]);
+    }
+
+}
+
+
 function bindTrendingFilters() {
 
     document
@@ -825,6 +1371,38 @@ function bindTrendingFilters() {
                 loadTrending(button.dataset.trendingPeriod);
             });
         });
+
+}
+
+
+function bindSearchControls() {
+
+    const headerSearchButton =
+        document.querySelector(".header__search");
+
+    const searchInput =
+        getElement("#searchInput");
+
+    if (headerSearchButton) {
+        headerSearchButton.addEventListener("click", openSearchModal);
+    }
+
+    document
+        .querySelectorAll("[data-search-close]")
+        .forEach((closeControl) => {
+            closeControl.addEventListener("click", closeSearchModal);
+        });
+
+    if (searchInput) {
+        searchInput.addEventListener("input", handleSearchInput);
+    }
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeSearchModal();
+            closeTrailerModal();
+        }
+    });
 
 }
 
@@ -844,11 +1422,17 @@ function bindTrailerModal() {
             closeControl.addEventListener("click", closeTrailerModal);
         });
 
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-            closeTrailerModal();
-        }
-    });
+    document
+        .querySelectorAll("[data-trailer-next]")
+        .forEach((button) => {
+            button.addEventListener("click", showNextTrailer);
+        });
+
+    document
+        .querySelectorAll("[data-trailer-prev]")
+        .forEach((button) => {
+            button.addEventListener("click", showPreviousTrailer);
+        });
 
 }
 
@@ -882,11 +1466,15 @@ function bindFreeFilters() {
 export function initializeHome() {
 
     bindTrendingFilters();
+    bindSearchControls();
     bindTrailerModal();
     bindPopularFilters();
     bindFreeFilters();
+    observeTrailerSection();
 
-    loadHero();
+    loadHero().then(() => {
+        loadTrailerCollection();
+    });
     loadTrending("day");
     loadPopular();
     loadNowPlaying();
