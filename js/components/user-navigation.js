@@ -13,6 +13,15 @@ function getAccessHref() {
 }
 
 
+function getPageHref(pageName) {
+
+    return window.location.pathname.includes("/pages/")
+        ? `./${pageName}`
+        : `./pages/${pageName}`;
+
+}
+
+
 function createAccessLink() {
 
     const link =
@@ -74,16 +83,31 @@ function createUserMenu(user) {
         user.name || user.email;
 
     const saved =
-        document.createElement("span");
+        document.createElement("a");
+
+    saved.href =
+        "#";
 
     saved.textContent =
         "SAVED";
 
     const ratings =
-        document.createElement("span");
+        document.createElement("a");
+
+    ratings.href =
+        "#";
 
     ratings.textContent =
         "MY RATINGS";
+
+    const tickets =
+        document.createElement("a");
+
+    tickets.href =
+        getPageHref("tickets.html");
+
+    tickets.textContent =
+        "MY TICKETS";
 
     const logout =
         document.createElement("button");
@@ -114,7 +138,7 @@ function createUserMenu(user) {
         }
     });
 
-    menu.append(eyebrow, name, saved, ratings, logout);
+    menu.append(eyebrow, name, saved, ratings, tickets, logout);
     wrapper.append(button, menu);
 
     return wrapper;

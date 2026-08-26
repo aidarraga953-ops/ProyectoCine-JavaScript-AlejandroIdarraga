@@ -1,0 +1,462 @@
+{
+  "users": [],
+  "favorites": [],
+  "ratings": [],
+  "billboard": [],
+  "rooms": [
+    {
+      "id": 1,
+      "name": "Room 01",
+      "type": "STANDARD",
+      "rows": 4,
+      "seatsPerRow": 6,
+      "capacity": 24
+    },
+    {
+      "id": 2,
+      "name": "Room 02",
+      "type": "IMAX",
+      "rows": 4,
+      "seatsPerRow": 6,
+      "capacity": 24
+    }
+  ],
+  "seats": [
+    {
+      "id": 1,
+      "roomId": 1,
+      "row": "A",
+      "number": 1,
+      "seatCode": "A1",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 2,
+      "roomId": 1,
+      "row": "A",
+      "number": 2,
+      "seatCode": "A2",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 3,
+      "roomId": 1,
+      "row": "A",
+      "number": 3,
+      "seatCode": "A3",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 4,
+      "roomId": 1,
+      "row": "A",
+      "number": 4,
+      "seatCode": "A4",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 5,
+      "roomId": 1,
+      "row": "A",
+      "number": 5,
+      "seatCode": "A5",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 6,
+      "roomId": 1,
+      "row": "A",
+      "number": 6,
+      "seatCode": "A6",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 7,
+      "roomId": 1,
+      "row": "B",
+      "number": 1,
+      "seatCode": "B1",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 8,
+      "roomId": 1,
+      "row": "B",
+      "number": 2,
+      "seatCode": "B2",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 9,
+      "roomId": 1,
+      "row": "B",
+      "number": 3,
+      "seatCode": "B3",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 10,
+      "roomId": 1,
+      "row": "B",
+      "number": 4,
+      "seatCode": "B4",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 11,
+      "roomId": 1,
+      "row": "B",
+      "number": 5,
+      "seatCode": "B5",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 12,
+      "roomId": 1,
+      "row": "B",
+      "number": 6,
+      "seatCode": "B6",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 13,
+      "roomId": 1,
+      "row": "C",
+      "number": 1,
+      "seatCode": "C1",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 14,
+      "roomId": 1,
+      "row": "C",
+      "number": 2,
+      "seatCode": "C2",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 15,
+      "roomId": 1,
+      "row": "C",
+      "number": 3,
+      "seatCode": "C3",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 16,
+      "roomId": 1,
+      "row": "C",
+      "number": 4,
+      "seatCode": "C4",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 17,
+      "roomId": 1,
+      "row": "C",
+      "number": 5,
+      "seatCode": "C5",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 18,
+      "roomId": 1,
+      "row": "C",
+      "number": 6,
+      "seatCode": "C6",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 19,
+      "roomId": 1,
+      "row": "D",
+      "number": 1,
+      "seatCode": "D1",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 20,
+      "roomId": 1,
+      "row": "D",
+      "number": 2,
+      "seatCode": "D2",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 21,
+      "roomId": 1,
+      "row": "D",
+      "number": 3,
+      "seatCode": "D3",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 22,
+      "roomId": 1,
+      "row": "D",
+      "number": 4,
+      "seatCode": "D4",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 23,
+      "roomId": 1,
+      "row": "D",
+      "number": 5,
+      "seatCode": "D5",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 24,
+      "roomId": 1,
+      "row": "D",
+      "number": 6,
+      "seatCode": "D6",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 25,
+      "roomId": 2,
+      "row": "A",
+      "number": 1,
+      "seatCode": "A1",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 26,
+      "roomId": 2,
+      "row": "A",
+      "number": 2,
+      "seatCode": "A2",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 27,
+      "roomId": 2,
+      "row": "A",
+      "number": 3,
+      "seatCode": "A3",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 28,
+      "roomId": 2,
+      "row": "A",
+      "number": 4,
+      "seatCode": "A4",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 29,
+      "roomId": 2,
+      "row": "A",
+      "number": 5,
+      "seatCode": "A5",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 30,
+      "roomId": 2,
+      "row": "A",
+      "number": 6,
+      "seatCode": "A6",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 31,
+      "roomId": 2,
+      "row": "B",
+      "number": 1,
+      "seatCode": "B1",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 32,
+      "roomId": 2,
+      "row": "B",
+      "number": 2,
+      "seatCode": "B2",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 33,
+      "roomId": 2,
+      "row": "B",
+      "number": 3,
+      "seatCode": "B3",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 34,
+      "roomId": 2,
+      "row": "B",
+      "number": 4,
+      "seatCode": "B4",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 35,
+      "roomId": 2,
+      "row": "B",
+      "number": 5,
+      "seatCode": "B5",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 36,
+      "roomId": 2,
+      "row": "B",
+      "number": 6,
+      "seatCode": "B6",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 37,
+      "roomId": 2,
+      "row": "C",
+      "number": 1,
+      "seatCode": "C1",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 38,
+      "roomId": 2,
+      "row": "C",
+      "number": 2,
+      "seatCode": "C2",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 39,
+      "roomId": 2,
+      "row": "C",
+      "number": 3,
+      "seatCode": "C3",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 40,
+      "roomId": 2,
+      "row": "C",
+      "number": 4,
+      "seatCode": "C4",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 41,
+      "roomId": 2,
+      "row": "C",
+      "number": 5,
+      "seatCode": "C5",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 42,
+      "roomId": 2,
+      "row": "C",
+      "number": 6,
+      "seatCode": "C6",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 43,
+      "roomId": 2,
+      "row": "D",
+      "number": 1,
+      "seatCode": "D1",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 44,
+      "roomId": 2,
+      "row": "D",
+      "number": 2,
+      "seatCode": "D2",
+      "location": "LEFT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 45,
+      "roomId": 2,
+      "row": "D",
+      "number": 3,
+      "seatCode": "D3",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 46,
+      "roomId": 2,
+      "row": "D",
+      "number": 4,
+      "seatCode": "D4",
+      "location": "CENTER",
+      "type": "REGULAR"
+    },
+    {
+      "id": 47,
+      "roomId": 2,
+      "row": "D",
+      "number": 5,
+      "seatCode": "D5",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    },
+    {
+      "id": 48,
+      "roomId": 2,
+      "row": "D",
+      "number": 6,
+      "seatCode": "D6",
+      "location": "RIGHT",
+      "type": "REGULAR"
+    }
+  ],
+  "functions": [],
+  "functionSeats": [],
+  "reservations": [],
+  "purchases": []
+}
