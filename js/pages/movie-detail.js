@@ -10,15 +10,17 @@ import {
 } from "../components/movie-card.js";
 
 import {
-    selectYouTubeTrailer
-} from "../components/trailer.js";
+    createCastCard
+} from "../components/cast-card.js";
 
 import {
-    getFavorite,
-    getMovieRating,
-    saveMovieRating,
-    toggleFavorite
-} from "../api/noir-data.js";
+    bindFavoriteButton,
+    createRatingControl
+} from "../components/noir-actions.js";
+
+import {
+    selectYouTubeTrailer
+} from "../components/trailer.js";
 
 
 function getElement(selector) {
@@ -142,57 +144,6 @@ function createInfoList(items) {
 }
 
 
-function createCastCard(person) {
-
-    const link =
-        document.createElement("a");
-
-    link.className =
-        "cast-card";
-
-    link.href =
-        `./person.html?id=${person.id}`;
-
-    const image =
-        document.createElement("img");
-
-    image.className =
-        "cast-card__image";
-
-    // TMDB entrega retratos de reparto en profile_path; si falta, usamos el fallback compartido.
-    image.src =
-        person.profile_path
-            ? getImageUrl(person.profile_path, "w185")
-            : FALLBACK_IMAGE;
-
-    image.alt =
-        person.name;
-
-    const name =
-        document.createElement("span");
-
-    name.className =
-        "cast-card__name";
-
-    name.textContent =
-        person.name;
-
-    const character =
-        document.createElement("span");
-
-    character.className =
-        "cast-card__character";
-
-    character.textContent =
-        person.character || "Cast";
-
-    link.append(image, name, character);
-
-    return link;
-
-}
-
-
 function renderKeywordList(container, keywords) {
 
     if (!keywords.length) {
@@ -236,143 +187,6 @@ function renderRail(container, movies) {
     movies.slice(0, 12).forEach((movie) => {
         container.append(createMovieCard(movie));
     });
-
-}
-
-
-function renderFavoriteState(button, isSaved) {
-
-    button.classList.toggle("is-saved", isSaved);
-    button.innerHTML =
-        isSaved
-            ? '<span aria-hidden="true">♥</span> SAVED'
-            : '<span aria-hidden="true">♡</span> SAVE TO NOIR';
-
-}
-
-
-async function bindFavorite(button, movie) {
-
-    const favorite =
-        await getFavorite(movie.id);
-
-    renderFavoriteState(button, Boolean(favorite));
-
-    button.addEventListener("click", async () => {
-        button.disabled =
-            true;
-
-        try {
-            const saved =
-                await toggleFavorite(movie);
-
-            renderFavoriteState(button, saved);
-        } catch (error) {
-            console.error("Favorite unavailable.", error);
-            button.textContent =
-                "JSON Server unavailable";
-        } finally {
-            button.disabled =
-                false;
-        }
-    });
-
-}
-
-
-function renderRating(container, value = 0) {
-
-    container
-        .querySelectorAll("[data-rating-value]")
-        .forEach((button) => {
-            const ratingValue =
-                Number(button.dataset.ratingValue);
-
-            button.textContent =
-                ratingValue <= value
-                    ? "★"
-                    : "☆";
-
-            button.classList.toggle("is-active", ratingValue <= value);
-        });
-
-}
-
-
-async function bindRating(container, movieId) {
-
-    const storedRating =
-        await getMovieRating(movieId);
-
-    let activeRating =
-        storedRating?.rating || 0;
-
-    renderRating(container, activeRating);
-
-    container
-        .querySelectorAll("[data-rating-value]")
-        .forEach((button) => {
-            button.addEventListener("click", async () => {
-                activeRating =
-                    Number(button.dataset.ratingValue);
-
-                renderRating(container, activeRating);
-
-                try {
-                    await saveMovieRating(movieId, activeRating);
-                } catch (error) {
-                    console.error("Rating unavailable.", error);
-                }
-            });
-        });
-
-}
-
-
-function createRatingControl(movieId) {
-
-    const wrapper =
-        document.createElement("div");
-
-    wrapper.className =
-        "noir-rating";
-
-    const label =
-        document.createElement("span");
-
-    label.className =
-        "noir-rating__label";
-
-    label.textContent =
-        "YOUR RATING";
-
-    const stars =
-        document.createElement("div");
-
-    stars.className =
-        "noir-rating__stars";
-
-    [1, 2, 3, 4, 5].forEach((value) => {
-        const button =
-            document.createElement("button");
-
-        button.type =
-            "button";
-
-        button.dataset.ratingValue =
-            value;
-
-        button.setAttribute("aria-label", `Rate ${value} of 5`);
-        button.textContent =
-            "☆";
-
-        stars.append(button);
-    });
-
-    wrapper.append(label, stars);
-    bindRating(wrapper, movieId);
-
-    return wrapper;
 
 }
 
@@ -512,7 +326,7 @@ function renderMovieDetail(payload) {
     }
 
     const ratingControl =
-        createRatingControl(movie.id);
+        createRatingControl(movie.id, "movie");
 
     const facts =
         createInfoList([
@@ -582,7 +396,7 @@ function renderMovieDetail(payload) {
     document.title =
         `NOIR - ${movie.title}`;
 
-    bindFavorite(saveButton, movie);
+    bindFavoriteButton(saveButton, movie, "movie");
 
 }
 
@@ -693,3 +507,4 @@ async function initializeMovieDetail() {
 
 bindTrailerModalControls();
 initializeMovieDetail();
+

@@ -133,3 +133,44 @@ export function getMovieCategory(category) {
     return MOVIE_CATEGORIES[category] || MOVIE_CATEGORIES.popular;
 
 }
+
+
+export const TV_CATEGORIES =
+    {
+        popular: {
+            title: "POPULAR",
+            endpoint: "/tv/popular",
+            parameters: {
+                sort_by: "popularity.desc"
+            }
+        },
+        "airing-today": {
+            title: "AIRING TODAY",
+            endpoint: "/tv/airing_today",
+            parameters: {
+                sort_by: "popularity.desc"
+            }
+        },
+        "on-tv": {
+            title: "ON TV",
+            endpoint: "/tv/on_the_air",
+            parameters: {
+                sort_by: "popularity.desc"
+            }
+        },
+        "top-rated": {
+            title: "TOP RATED",
+            endpoint: "/tv/top_rated",
+            parameters: {
+                sort_by: "vote_average.desc",
+                "vote_count.gte": 300
+            }
+        }
+    };
+
+
+export function getTVCategory(category) {
+
+    return TV_CATEGORIES[category] || TV_CATEGORIES.popular;
+
+}

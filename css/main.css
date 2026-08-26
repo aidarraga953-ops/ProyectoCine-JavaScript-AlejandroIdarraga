@@ -2288,6 +2288,42 @@ body.modal-open {
         500;
 }
 
+.detail-section__header {
+    display:
+        flex;
+
+    align-items:
+        end;
+
+    justify-content:
+        space-between;
+
+    gap:
+        1rem;
+
+    margin-bottom:
+        1.5rem;
+}
+
+.detail-section__header h2 {
+    margin:
+        0;
+}
+
+.detail-section__header span {
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.78rem;
+
+    letter-spacing:
+        0.14em;
+
+    text-transform:
+        uppercase;
+}
+
 .detail-section__body {
     display:
         flex;
@@ -2297,6 +2333,42 @@ body.modal-open {
 
     gap:
         0.8rem;
+}
+
+.tv-tagline {
+    margin:
+        0 0 1rem;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.88rem;
+
+    letter-spacing:
+        0.08em;
+
+    text-transform:
+        uppercase;
+}
+
+.keyword-chip {
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.78rem;
+
+    line-height:
+        1;
+}
+
+.keyword-chip::before {
+    content:
+        "#";
+
+    color:
+        var(--color-text);
 }
 
 .credit-link,
@@ -2412,6 +2484,212 @@ body.modal-open {
 .cast-card__image {
     filter:
         brightness(1);
+}
+
+.seasons-list {
+    display:
+        grid;
+
+    gap:
+        0;
+
+    border-top:
+        1px solid
+        var(--color-line);
+}
+
+.season-item {
+    display:
+        grid;
+
+    grid-template-columns:
+        70px 74px 1fr;
+
+    align-items:
+        center;
+
+    gap:
+        1.2rem;
+
+    width:
+        100%;
+
+    padding:
+        1rem 0;
+
+    border:
+        none;
+
+    border-bottom:
+        1px solid
+        var(--color-line);
+
+    background:
+        transparent;
+
+    color:
+        var(--color-text);
+
+    cursor:
+        pointer;
+
+    text-align:
+        left;
+
+    transition:
+        padding var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.season-item__number {
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.78rem;
+
+    letter-spacing:
+        0.14em;
+}
+
+.season-item__poster {
+    width:
+        58px;
+
+    aspect-ratio:
+        2 / 3;
+
+    object-fit:
+        cover;
+
+    background:
+        var(--color-surface);
+
+    filter:
+        brightness(0.72);
+
+    transition:
+        filter var(--transition-fast);
+}
+
+.season-item__info {
+    display:
+        grid;
+
+    gap:
+        0.35rem;
+}
+
+.season-item__info strong {
+    font-weight:
+        500;
+}
+
+.season-item__info span {
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.78rem;
+
+    line-height:
+        1.45;
+}
+
+.season-item__info span:last-child {
+    max-width:
+        760px;
+}
+
+.season-item:hover,
+.season-item.is-active {
+    padding-left:
+        12px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+.season-item:hover
+.season-item__poster,
+.season-item.is-active
+.season-item__poster {
+    filter:
+        brightness(1);
+}
+
+.episode-item {
+    display:
+        grid;
+
+    grid-template-columns:
+        52px minmax(150px, 240px) 1fr;
+
+    gap:
+        1.4rem;
+
+    align-items:
+        start;
+
+    width:
+        100%;
+
+    padding:
+        1.2rem 0;
+
+    border-bottom:
+        1px solid
+        var(--color-line);
+}
+
+.episode-item__number {
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.78rem;
+
+    letter-spacing:
+        0.14em;
+}
+
+.episode-item__still {
+    width:
+        100%;
+
+    aspect-ratio:
+        16 / 9;
+
+    object-fit:
+        cover;
+
+    background:
+        var(--color-surface);
+
+    filter:
+        brightness(0.82);
+}
+
+.episode-item h3 {
+    margin:
+        0 0 0.45rem;
+
+    font-size:
+        1.2rem;
+
+    font-weight:
+        500;
+}
+
+.episode-item p {
+    margin:
+        0 0 0.7rem;
+
+    color:
+        var(--color-text-muted);
+
+    line-height:
+        1.6;
 }
 
 .credit-link:hover,
@@ -3235,6 +3513,11 @@ body.modal-open {
             repeat(2, 1fr);
     }
 
+    .episode-item {
+        grid-template-columns:
+            42px 180px 1fr;
+    }
+
     .cast-grid {
         display:
             flex;
@@ -3319,6 +3602,24 @@ body.modal-open {
     .filmography-item__character {
         grid-column:
             3;
+    }
+
+    .season-item {
+        grid-template-columns:
+            42px 54px minmax(0, 1fr);
+
+        gap:
+            0.85rem;
+    }
+
+    .episode-item {
+        grid-template-columns:
+            1fr;
+    }
+
+    .episode-item__still {
+        max-width:
+            100%;
     }
 
     .people-grid {

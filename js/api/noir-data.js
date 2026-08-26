@@ -24,13 +24,24 @@ async function requestJson(url, options = {}) {
 }
 
 
-export async function getFavorite(tmdbId) {
+export async function getFavorite(tmdbId, mediaType = "movie") {
 
     try {
         const favorites =
-            await requestJson(`${FAVORITES_URL}?movieId=${tmdbId}`);
+            await requestJson(`${FAVORITES_URL}?tmdbId=${tmdbId}&mediaType=${mediaType}`);
 
-        return favorites[0] || null;
+        if (favorites[0]) {
+            return favorites[0];
+        }
+
+        if (mediaType === "movie") {
+            const legacyFavorites =
+                await requestJson(`${FAVORITES_URL}?movieId=${tmdbId}`);
+
+            return legacyFavorites[0] || null;
+        }
+
+        return null;
     } catch {
         return null;
     }
@@ -38,10 +49,10 @@ export async function getFavorite(tmdbId) {
 }
 
 
-export async function toggleFavorite(movie) {
+export async function toggleFavorite(item, mediaType = "movie") {
 
     const existingFavorite =
-        await getFavorite(movie.id);
+        await getFavorite(item.id, mediaType);
 
     if (existingFavorite) {
         await fetch(`${FAVORITES_URL}/${existingFavorite.id}`, {
@@ -57,9 +68,10 @@ export async function toggleFavorite(movie) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            movieId: movie.id,
-            title: movie.title,
-            poster_path: movie.poster_path,
+            tmdbId: item.id,
+            mediaType,
+            title: item.title || item.name,
+            poster_path: item.poster_path,
             savedAt: new Date().toISOString()
         })
     });
@@ -69,11 +81,11 @@ export async function toggleFavorite(movie) {
 }
 
 
-export async function getMovieRating(tmdbId) {
+export async function getRating(tmdbId, mediaType = "movie") {
 
     try {
         const ratings =
-            await requestJson(`${RATINGS_URL}?tmdbId=${tmdbId}&mediaType=movie`);
+            await requestJson(`${RATINGS_URL}?tmdbId=${tmdbId}&mediaType=${mediaType}`);
 
         return ratings[0] || null;
     } catch {
@@ -83,15 +95,15 @@ export async function getMovieRating(tmdbId) {
 }
 
 
-export async function saveMovieRating(tmdbId, value) {
+export async function saveRating(tmdbId, mediaType, value) {
 
     const existingRating =
-        await getMovieRating(tmdbId);
+        await getRating(tmdbId, mediaType);
 
     const ratingPayload =
         {
             tmdbId,
-            mediaType: "movie",
+            mediaType,
             rating: value
         };
 
@@ -113,5 +125,19 @@ export async function saveMovieRating(tmdbId, value) {
         },
         body: JSON.stringify(ratingPayload)
     });
+
+}
+
+
+export function getMovieRating(tmdbId) {
+
+    return getRating(tmdbId, "movie");
+
+}
+
+
+export function saveMovieRating(tmdbId, value) {
+
+    return saveRating(tmdbId, "movie", value);
 
 }

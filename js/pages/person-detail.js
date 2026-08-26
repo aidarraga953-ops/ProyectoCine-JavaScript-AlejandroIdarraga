@@ -5,7 +5,7 @@ import {
 } from "../api/tmdb.js";
 
 import {
-    createMovieCard
+    createMediaCard
 } from "../components/movie-card.js";
 
 
@@ -25,7 +25,7 @@ function getPersonId() {
 
 function getKnownFor(credits) {
 
-    return (credits.cast || [])
+    return credits
         .filter((movie) => movie.poster_path)
         .sort((first, second) => second.popularity - first.popularity)
         .slice(0, 8);
@@ -37,15 +37,44 @@ function getFilmography(credits, knownForMovies = []) {
 
     const knownForIds =
         new Set(
-            knownForMovies.map((movie) => movie.id)
+            knownForMovies.map((movie) => `${movie.media_type}:${movie.id}`)
         );
 
-    return (credits.cast || [])
-        .filter((movie) => !knownForIds.has(movie.id))
-        .filter((movie) => movie.release_date)
+    return credits
+        .filter((movie) => !knownForIds.has(`${movie.media_type}:${movie.id}`))
+        .filter((movie) => movie.release_date || movie.first_air_date)
         .sort((first, second) => {
-            return second.release_date.localeCompare(first.release_date);
+            const secondDate =
+                second.release_date || second.first_air_date || "";
+
+            const firstDate =
+                first.release_date || first.first_air_date || "";
+
+            return secondDate.localeCompare(firstDate);
         });
+
+}
+
+
+function combineCredits(movieCredits, tvCredits) {
+
+    const movies =
+        (movieCredits.cast || []).map((credit) => {
+            return {
+                ...credit,
+                media_type: "movie"
+            };
+        });
+
+    const television =
+        (tvCredits.cast || []).map((credit) => {
+            return {
+                ...credit,
+                media_type: "tv"
+            };
+        });
+
+    return [...movies, ...television];
 
 }
 
@@ -91,7 +120,7 @@ function renderKnownFor(container, movies) {
     }
 
     movies.forEach((movie) => {
-        container.append(createMovieCard(movie));
+        container.append(createMediaCard(movie, movie.media_type || "movie"));
     });
 
 }
@@ -112,8 +141,11 @@ function renderFilmography(container, movies) {
         link.className =
             "filmography-item";
 
+        // media_type decide si la filmografia navega a Movie Detail o TV Detail.
         link.href =
-            `./movie.html?id=${movie.id}`;
+            movie.media_type === "tv"
+                ? `./tv-details.html?id=${movie.id}`
+                : `./movie.html?id=${movie.id}`;
 
         const year =
             document.createElement("span");
@@ -122,7 +154,7 @@ function renderFilmography(container, movies) {
             "filmography-item__year";
 
         year.textContent =
-            movie.release_date.slice(0, 4);
+            (movie.release_date || movie.first_air_date || "TBA").slice(0, 4);
 
         const poster =
             document.createElement("img");
@@ -137,7 +169,7 @@ function renderFilmography(container, movies) {
                 : FALLBACK_IMAGE;
 
         poster.alt =
-            movie.title || "Untitled";
+            movie.title || movie.name || "Untitled";
 
         const title =
             document.createElement("span");
@@ -146,7 +178,7 @@ function renderFilmography(container, movies) {
             "filmography-item__title";
 
         title.textContent =
-            movie.title || "Untitled";
+            movie.title || movie.name || "Untitled";
 
         const meta =
             document.createElement("span");
@@ -155,7 +187,10 @@ function renderFilmography(container, movies) {
             "filmography-item__character";
 
         meta.textContent =
-            movie.character || "Cast";
+            [
+                movie.media_type === "tv" ? "TV" : "MOVIE",
+                movie.character || "Cast"
+            ].join(" / ");
 
         link.append(year, poster, title, meta);
         container.append(link);
@@ -365,14 +400,16 @@ async function initializePersonDetail() {
     try {
         const [
             person,
-            credits
+            movieCredits,
+            tvCredits
         ] =
             await Promise.all([
                 requestCachedTMDB(`/person/${personId}`, { language: "en-US" }),
-                requestCachedTMDB(`/person/${personId}/movie_credits`, { language: "en-US" })
+                requestCachedTMDB(`/person/${personId}/movie_credits`, { language: "en-US" }),
+                requestCachedTMDB(`/person/${personId}/tv_credits`, { language: "en-US" })
             ]);
 
-        renderPerson(person, credits);
+        renderPerson(person, combineCredits(movieCredits, tvCredits));
     } catch (error) {
         console.error("Person detail unavailable.", error);
         container.innerHTML =

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOIR - Television</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <div class="film-grain"></div>
+    <div class="site">
+        <header class="header header--solid">
+            <div class="header__container">
+                <a href="../index.html" class="header__logo" data-text="NOIR">NOIR</a>
+                <nav class="navigation">
+                    <div class="navigation__group">
+                        <button class="navigation__button">Movies</button>
+                        <ul class="navigation__menu">
+                            <li><a href="./movies.html?category=popular">Popular</a></li>
+                            <li><a href="./movies.html?category=now-playing">Now Playing</a></li>
+                            <li><a href="./movies.html?category=upcoming">Upcoming</a></li>
+                            <li><a href="./movies.html?category=top-rated">Top Rated</a></li>
+                        </ul>
+                    </div>
+                    <div class="navigation__group">
+                        <button class="navigation__button">TV Shows</button>
+                        <ul class="navigation__menu">
+                            <li><a href="./tv.html?category=popular">Popular</a></li>
+                            <li><a href="./tv.html?category=airing-today">Airing Today</a></li>
+                            <li><a href="./tv.html?category=on-tv">On TV</a></li>
+                            <li><a href="./tv.html?category=top-rated">Top Rated</a></li>
+                        </ul>
+                    </div>
+                    <div class="navigation__group">
+                        <button class="navigation__button">People</button>
+                        <ul class="navigation__menu">
+                            <li><a href="./people.html">Popular</a></li>
+                        </ul>
+                    </div>
+                    <div class="navigation__group">
+                        <button class="navigation__button">Awards</button>
+                        <ul class="navigation__menu">
+                            <li><a href="./awards.html?category=popular">Popular</a></li>
+                            <li><a href="./awards.html?category=upcoming">Upcoming</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main class="catalog-page">
+            <section class="page-heading">
+                <span class="section__eyebrow">NOIR / TELEVISION</span>
+                <h1 id="tvTitle">POPULAR</h1>
+            </section>
+
+            <section class="catalog-layout" aria-label="Television catalog">
+                <aside class="filters-panel">
+                    <form id="tvFilters">
+                        <div class="filters-panel__header">
+                            <h2>Filters</h2>
+                            <button class="text-button" type="reset">Reset</button>
+                        </div>
+
+                        <label class="filter-field">
+                            <span>Sort</span>
+                            <select name="sort_by">
+                                <option value="">Category default</option>
+                                <option value="popularity.desc">Popularity Descending</option>
+                                <option value="popularity.asc">Popularity Ascending</option>
+                                <option value="vote_average.desc">Rating Descending</option>
+                                <option value="vote_average.asc">Rating Ascending</option>
+                                <option value="first_air_date.desc">First Air Date Descending</option>
+                                <option value="first_air_date.asc">First Air Date Ascending</option>
+                                <option value="name.asc">Name A-Z</option>
+                                <option value="name.desc">Name Z-A</option>
+                            </select>
+                        </label>
+
+                        <label class="filter-field">
+                            <span>Where To Watch</span>
+                            <select name="watch">
+                                <option value="">Any</option>
+                                <option value="flatrate">Streaming</option>
+                                <option value="rent">Rent</option>
+                                <option value="buy">Buy</option>
+                                <option value="free|ads">Free</option>
+                            </select>
+                        </label>
+
+                        <label class="filter-field">
+                            <span>Provider</span>
+                            <select name="with_watch_providers" id="tvProviderFilter">
+                                <option value="">Any provider</option>
+                            </select>
+                        </label>
+
+                        <div class="filter-grid">
+                            <label class="filter-field">
+                                <span>First Air From</span>
+                                <input type="date" name="first_air_from">
+                            </label>
+                            <label class="filter-field">
+                                <span>First Air To</span>
+                                <input type="date" name="first_air_to">
+                            </label>
+                        </div>
+
+                        <label class="filter-field">
+                            <span>Genres</span>
+                            <select name="with_genres" id="tvGenreFilter">
+                                <option value="">Any genre</option>
+                            </select>
+                        </label>
+
+                        <label class="filter-field">
+                            <span>Language</span>
+                            <select name="with_original_language">
+                                <option value="">Any</option>
+                                <option value="en">English</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="ja">Japanese</option>
+                                <option value="ko">Korean</option>
+                                <option value="pt">Portuguese</option>
+                            </select>
+                        </label>
+
+                        <div class="filter-grid">
+                            <label class="filter-field">
+                                <span>User Score</span>
+                                <input type="number" name="vote_average_gte" min="0" max="10" step="0.5" placeholder="7.0">
+                            </label>
+                            <label class="filter-field">
+                                <span>Min Votes</span>
+                                <input type="number" name="vote_count_gte" min="0" step="50" placeholder="300">
+                            </label>
+                        </div>
+
+                        <div class="filter-grid">
+                            <label class="filter-field">
+                                <span>Runtime Min</span>
+                                <input type="number" name="runtime_gte" min="0" step="5" placeholder="20">
+                            </label>
+                            <label class="filter-field">
+                                <span>Runtime Max</span>
+                                <input type="number" name="runtime_lte" min="0" step="5" placeholder="90">
+                            </label>
+                        </div>
+
+                        <label class="filter-field">
+                            <span>Keywords</span>
+                            <input type="search" name="keywords" placeholder="crime, family">
+                        </label>
+
+                        <button class="button button--primary filters-panel__apply" type="submit">
+                            Apply Filters
+                        </button>
+                    </form>
+                </aside>
+
+                <div class="catalog-results">
+                    <div class="catalog-results__meta" id="tvCatalogMeta">Loading...</div>
+                    <div class="movies-grid catalog-grid" id="tvGrid"></div>
+                    <button class="button button--secondary load-more" type="button" id="tvLoadMoreButton">
+                        Load More
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer__bottom">
+                <span>NOIR / 2026</span>
+                <span>Data provided by TMDB.</span>
+            </div>
+        </footer>
+    </div>
+
+    <script type="module" src="../js/pages/tv.js"></script>
+</body>
+
+</html>
