@@ -12,7 +12,13 @@
 </head>
 
 <body data-auth-mode="register">
-    <div class="film-grain"></div>
+    <div class="auth-background" aria-hidden="true">
+        <video class="auth-background__video" autoplay muted loop playsinline preload="metadata">
+            <source src="../assets/img/video-login.mp4" type="video/mp4">
+        </video>
+        <div class="auth-background__overlay"></div>
+        <canvas class="auth-background__grain" data-film-grain></canvas>
+    </div>
 
     <main class="auth-scene" aria-label="NOIR member registration">
         <section class="newspaper-sheet newspaper-sheet--archive" aria-label="NOIR motion archive">

@@ -10,6 +10,10 @@ import {
     saveCurrentUser
 } from "../api/noir-auth.js";
 
+import {
+    initializeFilmGrain
+} from "../effects/film-grain.js";
+
 
 const EMAIL_PATTERN =
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -326,4 +330,5 @@ function initializeAuthForm() {
 
 loadEditorialMovies();
 observeEditorialVideos();
+initializeFilmGrain();
 initializeAuthForm();
