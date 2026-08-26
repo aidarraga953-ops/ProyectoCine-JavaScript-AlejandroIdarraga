@@ -22,6 +22,10 @@ import {
     selectYouTubeTrailer
 } from "../components/trailer.js";
 
+import {
+    initializeUserNavigation
+} from "../components/user-navigation.js";
+
 
 function getElement(selector) {
 
@@ -505,6 +509,7 @@ async function initializeMovieDetail() {
 
 }
 
+initializeUserNavigation();
 bindTrailerModalControls();
 initializeMovieDetail();
 

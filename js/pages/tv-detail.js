@@ -22,6 +22,10 @@ import {
     selectYouTubeTrailer
 } from "../components/trailer.js";
 
+import {
+    initializeUserNavigation
+} from "../components/user-navigation.js";
+
 
 let activeTVId =
     null;
@@ -792,5 +796,6 @@ async function initializeTVDetail() {
 }
 
 
+initializeUserNavigation();
 bindTrailerModalControls();
 initializeTVDetail();

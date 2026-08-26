@@ -17,6 +17,10 @@ import {
     selectYouTubeTrailer
 } from "../components/trailer.js";
 
+import {
+    initializeUserNavigation
+} from "../components/user-navigation.js";
+
 
 const AWARDS_CATEGORIES =
     {
@@ -653,5 +657,6 @@ async function initializeAwards() {
 }
 
 
+initializeUserNavigation();
 bindTrailerModalControls();
 initializeAwards();

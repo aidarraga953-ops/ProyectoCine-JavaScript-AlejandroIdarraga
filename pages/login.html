@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOIR - Access</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body data-auth-mode="login">
+    <div class="film-grain"></div>
+
+    <main class="auth-scene" aria-label="NOIR member access">
+        <section class="newspaper-sheet newspaper-sheet--archive" aria-label="NOIR motion archive">
+            <header class="newspaper-sheet__masthead">
+                <span>NOIR / MOTION ARCHIVE</span>
+                <span>CURATED CINEMA</span>
+                <span>EST. 2026</span>
+            </header>
+
+            <h1 class="newspaper-logo">NOIR</h1>
+            <p class="newspaper-deck">AN ARCHIVE OF MOVING IMAGES.</p>
+
+            <div class="archive-grid" id="archiveGrid">
+                <article class="archive-cell archive-cell--text archive-cell--a">
+                    <span>EVERY FRAME</span>
+                    <strong>TELLS A STORY.</strong>
+                </article>
+
+                <article class="archive-cell archive-cell--media archive-cell--b" data-editorial-frame>
+                    <img src="../assets/img/hero-placeholder.webp" alt="">
+                    <span data-frame-caption>NOW SHOWING</span>
+                </article>
+
+                <article class="archive-cell archive-cell--video archive-cell--c">
+                    <video muted loop playsinline preload="metadata">
+                        <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                    </video>
+                    <span>VIDEO 01</span>
+                </article>
+
+                <article class="archive-cell archive-cell--text archive-cell--d">
+                    <span>35 MM</span>
+                    <strong>FILM STOCK</strong>
+                </article>
+
+                <article class="archive-cell archive-cell--media archive-cell--e" data-editorial-frame>
+                    <img src="../assets/img/hero-placeholder.webp" alt="">
+                    <span data-frame-caption>CURATED DAILY</span>
+                </article>
+
+                <article class="archive-cell archive-cell--text archive-cell--f">
+                    <span>WATCH.</span>
+                    <span>RATE.</span>
+                    <span>SAVE.</span>
+                </article>
+
+                <article class="archive-cell archive-cell--video archive-cell--g">
+                    <video muted loop playsinline preload="metadata">
+                        <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4">
+                    </video>
+                    <span>VIDEO 02</span>
+                </article>
+
+                <article class="archive-cell archive-cell--text archive-cell--h">
+                    <span>MOTION</span>
+                    <strong>ARCHIVE 026</strong>
+                </article>
+
+                <article class="archive-cell archive-cell--media archive-cell--i" data-editorial-frame>
+                    <img src="../assets/img/hero-placeholder.webp" alt="">
+                    <span data-frame-caption>NOCTURNE</span>
+                </article>
+
+                <article class="archive-cell archive-cell--text archive-cell--j">
+                    <span>NOW</span>
+                    <strong>SHOWING</strong>
+                </article>
+            </div>
+        </section>
+
+        <section class="newspaper-sheet newspaper-sheet--access" aria-labelledby="authTitle">
+            <header class="newspaper-sheet__masthead">
+                <span>NOIR / MEMBER ACCESS</span>
+                <span>PRIVATE SCREENING</span>
+            </header>
+
+            <h1 class="newspaper-logo" id="authTitle">ACCESS</h1>
+
+            <div class="auth-copy">
+                <h2>JOIN THE SCREENING.</h2>
+                <p>Save films. Rate what you watch. Discover what comes next.</p>
+            </div>
+
+            <form class="auth-form" id="authForm" novalidate>
+                <label class="auth-field">
+                    <span>Email</span>
+                    <input type="email" name="email" autocomplete="email">
+                    <small data-error-for="email"></small>
+                </label>
+
+                <label class="auth-field">
+                    <span>Password</span>
+                    <input type="password" name="password" autocomplete="current-password">
+                    <small data-error-for="password"></small>
+                </label>
+
+                <p class="auth-form__state" id="authState" aria-live="polite"></p>
+
+                <button class="auth-submit" type="submit">ENTER NOIR -></button>
+            </form>
+
+            <p class="auth-switch">
+                NEW TO NOIR?
+                <a href="./register.html">CREATE ACCESS -></a>
+            </p>
+        </section>
+    </main>
+
+    <script type="module" src="../js/pages/auth.js"></script>
+</body>
+
+</html>

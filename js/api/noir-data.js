@@ -1,13 +1,18 @@
-const JSON_SERVER_BASE_URL =
-    "http://localhost:3000";
+import {
+    getCurrentUser
+} from "./noir-auth.js";
+
+import {
+    JSON_SERVER_URL
+} from "./json-server.js";
 
 
 const FAVORITES_URL =
-    `${JSON_SERVER_BASE_URL}/favorites`;
+    `${JSON_SERVER_URL}/favorites`;
 
 
 const RATINGS_URL =
-    `${JSON_SERVER_BASE_URL}/ratings`;
+    `${JSON_SERVER_URL}/ratings`;
 
 
 async function requestJson(url, options = {}) {
@@ -26,19 +31,19 @@ async function requestJson(url, options = {}) {
 
 export async function getFavorite(tmdbId, mediaType = "movie") {
 
+    const currentUser =
+        getCurrentUser();
+
+    if (!currentUser) {
+        return null;
+    }
+
     try {
         const favorites =
-            await requestJson(`${FAVORITES_URL}?tmdbId=${tmdbId}&mediaType=${mediaType}`);
+            await requestJson(`${FAVORITES_URL}?userId=${currentUser.id}&tmdbId=${tmdbId}&mediaType=${mediaType}`);
 
         if (favorites[0]) {
             return favorites[0];
-        }
-
-        if (mediaType === "movie") {
-            const legacyFavorites =
-                await requestJson(`${FAVORITES_URL}?movieId=${tmdbId}`);
-
-            return legacyFavorites[0] || null;
         }
 
         return null;
@@ -50,6 +55,13 @@ export async function getFavorite(tmdbId, mediaType = "movie") {
 
 
 export async function toggleFavorite(item, mediaType = "movie") {
+
+    const currentUser =
+        getCurrentUser();
+
+    if (!currentUser) {
+        throw new Error("Sign in required.");
+    }
 
     const existingFavorite =
         await getFavorite(item.id, mediaType);
@@ -68,6 +80,7 @@ export async function toggleFavorite(item, mediaType = "movie") {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
+            userId: currentUser.id,
             tmdbId: item.id,
             mediaType,
             title: item.title || item.name,
@@ -83,9 +96,16 @@ export async function toggleFavorite(item, mediaType = "movie") {
 
 export async function getRating(tmdbId, mediaType = "movie") {
 
+    const currentUser =
+        getCurrentUser();
+
+    if (!currentUser) {
+        return null;
+    }
+
     try {
         const ratings =
-            await requestJson(`${RATINGS_URL}?tmdbId=${tmdbId}&mediaType=${mediaType}`);
+            await requestJson(`${RATINGS_URL}?userId=${currentUser.id}&tmdbId=${tmdbId}&mediaType=${mediaType}`);
 
         return ratings[0] || null;
     } catch {
@@ -97,12 +117,20 @@ export async function getRating(tmdbId, mediaType = "movie") {
 
 export async function saveRating(tmdbId, mediaType, value) {
 
+    const currentUser =
+        getCurrentUser();
+
+    if (!currentUser) {
+        throw new Error("Sign in required.");
+    }
+
     const existingRating =
         await getRating(tmdbId, mediaType);
 
     const ratingPayload =
         {
             tmdbId,
+            userId: currentUser.id,
             mediaType,
             rating: value
         };

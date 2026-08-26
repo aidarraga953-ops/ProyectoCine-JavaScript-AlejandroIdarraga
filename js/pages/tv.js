@@ -10,6 +10,10 @@ import {
     createMediaCard
 } from "../components/movie-card.js";
 
+import {
+    initializeUserNavigation
+} from "../components/user-navigation.js";
+
 
 const state =
     {
@@ -463,4 +467,5 @@ function initializeTVPage() {
 }
 
 
+initializeUserNavigation();
 initializeTVPage();

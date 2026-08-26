@@ -8,6 +8,10 @@ import {
     createMediaCard
 } from "../components/movie-card.js";
 
+import {
+    initializeUserNavigation
+} from "../components/user-navigation.js";
+
 
 function getElement(selector) {
 
@@ -419,4 +423,5 @@ async function initializePersonDetail() {
 }
 
 
+initializeUserNavigation();
 initializePersonDetail();

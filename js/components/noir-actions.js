@@ -5,6 +5,10 @@ import {
     toggleFavorite
 } from "../api/noir-data.js";
 
+import {
+    getCurrentUser
+} from "../api/noir-auth.js";
+
 
 function renderFavoriteState(button, isSaved) {
 
@@ -25,6 +29,16 @@ export async function bindFavoriteButton(button, item, mediaType = "movie") {
     renderFavoriteState(button, Boolean(favorite));
 
     button.addEventListener("click", async () => {
+        if (!getCurrentUser()) {
+            button.textContent =
+                "SIGN IN TO SAVE FILMS";
+
+            window.setTimeout(() => {
+                renderFavoriteState(button, false);
+            }, 1800);
+            return;
+        }
+
         button.disabled =
             true;
 
@@ -79,6 +93,23 @@ async function bindRating(container, tmdbId, mediaType) {
         .querySelectorAll("[data-rating-value]")
         .forEach((button) => {
             button.addEventListener("click", async () => {
+                if (!getCurrentUser()) {
+                    const label =
+                        container.querySelector(".noir-rating__label");
+
+                    if (label) {
+                        label.textContent =
+                            "SIGN IN TO RATE";
+
+                        window.setTimeout(() => {
+                            label.textContent =
+                                "YOUR RATING";
+                        }, 1800);
+                    }
+
+                    return;
+                }
+
                 activeRating =
                     Number(button.dataset.ratingValue);
 

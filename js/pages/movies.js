@@ -10,6 +10,10 @@ import {
     createMovieCard
 } from "../components/movie-card.js";
 
+import {
+    initializeUserNavigation
+} from "../components/user-navigation.js";
+
 
 const state =
     {
@@ -522,4 +526,5 @@ function initializeMoviesPage() {
 }
 
 
+initializeUserNavigation();
 initializeMoviesPage();

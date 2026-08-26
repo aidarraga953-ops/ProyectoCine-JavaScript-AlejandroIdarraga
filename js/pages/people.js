@@ -4,6 +4,10 @@ import {
     requestCachedTMDB
 } from "../api/tmdb.js";
 
+import {
+    initializeUserNavigation
+} from "../components/user-navigation.js";
+
 
 function getElement(selector) {
 
@@ -92,4 +96,5 @@ async function initializePeople() {
 }
 
 
+initializeUserNavigation();
 initializePeople();
