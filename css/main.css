@@ -3007,6 +3007,368 @@ body.modal-open {
 }
 
 /* =========================
+   AWARDS
+========================= */
+
+.awards-page {
+    width:
+        min(
+            calc(100% - 48px),
+            var(--container-width)
+        );
+
+    margin:
+        0 auto;
+
+    padding-top:
+        clamp(3rem, 7vw, 6rem);
+}
+
+.awards-hero {
+    min-height:
+        min(70vh, 720px);
+
+    display:
+        flex;
+
+    align-items:
+        end;
+
+    padding:
+        clamp(3rem, 8vw, 7rem) 0;
+
+    border-bottom:
+        1px solid
+        var(--color-line);
+}
+
+.awards-hero h1 {
+    max-width:
+        920px;
+
+    margin:
+        0.9rem 0 1.2rem;
+
+    font-size:
+        clamp(3.4rem, 9vw, 9rem);
+
+    font-weight:
+        500;
+
+    line-height:
+        0.88;
+}
+
+.awards-hero p {
+    max-width:
+        540px;
+
+    color:
+        var(--color-text-muted);
+
+    line-height:
+        1.75;
+}
+
+.awards-selection {
+    padding:
+        var(--space-lg) 0;
+}
+
+.awards-feature {
+    position:
+        relative;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(0, 1.15fr) minmax(320px, 0.85fr);
+
+    gap:
+        clamp(2rem, 5vw, 5rem);
+
+    align-items:
+        end;
+
+    min-height:
+        620px;
+
+    padding:
+        clamp(2rem, 5vw, 4rem) 0;
+}
+
+.awards-feature::before {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        0 calc(50% - 50vw);
+
+    z-index:
+        -2;
+
+    background-image:
+        var(--awards-backdrop);
+
+    background-size:
+        cover;
+
+    background-position:
+        center;
+
+    opacity:
+        0.18;
+
+    filter:
+        saturate(0.72) brightness(0.9);
+}
+
+.awards-feature::after {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        0 calc(50% - 50vw);
+
+    z-index:
+        -1;
+
+    background:
+        linear-gradient(
+            to top,
+            var(--color-background),
+            rgba(8, 8, 8, 0.78),
+            rgba(8, 8, 8, 0.36)
+        );
+}
+
+.awards-feature__image {
+    width:
+        100%;
+
+    aspect-ratio:
+        16 / 9;
+
+    object-fit:
+        cover;
+
+    filter:
+        brightness(0.72) saturate(0.86);
+
+    transition:
+        filter var(--transition-normal),
+        transform var(--transition-normal);
+}
+
+.awards-feature__content h2 {
+    margin:
+        0.8rem 0 1rem;
+
+    font-size:
+        clamp(2.8rem, 6vw, 6rem);
+
+    font-weight:
+        500;
+
+    line-height:
+        0.92;
+}
+
+.awards-feature__meta {
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.72rem;
+
+    letter-spacing:
+        0.12em;
+
+    text-transform:
+        uppercase;
+}
+
+.awards-feature__overview {
+    color:
+        rgba(241, 239, 234, 0.76);
+
+    line-height:
+        1.72;
+}
+
+.awards-feature:hover
+.awards-feature__image {
+    filter:
+        brightness(0.95) saturate(1);
+
+    transform:
+        translateY(-4px);
+}
+
+.awards-list,
+.awards-watchlist {
+    border-top:
+        1px solid
+        var(--color-line);
+}
+
+.awards-row,
+.awards-watchlist__item {
+    display:
+        grid;
+
+    align-items:
+        center;
+
+    gap:
+        1.2rem;
+
+    border-bottom:
+        1px solid
+        var(--color-line);
+
+    transition:
+        padding var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.awards-row {
+    grid-template-columns:
+        70px minmax(180px, 320px) 1fr;
+
+    padding:
+        1.1rem 0;
+}
+
+.awards-row__number,
+.awards-watchlist__item > span:first-child {
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.78rem;
+
+    letter-spacing:
+        0.14em;
+}
+
+.awards-row__image {
+    width:
+        100%;
+
+    aspect-ratio:
+        16 / 9;
+
+    object-fit:
+        cover;
+
+    filter:
+        brightness(0.7);
+
+    transition:
+        filter var(--transition-fast);
+}
+
+.awards-row__content {
+    display:
+        grid;
+
+    gap:
+        0.45rem;
+}
+
+.awards-row__content strong,
+.awards-watchlist__item strong {
+    font-size:
+        clamp(1.25rem, 3vw, 2.2rem);
+
+    font-weight:
+        500;
+
+    transition:
+        color var(--transition-fast);
+}
+
+.awards-row__content span {
+    color:
+        var(--color-text-muted);
+
+    line-height:
+        1.5;
+}
+
+.awards-row__content span:last-child {
+    max-width:
+        720px;
+}
+
+.awards-row:hover,
+.awards-watchlist__item:hover {
+    padding-left:
+        12px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+.awards-row:hover
+.awards-row__image,
+.awards-watchlist__item:hover img {
+    filter:
+        brightness(1);
+}
+
+.awards-row:hover
+.awards-row__content strong,
+.awards-watchlist__item:hover strong {
+    color:
+        var(--color-accent);
+}
+
+.awards-watchlist__item {
+    grid-template-columns:
+        56px 70px 1fr 140px;
+
+    padding:
+        0.9rem 0;
+}
+
+.awards-watchlist__item img {
+    width:
+        52px;
+
+    aspect-ratio:
+        2 / 3;
+
+    object-fit:
+        cover;
+
+    background:
+        var(--color-surface);
+
+    filter:
+        brightness(0.76);
+
+    transition:
+        filter var(--transition-fast);
+}
+
+.awards-watchlist__item > span:last-child {
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.78rem;
+}
+
+/* =========================
    GENRES
 ========================= */
 
@@ -3518,6 +3880,19 @@ body.modal-open {
             42px 180px 1fr;
     }
 
+    .awards-feature {
+        grid-template-columns:
+            1fr;
+
+        min-height:
+            auto;
+    }
+
+    .awards-row {
+        grid-template-columns:
+            52px minmax(140px, 240px) 1fr;
+    }
+
     .cast-grid {
         display:
             flex;
@@ -3620,6 +3995,38 @@ body.modal-open {
     .episode-item__still {
         max-width:
             100%;
+    }
+
+    .awards-page {
+        width:
+            calc(100% - 32px);
+    }
+
+    .awards-hero {
+        min-height:
+            auto;
+    }
+
+    .awards-row,
+    .awards-watchlist__item {
+        grid-template-columns:
+            42px 1fr;
+    }
+
+    .awards-row__image,
+    .awards-watchlist__item img {
+        grid-column:
+            1 / -1;
+
+        width:
+            100%;
+    }
+
+    .awards-row__content,
+    .awards-watchlist__item strong,
+    .awards-watchlist__item > span:last-child {
+        grid-column:
+            2;
     }
 
     .people-grid {

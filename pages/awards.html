@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOIR - Awards</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <div class="film-grain"></div>
+    <div class="site">
+        <header class="header header--solid">
+            <div class="header__container">
+                <a href="../index.html" class="header__logo" data-text="NOIR">NOIR</a>
+                <nav class="navigation">
+                    <div class="navigation__group">
+                        <button class="navigation__button">Movies</button>
+                        <ul class="navigation__menu">
+                            <li><a href="./movies.html?category=popular">Popular</a></li>
+                            <li><a href="./movies.html?category=now-playing">Now Playing</a></li>
+                            <li><a href="./movies.html?category=upcoming">Upcoming</a></li>
+                            <li><a href="./movies.html?category=top-rated">Top Rated</a></li>
+                        </ul>
+                    </div>
+                    <div class="navigation__group">
+                        <button class="navigation__button">TV Shows</button>
+                        <ul class="navigation__menu">
+                            <li><a href="./tv.html?category=popular">Popular</a></li>
+                            <li><a href="./tv.html?category=airing-today">Airing Today</a></li>
+                            <li><a href="./tv.html?category=on-tv">On TV</a></li>
+                            <li><a href="./tv.html?category=top-rated">Top Rated</a></li>
+                        </ul>
+                    </div>
+                    <div class="navigation__group">
+                        <button class="navigation__button">People</button>
+                        <ul class="navigation__menu">
+                            <li><a href="./people.html">Popular</a></li>
+                        </ul>
+                    </div>
+                    <div class="navigation__group">
+                        <button class="navigation__button">Awards</button>
+                        <ul class="navigation__menu">
+                            <li><a href="./awards.html?category=popular">Popular</a></li>
+                            <li><a href="./awards.html?category=upcoming">Upcoming</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main class="awards-page">
+            <section class="awards-hero" id="awardsHero">
+                <div>
+                    <span class="section__eyebrow">NOIR / AWARDS</span>
+                    <h1 id="awardsTitle">THE FILMS WE'RE WATCHING</h1>
+                    <p id="awardsDescription">
+                        A curated selection of cinema shaping the conversation.
+                    </p>
+                </div>
+            </section>
+
+            <section class="awards-selection" id="awardsSelection">
+                <p class="section__state">CURATING FILMS...</p>
+            </section>
+        </main>
+
+        <div
+            class="trailer-modal"
+            id="trailerModal"
+            aria-hidden="true"
+        >
+            <div class="trailer-modal__overlay" data-trailer-close></div>
+            <section
+                class="trailer-modal__content"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="trailerModalTitle"
+            >
+                <button
+                    class="trailer-modal__close"
+                    type="button"
+                    aria-label="Close trailer"
+                    data-trailer-close
+                >
+                    x
+                </button>
+                <span class="trailer-modal__eyebrow">Trailer</span>
+                <h2 id="trailerModalTitle">NOIR Trailer</h2>
+                <div class="trailer-modal__frame">
+                    <iframe
+                        id="trailerFrame"
+                        title="YouTube trailer"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen
+                    ></iframe>
+                </div>
+            </section>
+        </div>
+
+        <footer class="footer">
+            <div class="footer__bottom">
+                <span>NOIR / 2026</span>
+                <span>Data provided by TMDB.</span>
+            </div>
+        </footer>
+    </div>
+
+    <script type="module" src="../js/pages/awards.js"></script>
+</body>
+
+</html>
