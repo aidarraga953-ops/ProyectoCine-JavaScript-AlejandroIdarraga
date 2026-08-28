@@ -3025,6 +3025,15 @@ body.modal-open {
 }
 
 .awards-hero {
+    position:
+        relative;
+
+    isolation:
+        isolate;
+
+    overflow:
+        hidden;
+
     min-height:
         min(70vh, 720px);
 
@@ -3040,6 +3049,259 @@ body.modal-open {
     border-bottom:
         1px solid
         var(--color-line);
+}
+
+.awards-hero::before {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        -8% -8% -18%;
+
+    z-index:
+        -3;
+
+    background:
+        #020202;
+}
+
+.awards-hero__content {
+    position:
+        relative;
+
+    z-index:
+        2;
+}
+
+.awards-hero__art {
+    position:
+        absolute;
+
+    inset:
+        -10% -12% -20% -8%;
+
+    z-index:
+        -2;
+
+    pointer-events:
+        none;
+
+    opacity:
+        0.92;
+
+    -webkit-mask-image:
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 1) 58%,
+            rgba(0, 0, 0, 0.68) 78%,
+            rgba(0, 0, 0, 0) 100%
+        );
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 1) 58%,
+            rgba(0, 0, 0, 0.68) 78%,
+            rgba(0, 0, 0, 0) 100%
+        );
+}
+
+.awards-hero__image {
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        cover;
+
+    object-position:
+        center right;
+
+    filter:
+        saturate(0.88) contrast(1.06) brightness(0.72);
+
+    transform:
+        translate3d(0, 0, 0) scale(1.01);
+
+    animation:
+        awardsHeroDrift 24s ease-in-out infinite alternate;
+}
+
+.awards-hero__veil,
+.awards-hero__grain,
+.awards-hero__reflection {
+    position:
+        absolute;
+
+    display:
+        block;
+}
+
+.awards-hero__veil {
+    inset:
+        0;
+}
+
+.awards-hero__veil--left {
+    background:
+        linear-gradient(
+            90deg,
+            #020202 0%,
+            rgba(2, 2, 2, 0.96) 31%,
+            rgba(2, 2, 2, 0.7) 49%,
+            rgba(2, 2, 2, 0.16) 68%,
+            transparent 100%
+        );
+}
+
+.awards-hero__veil--bottom {
+    background:
+        radial-gradient(
+            circle at 72% 42%,
+            rgba(167, 116, 50, 0.15),
+            transparent 28%
+        ),
+        linear-gradient(
+            180deg,
+            transparent 48%,
+            rgba(2, 2, 2, 0.74) 82%,
+            #020202 100%
+        );
+}
+
+.awards-hero__reflection {
+    width:
+        clamp(7px, 1vw, 14px);
+
+    aspect-ratio:
+        1;
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle at 38% 36%,
+            rgba(218, 184, 116, 0.68),
+            rgba(122, 78, 33, 0.18) 54%,
+            transparent 72%
+        );
+
+    box-shadow:
+        0 0 18px rgba(174, 111, 46, 0.12);
+
+    opacity:
+        0.34;
+
+    filter:
+        blur(0.5px);
+
+    animation:
+        awardsReflectionBreathe 18s ease-in-out infinite alternate;
+}
+
+.awards-hero__reflection--one {
+    top:
+        18%;
+
+    right:
+        22%;
+}
+
+.awards-hero__reflection--two {
+    top:
+        31%;
+
+    right:
+        7%;
+
+    width:
+        clamp(20px, 3.4vw, 46px);
+
+    opacity:
+        0.16;
+
+    filter:
+        blur(2px);
+}
+
+.awards-hero__reflection--three {
+    top:
+        56%;
+
+    right:
+        33%;
+
+    width:
+        clamp(5px, 0.7vw, 10px);
+
+    opacity:
+        0.24;
+}
+
+.awards-hero__reflection--four {
+    bottom:
+        23%;
+
+    right:
+        -1%;
+
+    width:
+        clamp(18px, 3vw, 38px);
+
+    opacity:
+        0.14;
+
+    filter:
+        blur(2.5px);
+}
+
+.awards-hero__reflection--five {
+    top:
+        9%;
+
+    right:
+        44%;
+
+    width:
+        clamp(6px, 0.85vw, 12px);
+
+    opacity:
+        0.22;
+}
+
+.awards-hero__grain {
+    inset:
+        0;
+
+    opacity:
+        0.12;
+
+    mix-blend-mode:
+        screen;
+
+    background-image:
+        radial-gradient(
+            circle at 20% 30%,
+            rgba(255, 255, 255, 0.1) 0 1px,
+            transparent 1px
+        );
+
+    background-size:
+        4px 4px;
 }
 
 .awards-hero h1 {
@@ -3068,6 +3330,50 @@ body.modal-open {
 
     line-height:
         1.75;
+}
+
+@keyframes awardsHeroDrift {
+    from {
+        transform:
+            translate3d(-2px, 0, 0) scale(1.01);
+
+        filter:
+            saturate(0.86) contrast(1.06) brightness(0.69);
+    }
+
+    to {
+        transform:
+            translate3d(6px, -4px, 0) scale(1.015);
+
+        filter:
+            saturate(0.9) contrast(1.08) brightness(0.75);
+    }
+}
+
+@keyframes awardsReflectionBreathe {
+    from {
+        transform:
+            translate3d(0, 0, 0);
+
+        opacity:
+            0.2;
+    }
+
+    to {
+        transform:
+            translate3d(4px, -3px, 0);
+
+        opacity:
+            0.38;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .awards-hero__image,
+    .awards-hero__reflection {
+        animation:
+            none;
+    }
 }
 
 .awards-selection {
@@ -3888,6 +4194,31 @@ body.modal-open {
             auto;
     }
 
+    .awards-hero__art {
+        inset:
+            -6% -22% -18% -8%;
+
+        opacity:
+            0.78;
+    }
+
+    .awards-hero__image {
+        object-position:
+            72% center;
+    }
+
+    .awards-hero__veil--left {
+        background:
+            linear-gradient(
+                90deg,
+                #020202 0%,
+                rgba(2, 2, 2, 0.98) 36%,
+                rgba(2, 2, 2, 0.82) 58%,
+                rgba(2, 2, 2, 0.22) 78%,
+                transparent 100%
+            );
+    }
+
     .awards-row {
         grid-template-columns:
             52px minmax(140px, 240px) 1fr;
@@ -4000,23 +4331,113 @@ body.modal-open {
     .awards-page {
         width:
             calc(100% - 32px);
+
+        padding-top:
+            clamp(1.5rem, 8vw, 3rem);
     }
 
     .awards-hero {
         min-height:
-            auto;
+            clamp(500px, 76svh, 560px);
+
+        padding:
+            clamp(2.25rem, 12vw, 4rem) 16px;
+
+        margin-right:
+            -16px;
+
+        margin-left:
+            -16px;
+    }
+
+    .awards-hero__art {
+        inset:
+            -2% -34% -14% -18%;
+
+        opacity:
+            0.9;
+    }
+
+    .awards-hero__image {
+        object-position:
+            63% center;
+
+        filter:
+            saturate(0.94) contrast(1.08) brightness(0.78);
+    }
+
+    .awards-hero__veil--left {
+        background:
+            linear-gradient(
+                90deg,
+                #020202 0%,
+                rgba(2, 2, 2, 0.96) 40%,
+                rgba(2, 2, 2, 0.74) 61%,
+                rgba(2, 2, 2, 0.24) 82%,
+                transparent 100%
+            );
+    }
+
+    .awards-hero__veil--bottom {
+        background:
+            radial-gradient(
+                circle at 76% 34%,
+                rgba(176, 113, 45, 0.24),
+                transparent 25%
+            ),
+            linear-gradient(
+                180deg,
+                transparent 42%,
+                rgba(2, 2, 2, 0.52) 78%,
+                #020202 100%
+            );
+    }
+
+    .awards-hero h1 {
+        max-width:
+            390px;
+
+        margin:
+            0.75rem 0 1rem;
+
+        font-size:
+            clamp(3.05rem, 13.4vw, 4.25rem);
+
+        line-height:
+            0.94;
+    }
+
+    .awards-hero p {
+        max-width:
+            350px;
+
+        line-height:
+            1.65;
+    }
+
+    .awards-hero__reflection--two,
+    .awards-hero__reflection--four,
+    .awards-hero__reflection--five {
+        display:
+            none;
     }
 
     .awards-row,
     .awards-watchlist__item {
         grid-template-columns:
-            42px 1fr;
+            1fr;
+
+        gap:
+            1.15rem;
+
+        padding:
+            1.15rem 0 1.7rem;
     }
 
     .awards-row__image,
     .awards-watchlist__item img {
         grid-column:
-            1 / -1;
+            1;
 
         width:
             100%;
@@ -4026,7 +4447,41 @@ body.modal-open {
     .awards-watchlist__item strong,
     .awards-watchlist__item > span:last-child {
         grid-column:
-            2;
+            1;
+    }
+
+    .awards-row__number,
+    .awards-watchlist__item > span:first-child {
+        grid-column:
+            1;
+
+        align-self:
+            start;
+    }
+
+    .awards-row__content {
+        width:
+            min(100%, 36rem);
+
+        padding:
+            0 clamp(0.75rem, 5vw, 1.5rem);
+
+        margin:
+            0 auto;
+    }
+
+    .awards-row__content strong,
+    .awards-watchlist__item strong {
+        font-size:
+            clamp(1.05rem, 5vw, 1.35rem);
+
+        line-height:
+            1.2;
+    }
+
+    .awards-row__content span {
+        line-height:
+            1.55;
     }
 
     .people-grid {
