@@ -263,8 +263,10 @@ async function createTicketElement(record, kind) {
             <p>${model.room ? `${escapeHtml(model.room.name)} / ${escapeHtml(model.room.type)}` : "ROOM TBA"}</p>
             <strong>SEATS / ${model.seatsLabel}</strong>
             ${createTicketAction(model)}
-            <i class="ticket-barcode" aria-hidden="true"></i>
-            <code>${model.code}</code>
+            <span class="cinema-ticket__barcode">
+                <i class="ticket-barcode" aria-hidden="true"></i>
+                <code>${model.code}</code>
+            </span>
         </section>
         <button class="cinema-ticket__open" type="button" aria-label="Open ${model.statusLabel.toLowerCase()} ticket for ${escapeHtml(model.movie.title)}"></button>`;
 
