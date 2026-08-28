@@ -53,6 +53,38 @@ export async function getFavorite(tmdbId, mediaType = "movie") {
 
 }
 
+export async function getCurrentUserFavorites() {
+
+    const currentUser =
+        getCurrentUser();
+
+    if (!currentUser) {
+        return [];
+    }
+
+    const favorites =
+        await requestJson(`${FAVORITES_URL}?userId=${currentUser.id}`);
+
+    return favorites.sort((a, b) => {
+        return new Date(b.savedAt || 0) - new Date(a.savedAt || 0);
+    });
+
+}
+
+
+export async function removeFavorite(favoriteId) {
+
+    const response =
+        await fetch(`${FAVORITES_URL}/${favoriteId}`, {
+            method: "DELETE"
+        });
+
+    if (!response.ok) {
+        throw new Error(`JSON Server responded with ${response.status}`);
+    }
+
+}
+
 
 export async function toggleFavorite(item, mediaType = "movie") {
 
@@ -114,6 +146,24 @@ export async function getRating(tmdbId, mediaType = "movie") {
 
 }
 
+export async function getCurrentUserRatings() {
+
+    const currentUser =
+        getCurrentUser();
+
+    if (!currentUser) {
+        return [];
+    }
+
+    const ratings =
+        await requestJson(`${RATINGS_URL}?userId=${currentUser.id}`);
+
+    return ratings.sort((a, b) => {
+        return new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0);
+    });
+
+}
+
 
 export async function saveRating(tmdbId, mediaType, value) {
 
@@ -132,7 +182,8 @@ export async function saveRating(tmdbId, mediaType, value) {
             tmdbId,
             userId: currentUser.id,
             mediaType,
-            rating: value
+            rating: value,
+            updatedAt: new Date().toISOString()
         };
 
     // El rating NOIR vive separado de Favorites para no mezclarlo con vote_average de TMDB.

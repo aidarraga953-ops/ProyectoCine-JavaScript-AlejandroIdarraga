@@ -17,6 +17,10 @@ import {
     selectYouTubeTrailer
 } from "../components/trailer.js";
 
+import {
+    initializeScrollReveals
+} from "../effects/reveal-on-scroll.js";
+
 
 const MOVIE_LIMIT =
     16;
@@ -56,6 +60,15 @@ let trailerObserver =
 
 let searchDebounceId =
     null;
+
+let heroTransitionTimeout =
+    null;
+
+let heroContentTimeout =
+    null;
+
+let activeHeroImageId =
+    "heroImage";
 
 const popularCategoryConfig =
     {
@@ -257,6 +270,34 @@ function setActiveTrendingButton(period) {
 
 }
 
+function prefersReducedMotion() {
+
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+}
+
+
+function setHeroTransitionState(hero, isTransitioning) {
+
+    if (!hero) {
+        return;
+    }
+
+    hero.classList.toggle("is-transitioning", isTransitioning);
+
+}
+
+function setHeroTextState(hero, state) {
+
+    if (!hero) {
+        return;
+    }
+
+    hero.classList.toggle("is-text-out", state === "out");
+    hero.classList.toggle("is-text-in", state === "in");
+
+}
+
 
 function renderHero(index) {
 
@@ -267,14 +308,22 @@ function renderHero(index) {
         return;
     }
 
+    const hadHeroMovie =
+        Boolean(currentHeroMovie);
+
     currentHeroMovie =
         movie;
 
     currentHeroIndex =
         index;
 
-    const image =
-        getElement("#heroImage");
+    const currentImage =
+        getElement(`#${activeHeroImageId}`);
+
+    const nextImage =
+        getElement(activeHeroImageId === "heroImage"
+            ? "#heroImageNext"
+            : "#heroImage");
 
     const eyebrow =
         getElement("#heroEyebrow");
@@ -300,48 +349,116 @@ function renderHero(index) {
     const displayIndex =
         String(index + 1).padStart(2, "0");
 
-    if (image) {
-        image.src =
-            getImageUrl(movie.backdrop_path, "w1280");
+    const hero =
+        getElement(".hero");
 
-        image.alt =
-            movie.title || "";
+    const nextImageUrl =
+        getImageUrl(movie.backdrop_path, "w1280");
+
+    const updateTextContent = () => {
+        if (nextImage) {
+            nextImage.alt =
+                movie.title || "";
+        }
+
+        if (eyebrow) {
+            eyebrow.textContent =
+                `Featured Film / ${displayIndex}`;
+        }
+
+        if (title) {
+            title.textContent =
+                movie.title || "Untitled";
+        }
+
+        if (metadata) {
+            metadata.textContent =
+                `${formatMovieYear(movie.release_date)} / ID ${movie.id} / Score ${formatMovieScore(movie.vote_average)}`;
+        }
+
+        if (description) {
+            description.textContent =
+                movie.overview || "No synopsis available yet.";
+        }
+
+        if (link) {
+            link.href =
+                `./pages/movie.html?id=${movie.id}`;
+        }
+
+        if (current) {
+            current.textContent =
+                displayIndex;
+        }
+
+        if (total) {
+            total.textContent =
+                String(heroMovies.length).padStart(2, "0");
+        }
+    };
+
+    const swapHeroImage = () => {
+        if (!currentImage || !nextImage) {
+            return;
+        }
+
+        nextImage.src =
+            nextImageUrl;
+
+        nextImage.classList.add("is-active");
+        currentImage.classList.remove("is-active");
+
+        activeHeroImageId =
+            nextImage.id;
+    };
+
+    const preloadAndSwapHeroImage = () => {
+        const preloader =
+            new Image();
+
+        preloader.onload =
+            swapHeroImage;
+
+        preloader.onerror =
+            swapHeroImage;
+
+        preloader.src =
+            nextImageUrl;
+    };
+
+    clearTimeout(heroTransitionTimeout);
+    clearTimeout(heroContentTimeout);
+
+    if (prefersReducedMotion() || !hero || !hadHeroMovie) {
+        if (currentImage) {
+            currentImage.src =
+                nextImageUrl;
+
+            currentImage.alt =
+                movie.title || "";
+        }
+
+        updateTextContent();
+        setHeroTransitionState(hero, false);
+        setHeroTextState(hero, null);
+        return;
     }
 
-    if (eyebrow) {
-        eyebrow.textContent =
-            `Featured Film / ${displayIndex}`;
-    }
+    setHeroTransitionState(hero, true);
+    setHeroTextState(hero, "out");
+    preloadAndSwapHeroImage();
 
-    if (title) {
-        title.textContent =
-            movie.title || "Untitled";
-    }
+    heroContentTimeout =
+        setTimeout(() => {
+            updateTextContent();
+            setHeroTextState(hero, "in");
+        }, 260);
 
-    if (metadata) {
-        metadata.textContent =
-            `${formatMovieYear(movie.release_date)} / ID ${movie.id} / Score ${formatMovieScore(movie.vote_average)}`;
-    }
-
-    if (description) {
-        description.textContent =
-            movie.overview || "No synopsis available yet.";
-    }
-
-    if (link) {
-        link.href =
-            `./pages/movie.html?id=${movie.id}`;
-    }
-
-    if (current) {
-        current.textContent =
-            displayIndex;
-    }
-
-    if (total) {
-        total.textContent =
-            String(heroMovies.length).padStart(2, "0");
-    }
+    heroTransitionTimeout =
+        setTimeout(() => {
+            setHeroTransitionState(hero, false);
+            setHeroTextState(hero, null);
+        }, 980);
 
 }
 
@@ -1457,6 +1574,7 @@ function bindFreeFilters() {
 
 export function initializeHome() {
 
+    initializeScrollReveals();
     bindTrendingFilters();
     bindSearchControls();
     bindTrailerModal();
