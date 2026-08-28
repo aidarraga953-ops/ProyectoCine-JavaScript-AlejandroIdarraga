@@ -270,7 +270,21 @@ function renderBooking() {
                     <span>SCREEN</span>
                 </div>
 
-                <div class="seat-map" id="seatMap"></div>
+                <div class="booking-seat-viewport">
+                    <div class="cinema-layout">
+                        <div class="seat-map cinema-seat-map" id="seatMap"></div>
+                        <aside class="cinema-aisle" aria-hidden="true">
+                            <span class="cinema-exit">EXIT &#8599;</span>
+                            <div class="cinema-stairs">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
 
                 <div class="seat-legend" aria-label="Seat status legend">
                     <span><i class="seat-swatch seat-swatch--available"></i>Available</span>
@@ -393,7 +407,19 @@ async function completeCheckout(kind) {
 
     // functionSeats une functionId + seatId: por eso cada horario tiene disponibilidad independiente.
     await Promise.all(selectedSeats.map((seat) => {
-        return updateFunctionSeatStatus(seat.functionSeatId, nextStatus);
+        const metadata =
+            kind === "reservation"
+                ? {
+                    reservationId: record.id,
+                    reservedByUserId: currentUser.id
+                }
+                : {
+                    reservationId: null,
+                    reservedByUserId: null,
+                    purchaseId: record.id
+                };
+
+        return updateFunctionSeatStatus(seat.functionSeatId, nextStatus, metadata);
     }));
 
     window.location.href =

@@ -276,6 +276,21 @@ export async function getFunctionSeats(functionId) {
 }
 
 
+export async function getFunctionSeatsBySeatIds(functionId, seatIds) {
+
+    const selectedIds =
+        new Set(seatIds.map(Number));
+
+    const functionSeats =
+        await getFunctionSeats(functionId);
+
+    return functionSeats.filter((functionSeat) => {
+        return selectedIds.has(Number(functionSeat.seatId));
+    });
+
+}
+
+
 export async function ensureFunctionSeats(movieFunction) {
 
     const existingFunctionSeats =
@@ -518,6 +533,79 @@ export async function revalidateSelectedSeats(functionId, seatIds) {
 }
 
 
+export async function revalidateReservedSeatsForReservation(reservation) {
+
+    return revalidateTicketSeatStatus(reservation, "reserved", "reservationId");
+
+}
+
+
+export async function revalidateTicketSeatStatus(record, status, ownerKey = "") {
+
+    const seatIds =
+        (record.seats || []).map((seat) => {
+            return Number(seat.seatId);
+        });
+
+    const expectedSeatIds =
+        new Set(seatIds);
+
+    const functionSeats =
+        await getFunctionSeatsBySeatIds(record.functionId, seatIds);
+
+    if (functionSeats.length !== expectedSeatIds.size) {
+        return {
+            valid: false,
+            functionSeats: []
+        };
+    }
+
+    const valid =
+        functionSeats.every((functionSeat) => {
+            const sameOwner =
+                !ownerKey ||
+                !functionSeat[ownerKey] ||
+                Number(functionSeat[ownerKey]) === Number(record.id);
+
+            return expectedSeatIds.has(Number(functionSeat.seatId)) &&
+                functionSeat.status === status &&
+                sameOwner;
+        });
+
+    return {
+        valid,
+        functionSeats
+    };
+
+}
+
+
+export async function getReservation(reservationId) {
+
+    return requestJson(`/reservations/${reservationId}`);
+
+}
+
+
+export async function getPurchase(purchaseId) {
+
+    return requestJson(`/purchases/${purchaseId}`);
+
+}
+
+
+export async function getPurchaseByReservation(reservationId) {
+
+    const purchases =
+        await requestJson(`/purchases?sourceReservationId=${reservationId}`);
+
+    return purchases.find((purchase) => {
+        return purchase.status !== "cancelled";
+    }) || null;
+
+}
+
+
 export async function createReservation(payload) {
 
     return requestJson("/reservations", {
@@ -548,12 +636,41 @@ export async function createPurchase(payload) {
 }
 
 
-export async function updateFunctionSeatStatus(functionSeatId, status) {
+export async function updateReservationStatus(reservationId, status) {
+
+    return requestJson(`/reservations/${reservationId}`, {
+        method: "PATCH",
+        headers: JSON_HEADERS,
+        body: JSON.stringify({
+            status,
+            updatedAt: new Date().toISOString()
+        })
+    });
+
+}
+
+
+export async function updatePurchaseStatus(purchaseId, status) {
+
+    return requestJson(`/purchases/${purchaseId}`, {
+        method: "PATCH",
+        headers: JSON_HEADERS,
+        body: JSON.stringify({
+            status,
+            updatedAt: new Date().toISOString()
+        })
+    });
+
+}
+
+
+export async function updateFunctionSeatStatus(functionSeatId, status, metadata = {}) {
 
     return requestJson(`/functionSeats/${functionSeatId}`, {
         method: "PATCH",
         headers: JSON_HEADERS,
         body: JSON.stringify({
+            ...metadata,
             status
         })
     });
@@ -573,8 +690,13 @@ export async function getUserTickets(userId) {
         ]);
 
     return {
-        reservations,
-        purchases
+        reservations: reservations.filter((reservation) => {
+            return reservation.status === "reserved" ||
+                reservation.status === "confirmed";
+        }),
+        purchases: purchases.filter((purchase) => {
+            return purchase.status !== "cancelled";
+        })
     };
 
 }

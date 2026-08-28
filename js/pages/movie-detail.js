@@ -601,6 +601,11 @@ function renderWeeklyReleaseTickets(container, movies, week) {
             `url("${getImageUrl(movie.backdrop_path || movie.poster_path, "w780")}")`
         );
 
+        link.style.setProperty(
+            "--ticket-poster",
+            `url("${getImageUrl(movie.poster_path || movie.backdrop_path, "w500")}")`
+        );
+
         link.innerHTML =
             `<span class="weekly-ticket__number">${String(index + 1).padStart(2, "0")}</span>
             <span class="weekly-ticket__image" aria-hidden="true"></span>
@@ -662,6 +667,11 @@ function renderOtherScreenings(container, functions, roomsById, availabilityByFu
         ticket.style.setProperty(
             "--ticket-backdrop",
             `url("${getImageUrl(movie.backdrop_path, "w780")}")`
+        );
+
+        ticket.style.setProperty(
+            "--ticket-poster",
+            `url("${getImageUrl(movie.poster_path || movie.backdrop_path, "w500")}")`
         );
 
         ticket.innerHTML =
@@ -755,6 +765,14 @@ async function loadMovieFunctions(movie, target) {
         summary.className =
             "screening-summary";
 
+        const functionLayout =
+            document.createElement("div");
+
+        functionLayout.className =
+            "screening-function-layout";
+
+        functionLayout.append(summary, target.other);
+
         let functions =
             [];
 
@@ -778,11 +796,14 @@ async function loadMovieFunctions(movie, target) {
                     roomsById.get(Number(selectedFunction.roomId));
 
                 summary.innerHTML =
-                    `<div>
+                    `<div class="screening-summary__details">
                         <span>Selected Function</span>
                         <strong>${formatDateParts(selectedFunction.date).full} / ${selectedFunction.time}</strong>
-                        <small>${getRoomLabel(room)} / ${formatCurrency(selectedFunction.price)}</small>
-                        <small>${availabilityByFunction.get(selectedFunction.id) || 0} seats available</small>
+                        <div class="screening-summary__meta">
+                            <small>${getRoomLabel(room)}</small>
+                            <small>${formatCurrency(selectedFunction.price)}</small>
+                            <small>${availabilityByFunction.get(selectedFunction.id) || 0} seats available</small>
+                        </div>
                     </div>
                     <a class="button button--primary" href="./booking.html?functionId=${selectedFunction.id}">
                         Select Seats
@@ -919,7 +940,7 @@ async function loadMovieFunctions(movie, target) {
                 <strong>${rooms.map(getRoomLabel).join(" / ")}</strong>
             </div>`;
 
-        target.body.replaceChildren(location, monthSelector, dates, times, summary);
+        target.body.replaceChildren(location, monthSelector, dates, times, functionLayout);
         await reloadForSelectedDate();
 
     } catch (error) {

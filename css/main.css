@@ -2060,7 +2060,7 @@ body.modal-open {
         1fr 1fr;
 
     gap:
-        0.8rem;
+        0.65rem;
 }
 
 .filters-panel__apply {
@@ -4676,8 +4676,7 @@ body[data-auth-mode] {
 .screenings__location span,
 .screening-summary span,
 .booking-summary span,
-.booking-poster span,
-.noir-ticket__body span {
+.booking-poster span {
     display:
         block;
 
@@ -4719,8 +4718,44 @@ body[data-auth-mode] {
     overflow-x:
         auto;
 
-    padding-bottom:
-        0.4rem;
+    padding:
+        0.35rem 0 0.8rem;
+
+    scrollbar-color:
+        rgba(var(--movie-color-primary-rgb), 0.72) rgba(241, 239, 234, 0.08);
+
+    scrollbar-width:
+        thin;
+}
+
+.screening-dates::-webkit-scrollbar {
+    height:
+        8px;
+}
+
+.screening-dates::-webkit-scrollbar-track {
+    background:
+        rgba(241, 239, 234, 0.08);
+}
+
+.screening-dates::-webkit-scrollbar-thumb {
+    border:
+        2px solid
+        rgba(8, 8, 8, 0.78);
+
+    background:
+        rgba(var(--movie-color-primary-rgb), 0.72);
+}
+
+.screening-dates::-webkit-scrollbar-button {
+    width:
+        0;
+
+    height:
+        0;
+
+    background:
+        rgba(8, 8, 8, 0.78);
 }
 
 .screening-date {
@@ -4728,20 +4763,20 @@ body[data-auth-mode] {
         relative;
 
     flex:
-        0 0 76px;
+        0 0 82px;
 
     min-height:
-        92px;
+        104px;
 
     border:
         1px solid
-        var(--color-line);
+        rgba(241, 239, 234, 0.12);
 
     background:
         linear-gradient(
             180deg,
-            rgba(255, 255, 255, 0.04),
-            rgba(255, 255, 255, 0.015)
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.012)
         );
 
     color:
@@ -4772,10 +4807,10 @@ body[data-auth-mode] {
         50%;
 
     width:
-        12px;
+        10px;
 
     height:
-        12px;
+        10px;
 
     border-radius:
         50%;
@@ -4783,19 +4818,18 @@ body[data-auth-mode] {
     background:
         var(--color-background);
 
-    border:
-        1px solid
-        var(--color-line);
+    box-shadow:
+        0 0 0 1px rgba(241, 239, 234, 0.12);
 }
 
 .screening-date::before {
     left:
-        -7px;
+        -6px;
 }
 
 .screening-date::after {
     right:
-        -7px;
+        -6px;
 }
 
 .screening-date span,
@@ -4814,13 +4848,13 @@ body[data-auth-mode] {
 
 .screening-date strong {
     margin-top:
-        0.35rem;
+        0.28rem;
 
     color:
         var(--color-text);
 
     font-size:
-        1.5rem;
+        1.65rem;
 
     font-weight:
         500;
@@ -4831,7 +4865,7 @@ body[data-auth-mode] {
         block;
 
     margin-top:
-        0.2rem;
+        0.32rem;
 
     color:
         var(--color-text-muted);
@@ -4863,8 +4897,8 @@ body[data-auth-mode] {
 
 .screening-date.is-active::before,
 .screening-date.is-active::after {
-    border-color:
-        rgba(var(--movie-color-primary-rgb), 0.72);
+    box-shadow:
+        0 0 0 1px rgba(var(--movie-color-primary-rgb), 0.72);
 }
 
 .screening-time-board {
@@ -5012,31 +5046,103 @@ body[data-auth-mode] {
 
 .screening-summary {
     display:
-        flex;
+        grid;
 
     align-items:
-        flex-end;
+        end;
 
-    justify-content:
-        space-between;
+    grid-template-columns:
+        minmax(220px, 1fr) auto;
 
     gap:
-        1.2rem;
+        1.3rem;
 
     padding:
-        1.3rem 0 0;
+        1.2rem 1.25rem;
+
+    border:
+        1px solid
+        rgba(var(--movie-color-primary-rgb), 0.32);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.014)
+        );
+}
+
+.screening-function-layout {
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(280px, 420px) minmax(0, 1fr);
+
+    gap:
+        clamp(1.4rem, 3vw, 2.6rem);
+
+    align-items:
+        start;
+
+    padding-top:
+        0.9rem;
 
     border-top:
         1px solid
         rgba(var(--movie-color-primary-rgb), 0.32);
 }
 
+.screening-summary__details {
+    display:
+        grid;
+
+    gap:
+        0.36rem;
+}
+
+.screening-summary__details > span {
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.72rem;
+
+    letter-spacing:
+        0.16em;
+
+    text-transform:
+        uppercase;
+}
+
+.screening-summary__details strong {
+    color:
+        var(--color-text);
+
+    font-size:
+        clamp(1.25rem, 2.2vw, 1.9rem);
+
+    font-weight:
+        500;
+
+    line-height:
+        1;
+}
+
+.screening-summary__meta {
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        0.42rem 0.65rem;
+}
+
 .screening-summary small {
     display:
-        block;
-
-    margin-top:
-        0.3rem;
+        inline-flex;
 
     color:
         var(--color-text-muted);
@@ -5056,9 +5162,20 @@ body[data-auth-mode] {
         var(--movie-color-primary);
 }
 
+.screening-summary .button {
+    align-self:
+        end;
+
+    white-space:
+        nowrap;
+}
+
 .other-screenings {
+    min-width:
+        0;
+
     margin-top:
-        2.6rem;
+        0;
 }
 
 .ticket-list {
@@ -5066,61 +5183,127 @@ body[data-auth-mode] {
         grid;
 
     gap:
-        1rem;
+        clamp(1rem, 2vw, 1.35rem);
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(210px, 260px));
+
+    justify-content:
+        center;
 }
 
 .screening-ticket,
-.noir-ticket {
+.weekly-ticket {
     position:
         relative;
 
     display:
         grid;
 
+    grid-template-rows:
+        62% 38%;
+
+    grid-template-columns:
+        minmax(0, 1fr) 86px;
+
     overflow:
         hidden;
 
-    border:
-        1px solid
-        var(--color-line);
+    min-height:
+        430px;
+
+    border-radius:
+        3px;
 
     background:
         linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.045),
-            rgba(255, 255, 255, 0.012)
+            180deg,
+            #f1eee4,
+            #d9d2c3
         ),
-        var(--color-surface);
+        #eee7d8;
+
+    box-shadow:
+        0 18px 54px rgba(0, 0, 0, 0.3),
+        0 22px 70px rgba(var(--movie-color-primary-rgb), 0.09);
+
+    color:
+        #14110d;
+
+    text-decoration:
+        none;
 
     transition:
-        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
         transform var(--transition-fast);
 }
 
-.screening-ticket {
-    grid-template-columns:
-        minmax(140px, 280px) 1fr 132px;
+.screening-ticket::before,
+.screening-ticket::after,
+.weekly-ticket::before,
+.weekly-ticket::after {
+    content:
+        "";
 
-    min-height:
-        148px;
+    position:
+        absolute;
+
+    top:
+        calc(62% - 16px);
+
+    z-index:
+        3;
+
+    width:
+        32px;
+
+    height:
+        32px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--color-background);
+}
+
+.screening-ticket::before,
+.weekly-ticket::before {
+    left:
+        -17px;
+}
+
+.screening-ticket::after,
+.weekly-ticket::after {
+    right:
+        -17px;
 }
 
 .screening-ticket__image,
-.noir-ticket__image {
+.weekly-ticket__image {
+    grid-column:
+        1 / -1;
+
+    grid-row:
+        1;
+
+    min-height:
+        0;
+
     background-image:
         linear-gradient(
-            90deg,
-            rgba(8, 8, 8, 0.02),
-            rgba(8, 8, 8, 0.5),
-            rgba(8, 8, 8, 0.96)
+            180deg,
+            transparent 58%,
+            rgba(8, 8, 8, 0.16)
         ),
+        var(--ticket-poster),
         var(--ticket-backdrop);
 
     background-size:
         cover;
 
     background-position:
-        center;
+        center top;
 
     filter:
         saturate(0.72) contrast(1.05);
@@ -5129,24 +5312,20 @@ body[data-auth-mode] {
         filter var(--transition-normal),
         transform var(--transition-normal);
 
-    -webkit-mask-image:
-        linear-gradient(90deg, #000 0%, #000 58%, transparent 100%);
-
-    mask-image:
-        linear-gradient(90deg, #000 0%, #000 58%, transparent 100%);
 }
 
 .screening-ticket:hover,
-.noir-ticket:hover {
-    border-color:
-        rgba(var(--movie-color-primary-rgb), 0.52);
+.weekly-ticket:hover {
+    box-shadow:
+        0 20px 62px rgba(0, 0, 0, 0.34),
+        0 24px 78px rgba(var(--movie-color-primary-rgb), 0.14);
 
     transform:
         translateY(-2px);
 }
 
 .screening-ticket:hover .screening-ticket__image,
-.noir-ticket:hover .noir-ticket__image {
+.weekly-ticket:hover .weekly-ticket__image {
     filter:
         saturate(0.92) brightness(1.08) contrast(1.08);
 
@@ -5155,37 +5334,57 @@ body[data-auth-mode] {
 }
 
 .screening-ticket__main {
+    grid-column:
+        1;
+
+    grid-row:
+        2;
+
     display:
         grid;
 
     align-content:
-        center;
+        start;
 
     gap:
         0.45rem;
 
     padding:
-        1.1rem;
+        0.95rem 1rem 1rem;
+
+    border-top:
+        1px dashed
+        rgba(8, 8, 8, 0.28);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.76),
+            rgba(234, 227, 213, 0.98)
+        );
 }
 
 .screening-ticket__main strong {
+    color:
+        #14110d;
+
     font-size:
-        clamp(1.4rem, 4vw, 2.6rem);
+        1.12rem;
 
     font-weight:
         500;
 
     line-height:
-        0.95;
+        0.98;
 }
 
 .screening-ticket__main small,
 .screening-ticket__stub small {
     color:
-        var(--color-text-muted);
+        rgba(20, 17, 13, 0.62);
 
     font-size:
-        0.72rem;
+        0.66rem;
 
     letter-spacing:
         0.12em;
@@ -5194,10 +5393,15 @@ body[data-auth-mode] {
         uppercase;
 }
 
-.screening-ticket__stub,
-.noir-ticket__stub {
+.screening-ticket__stub {
     position:
         relative;
+
+    grid-column:
+        2;
+
+    grid-row:
+        2;
 
     display:
         grid;
@@ -5210,64 +5414,31 @@ body[data-auth-mode] {
 
     border-left:
         1px dashed
-        rgba(241, 239, 234, 0.36);
+        rgba(8, 8, 8, 0.28);
 
     background:
         linear-gradient(
             180deg,
-            rgba(var(--movie-color-primary-rgb), 0.08),
-            rgba(255, 255, 255, 0.015)
+            rgba(var(--movie-color-primary-rgb), 0.16),
+            rgba(234, 227, 213, 0.98)
         );
 }
 
 .screening-ticket__stub::before,
-.screening-ticket__stub::after,
-.noir-ticket__stub::before,
-.noir-ticket__stub::after {
-    content:
-        "";
-
-    position:
-        absolute;
-
-    left:
-        -10px;
-
-    width:
-        18px;
-
-    height:
-        18px;
-
-    border-radius:
-        50%;
-
-    background:
-        var(--color-background);
-
-    border:
-        1px solid
-        var(--color-line);
-}
-
-.screening-ticket__stub::before,
-.noir-ticket__stub::before {
-    top:
-        -10px;
-}
-
-.screening-ticket__stub::after,
-.noir-ticket__stub::after {
-    bottom:
-        -10px;
+.screening-ticket__stub::after {
+    display:
+        none;
 }
 
 .screening-ticket__stub strong {
     font-size:
-        1.8rem;
+        1.38rem;
 
     font-weight:
         500;
+
+    color:
+        #14110d;
 }
 
 .weekly-releases {
@@ -5293,112 +5464,110 @@ body[data-auth-mode] {
         grid;
 
     gap:
-        1rem;
-}
-
-.weekly-ticket {
-    position:
-        relative;
-
-    display:
-        grid;
+        clamp(1rem, 2vw, 1.35rem);
 
     grid-template-columns:
-        52px minmax(180px, 360px) 1fr 132px;
+        repeat(auto-fit, minmax(210px, 260px));
 
-    min-height:
-        142px;
-
-    overflow:
-        hidden;
-
-    border:
-        1px solid
-        var(--color-line);
-
-    background:
-        rgba(255, 255, 255, 0.018);
-
-    transition:
-        border-color var(--transition-fast),
-        transform var(--transition-fast);
-}
-
-.weekly-ticket:hover {
-    border-color:
-        rgba(var(--movie-color-primary-rgb), 0.48);
-
-    transform:
-        translateY(-2px);
+    justify-content:
+        center;
 }
 
 .weekly-ticket__number {
+    position:
+        absolute;
+
+    top:
+        0.8rem;
+
+    left:
+        0.8rem;
+
+    z-index:
+        2;
+
     display:
         grid;
 
     place-items:
         center;
 
-    color:
-        var(--color-text-muted);
+    width:
+        42px;
 
-    border-right:
+    height:
+        32px;
+
+    border:
         1px solid
-        var(--color-line);
+        rgba(241, 239, 234, 0.32);
+
+    background:
+        rgba(8, 8, 8, 0.48);
+
+    color:
+        var(--color-text);
 
     font-size:
         0.72rem;
-}
 
-.weekly-ticket__image {
-    background-image:
-        linear-gradient(
-            90deg,
-            rgba(8, 8, 8, 0.04),
-            rgba(8, 8, 8, 0.82)
-        ),
-        var(--ticket-backdrop);
-
-    background-size:
-        cover;
-
-    background-position:
-        center;
+    letter-spacing:
+        0.12em;
 }
 
 .weekly-ticket__main {
+    grid-column:
+        1;
+
+    grid-row:
+        2;
+
     display:
         grid;
 
     align-content:
-        center;
+        start;
 
     gap:
-        0.55rem;
+        0.45rem;
 
     padding:
-        1rem 1.2rem;
+        0.95rem 1rem 1rem;
+
+    border-top:
+        1px dashed
+        rgba(8, 8, 8, 0.28);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.76),
+            rgba(234, 227, 213, 0.98)
+        );
 }
 
 .weekly-ticket__main strong {
+    color:
+        #14110d;
+
     font-size:
-        clamp(1.25rem, 3.4vw, 2.4rem);
+        1.08rem;
 
     font-weight:
         500;
 
     line-height:
-        0.96;
+        0.98;
 }
 
 .weekly-ticket__main small,
 .weekly-ticket__stub small,
 .weekly-ticket__stub em {
     color:
-        var(--color-text-muted);
+        rgba(20, 17, 13, 0.62);
 
     font-size:
-        0.68rem;
+        0.66rem;
 
     font-style:
         normal;
@@ -5414,6 +5583,12 @@ body[data-auth-mode] {
     position:
         relative;
 
+    grid-column:
+        2;
+
+    grid-row:
+        2;
+
     display:
         grid;
 
@@ -5421,57 +5596,35 @@ body[data-auth-mode] {
         center;
 
     gap:
-        0.25rem;
+        0.32rem;
 
     border-left:
         1px dashed
-        rgba(241, 239, 234, 0.34);
+        rgba(8, 8, 8, 0.28);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(var(--movie-color-primary-rgb), 0.16),
+            rgba(234, 227, 213, 0.98)
+        );
 }
 
 .weekly-ticket__stub::before,
 .weekly-ticket__stub::after {
-    content:
-        "";
-
-    position:
-        absolute;
-
-    left:
-        -10px;
-
-    width:
-        18px;
-
-    height:
-        18px;
-
-    border-radius:
-        50%;
-
-    background:
-        var(--color-background);
-
-    border:
-        1px solid
-        var(--color-line);
-}
-
-.weekly-ticket__stub::before {
-    top:
-        -10px;
-}
-
-.weekly-ticket__stub::after {
-    bottom:
-        -10px;
+    display:
+        none;
 }
 
 .weekly-ticket__stub strong {
     font-size:
-        1.65rem;
+        1.34rem;
 
     font-weight:
         500;
+
+    color:
+        #14110d;
 }
 
 /* =========================
@@ -5697,7 +5850,7 @@ body[data-auth-mode] {
         relative;
 
     width:
-        min(100%, 560px);
+        min(100%, 680px);
 
     height:
         78px;
@@ -5742,6 +5895,39 @@ body[data-auth-mode] {
 
     filter:
         blur(8px);
+}
+
+.screen-shape::before {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    left:
+        4%;
+
+    right:
+        4%;
+
+    top:
+        18px;
+
+    height:
+        110px;
+
+    background:
+        radial-gradient(
+            ellipse at top,
+            rgba(var(--movie-color-primary-rgb), 0.13),
+            transparent 68%
+        );
+
+    filter:
+        blur(14px);
+
+    opacity:
+        0.7;
 }
 
 .screen-shape span {
@@ -6103,16 +6289,73 @@ body[data-auth-mode] {
     display:
         grid;
 
+    grid-template-columns:
+        repeat(auto-fit, minmax(240px, 300px));
+
     gap:
-        1rem;
+        clamp(1.2rem, 2.4vw, 2rem);
+
+    align-items:
+        start;
+
+    justify-content:
+        center;
 }
 
-.noir-ticket {
-    grid-template-columns:
-        minmax(220px, 420px) minmax(0, 1fr) 190px;
+.booking-page,
+.tickets-page {
+    overflow-x:
+        clip;
+}
 
-    min-height:
-        228px;
+.ticket-stack:has(.cinema-ticket:only-child) {
+    grid-template-columns:
+        minmax(280px, 320px);
+
+    justify-content:
+        center;
+}
+
+.cinema-ticket {
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    display:
+        grid;
+
+    grid-template-rows:
+        65% 35%;
+
+    width:
+        min(100%, 320px);
+
+    height:
+        580px;
+
+    border-radius:
+        3px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f1eee4,
+            #d9d2c3
+        ),
+        #eee7d8;
+
+    box-shadow:
+        0 20px 64px rgba(0, 0, 0, 0.34),
+        0 24px 86px rgba(var(--movie-color-primary-rgb), 0.11);
+
+    cursor:
+        pointer;
+
+    transition:
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
 
     --movie-color-primary:
         #8a7a68;
@@ -6125,13 +6368,79 @@ body[data-auth-mode] {
 
     --movie-color-secondary-rgb:
         53, 48, 43;
-
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.045),
-        0 24px 80px rgba(var(--movie-color-primary-rgb), 0.08);
 }
 
-.noir-ticket::before {
+.cinema-ticket::before,
+.cinema-ticket::after {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        calc(65% - 18px);
+
+    z-index:
+        4;
+
+    width:
+        36px;
+
+    height:
+        36px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--color-background);
+}
+
+.cinema-ticket::before {
+    left:
+        -19px;
+}
+
+.cinema-ticket::after {
+    right:
+        -19px;
+}
+
+.cinema-ticket:hover,
+.cinema-ticket:has(.cinema-ticket__open:focus-visible) {
+    box-shadow:
+        0 22px 72px rgba(0, 0, 0, 0.38),
+        0 28px 96px rgba(var(--movie-color-primary-rgb), 0.17);
+
+    transform:
+        translateY(-3px);
+}
+
+.cinema-ticket:has(.cinema-ticket__open:focus-visible) {
+    outline:
+        2px solid
+        rgba(var(--movie-color-primary-rgb), 0.9);
+
+    outline-offset:
+        4px;
+}
+
+.cinema-ticket.is-highlighted {
+    box-shadow:
+        0 22px 72px rgba(0, 0, 0, 0.4),
+        0 28px 96px rgba(var(--movie-color-primary-rgb), 0.2);
+}
+
+.cinema-ticket__poster {
+    position:
+        relative;
+
+    overflow:
+        hidden;
+}
+
+.cinema-ticket__poster::after {
     content:
         "";
 
@@ -6139,79 +6448,263 @@ body[data-auth-mode] {
         absolute;
 
     inset:
-        0;
+        auto 0 0;
 
-    pointer-events:
-        none;
+    height:
+        34%;
 
     background:
-        repeating-linear-gradient(
-            0deg,
-            rgba(255, 255, 255, 0.028) 0 1px,
-            transparent 1px 9px
-        ),
-        radial-gradient(
-            circle at 24% 20%,
-            rgba(var(--movie-color-primary-rgb), 0.18),
-            transparent 34%
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(8, 8, 8, 0.16)
         );
-
-    opacity:
-        0.72;
 }
 
-.noir-ticket.is-highlighted {
-    border-color:
-        rgba(var(--movie-color-primary-rgb), 0.82);
+.cinema-ticket__poster img {
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        cover;
+
+    object-position:
+        center top;
+
+    display:
+        block;
+
+    filter:
+        saturate(0.74) contrast(1.04);
+
+    transition:
+        filter var(--transition-normal),
+        transform var(--transition-normal);
 }
 
-.noir-ticket__body {
+.cinema-ticket__open {
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    z-index:
+        3;
+
+    border:
+        0;
+
+    padding:
+        0;
+
+    background:
+        transparent;
+
+    cursor:
+        pointer;
+}
+
+.cinema-ticket__open:focus-visible {
+    outline:
+        2px solid
+        rgba(var(--movie-color-primary-rgb), 0.9);
+
+    outline-offset:
+        -6px;
+}
+
+.cinema-ticket:hover .cinema-ticket__poster,
+.cinema-ticket:has(.cinema-ticket__open:focus-visible) .cinema-ticket__poster {
+    transform:
+        none;
+}
+
+.cinema-ticket:hover .cinema-ticket__poster img,
+.cinema-ticket:has(.cinema-ticket__open:focus-visible) .cinema-ticket__poster img {
+    filter:
+        saturate(0.95) contrast(1.11) brightness(1.06);
+
+    transform:
+        scale(1.01);
+}
+
+.cinema-ticket__info {
     position:
         relative;
 
     z-index:
-        1;
+        2;
 
     display:
         grid;
 
     align-content:
-        center;
+        start;
 
     gap:
-        0.45rem;
+        0.38rem;
 
     padding:
-        1.5rem;
+        0.95rem 1.1rem 1rem;
 
-    border-left:
-        1px solid
-        rgba(var(--movie-color-primary-rgb), 0.18);
+    border-top:
+        1px dashed
+        rgba(8, 8, 8, 0.28);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.76),
+            rgba(234, 227, 213, 0.98)
+        );
+
+    color:
+        #14110d;
 }
 
-.noir-ticket__body h3 {
-    margin:
-        0.2rem 0;
+.cinema-ticket__info::before {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    left:
+        1.25rem;
+
+    right:
+        1.25rem;
+
+    top:
+        0;
+
+    height:
+        1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(var(--movie-color-primary-rgb), 0.56),
+            transparent
+        );
+}
+
+.cinema-ticket__status-row {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        1rem;
+}
+
+.cinema-ticket__status,
+.cinema-ticket__sequence,
+.cinema-ticket__runtime,
+.cinema-ticket__info p,
+.cinema-ticket__info small,
+.cinema-ticket__info code {
+    color:
+        rgba(20, 17, 13, 0.62);
 
     font-size:
-        clamp(1.6rem, 4vw, 3rem);
+        0.7rem;
+
+    letter-spacing:
+        0.12em;
+
+    text-transform:
+        uppercase;
+}
+
+.cinema-ticket__status {
+    color:
+        #14110d;
+}
+
+.cinema-ticket__runtime {
+    justify-self:
+        center;
+}
+
+.cinema-ticket__info h3 {
+    margin:
+        0.04rem 0 0.16rem;
+
+    font-size:
+        1.55rem;
 
     font-weight:
         500;
 
     line-height:
-        0.94;
+        0.96;
 }
 
-.noir-ticket__body p,
-.noir-ticket__body small,
-.noir-ticket__stub small,
-.noir-ticket__stub span {
+.cinema-ticket__info p,
+.cinema-ticket__info small {
     margin:
         0;
+}
+
+.cinema-ticket__info strong {
+    margin:
+        0.2rem 0 0.12rem;
 
     color:
-        var(--color-text-muted);
+        #14110d;
+
+    font-size:
+        0.9rem;
+
+    font-weight:
+        500;
+
+    letter-spacing:
+        0.12em;
+
+    text-transform:
+        uppercase;
+}
+
+.cinema-ticket__pay {
+    position:
+        relative;
+
+    z-index:
+        5;
+
+    justify-self:
+        start;
+
+    margin:
+        0.3rem 0;
+
+    border:
+        1px solid
+        rgba(20, 17, 13, 0.28);
+
+    padding:
+        0.55rem 0.85rem;
+
+    background:
+        rgba(var(--movie-color-primary-rgb), 0.16);
+
+    color:
+        #14110d;
+
+    cursor:
+        pointer;
 
     font-size:
         0.72rem;
@@ -6221,41 +6714,49 @@ body[data-auth-mode] {
 
     text-transform:
         uppercase;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast);
 }
 
-.noir-ticket__body small {
-    margin-top:
-        0.9rem;
+.cinema-ticket__pay:hover,
+.cinema-ticket__pay:focus-visible {
+    border-color:
+        rgba(20, 17, 13, 0.44);
 
+    background:
+        rgba(var(--movie-color-primary-rgb), 0.26);
+}
+
+.cinema-ticket__info code {
     color:
-        rgba(241, 239, 234, 0.46);
+        rgba(20, 17, 13, 0.68);
+
+    font-family:
+        var(--font-main);
 }
 
-.noir-ticket__stub {
-    z-index:
-        1;
-
-    padding:
+.ticket-message {
+    min-height:
         1rem;
 
-    border-left-color:
-        rgba(var(--movie-color-primary-rgb), 0.5);
-}
-
-.noir-ticket__stub strong {
-    font-size:
-        1.4rem;
-
-    letter-spacing:
-        0.18em;
-}
-
-.noir-ticket__stub span {
     color:
         var(--color-text);
 
-    text-align:
-        center;
+    font-size:
+        0.72rem;
+
+    letter-spacing:
+        0.14em;
+
+    text-transform:
+        uppercase;
+}
+
+.ticket-message.is-error {
+    color:
+        #d89090;
 }
 
 .ticket-barcode {
@@ -6281,9 +6782,588 @@ body[data-auth-mode] {
         0.72;
 }
 
-.noir-ticket:hover .ticket-barcode {
+/* =========================
+   TICKET MODAL / PAYMENT
+========================= */
+
+.cinema-ticket .ticket-barcode {
+    width:
+        100%;
+
+    height:
+        34px;
+
+    margin:
+        0.35rem 0 0.2rem;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(20, 17, 13, 0.82) 0 2px,
+            transparent 2px 5px,
+            rgba(var(--movie-color-primary-rgb), 0.78) 5px 7px,
+            transparent 7px 11px
+        );
+
+    opacity:
+        0.68;
+}
+
+.cinema-ticket:hover .ticket-barcode,
+.cinema-ticket:has(.cinema-ticket__open:focus-visible) .ticket-barcode {
     opacity:
         0.9;
+}
+
+.ticket-modal {
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        80;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    padding:
+        1.5rem;
+
+    pointer-events:
+        none;
+
+    opacity:
+        0;
+
+    transition:
+        opacity var(--transition-fast);
+
+    --movie-color-primary:
+        #8a7a68;
+
+    --movie-color-secondary:
+        #35302b;
+
+    --movie-color-primary-rgb:
+        138, 122, 104;
+
+    --movie-color-secondary-rgb:
+        53, 48, 43;
+}
+
+.ticket-modal.is-open {
+    pointer-events:
+        auto;
+
+    opacity:
+        1;
+}
+
+.ticket-modal__overlay {
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    background:
+        rgba(8, 8, 8, 0.82);
+
+    backdrop-filter:
+        blur(16px);
+}
+
+.ticket-modal__panel {
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    width:
+        min(860px, 100%);
+
+    border:
+        1px solid
+        rgba(var(--movie-color-primary-rgb), 0.42);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.07),
+            rgba(255, 255, 255, 0.018)
+        ),
+        #101010;
+
+    box-shadow:
+        0 40px 120px rgba(0, 0, 0, 0.62),
+        0 24px 90px rgba(var(--movie-color-primary-rgb), 0.12);
+}
+
+.ticket-modal__panel::before {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        -16%;
+
+    background-image:
+        radial-gradient(
+            circle at 26% 30%,
+            rgba(var(--movie-color-primary-rgb), 0.24),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 76% 20%,
+            rgba(var(--movie-color-secondary-rgb), 0.2),
+            transparent 32%
+        ),
+        var(--ticket-backdrop);
+
+    background-size:
+        cover;
+
+    background-position:
+        center;
+
+    filter:
+        blur(34px) saturate(0.82);
+
+    opacity:
+        0.28;
+}
+
+.ticket-modal__close {
+    position:
+        absolute;
+
+    top:
+        1rem;
+
+    right:
+        1rem;
+
+    z-index:
+        3;
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    border:
+        1px solid
+        rgba(241, 239, 234, 0.28);
+
+    background:
+        rgba(8, 8, 8, 0.46);
+
+    color:
+        var(--color-text);
+
+    cursor:
+        pointer;
+
+    font-size:
+        1.25rem;
+}
+
+.ticket-modal__content {
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(170px, 260px) minmax(0, 1fr);
+
+    gap:
+        clamp(1.4rem, 4vw, 3rem);
+
+    align-items:
+        center;
+
+    padding:
+        clamp(1.5rem, 5vw, 4rem);
+}
+
+.ticket-modal__poster img {
+    width:
+        100%;
+
+    aspect-ratio:
+        2 / 3;
+
+    object-fit:
+        cover;
+
+    box-shadow:
+        0 24px 70px rgba(var(--movie-color-primary-rgb), 0.18);
+}
+
+.ticket-modal__details {
+    display:
+        grid;
+
+    gap:
+        0.75rem;
+}
+
+.ticket-modal__details span,
+.ticket-modal__details p,
+.ticket-modal__details dt,
+.ticket-modal__message,
+.ticket-modal__admit {
+    margin:
+        0;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.74rem;
+
+    letter-spacing:
+        0.13em;
+
+    text-transform:
+        uppercase;
+}
+
+.ticket-modal__details h2 {
+    margin:
+        0;
+
+    max-width:
+        520px;
+
+    font-size:
+        clamp(2rem, 6vw, 4.4rem);
+
+    font-weight:
+        500;
+
+    line-height:
+        0.92;
+}
+
+.ticket-modal__details strong {
+    color:
+        var(--color-text);
+
+    font-size:
+        1rem;
+
+    font-weight:
+        500;
+
+    letter-spacing:
+        0.14em;
+
+    text-transform:
+        uppercase;
+}
+
+.ticket-modal__details dl {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        1rem;
+
+    margin:
+        0.9rem 0 0;
+}
+
+.ticket-modal__details dd {
+    margin:
+        0.3rem 0 0;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        1.25rem;
+}
+
+.ticket-modal__message {
+    display:
+        none;
+
+    color:
+        #d89090;
+}
+
+.ticket-modal__message.is-visible {
+    display:
+        block;
+}
+
+.ticket-modal__pay {
+    justify-self:
+        start;
+
+    margin-top:
+        0.5rem;
+}
+
+.ticket-modal__actions {
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    align-items:
+        center;
+
+    gap:
+        0.85rem;
+
+    margin-top:
+        0.4rem;
+}
+
+.ticket-modal__pay::after {
+    background:
+        var(--movie-color-primary);
+}
+
+.ticket-modal__admit,
+.ticket-modal__cancel,
+.ticket-modal__keep {
+    color:
+        var(--color-text);
+}
+
+.ticket-modal__cancel,
+.ticket-modal__keep {
+    border:
+        0;
+
+    padding:
+        0;
+
+    background:
+        transparent;
+
+    cursor:
+        pointer;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        0.72rem;
+
+    letter-spacing:
+        0.13em;
+
+    text-transform:
+        uppercase;
+}
+
+.ticket-modal__cancel:hover,
+.ticket-modal__cancel:focus-visible,
+.ticket-modal__keep:hover,
+.ticket-modal__keep:focus-visible {
+    color:
+        var(--color-text);
+}
+
+.ticket-modal__confirm {
+    display:
+        grid;
+
+    gap:
+        0.35rem;
+
+    margin-top:
+        0.35rem;
+
+    padding:
+        0.9rem 0;
+
+    border-top:
+        1px solid
+        rgba(241, 239, 234, 0.18);
+
+    border-bottom:
+        1px solid
+        rgba(241, 239, 234, 0.18);
+}
+
+.ticket-modal__confirm strong {
+    font-size:
+        0.86rem;
+}
+
+.ticket-modal__confirm small {
+    color:
+        var(--color-text);
+
+    font-size:
+        0.78rem;
+
+    letter-spacing:
+        0.12em;
+
+    text-transform:
+        uppercase;
+}
+
+/* =========================
+   BOOKING AISLE
+========================= */
+
+.booking-seat-viewport {
+    width:
+        100%;
+
+    margin:
+        0 auto;
+
+    overflow-x:
+        visible;
+
+    overflow-y:
+        visible;
+}
+
+.cinema-layout {
+    width:
+        max-content;
+
+    margin:
+        0 auto;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        auto 92px;
+
+    align-items:
+        flex-start;
+
+    gap:
+        clamp(1rem, 2.8vw, 2rem);
+}
+
+.cinema-seat-map {
+    margin:
+        0;
+}
+
+.cinema-aisle {
+    display:
+        grid;
+
+    justify-items:
+        end;
+
+    gap:
+        0.42rem;
+
+    min-width:
+        92px;
+
+    padding-top:
+        0.1rem;
+
+    color:
+        rgba(149, 175, 142, 0.78);
+}
+
+.cinema-exit {
+    display:
+        block;
+
+    margin-bottom:
+        0.28rem;
+
+    color:
+        rgba(149, 175, 142, 0.9);
+
+    font-size:
+        0.62rem;
+
+    letter-spacing:
+        0.14em;
+
+    text-transform:
+        uppercase;
+}
+
+.cinema-stairs {
+    display:
+        grid;
+
+    justify-items:
+        end;
+
+    gap:
+        0.42rem;
+}
+
+.cinema-stairs span {
+    display:
+        block;
+
+    width:
+        calc(24px + (var(--step-index, 0) * 11px));
+
+    height:
+        13px;
+
+    border-right:
+        1px solid
+        rgba(241, 239, 234, 0.28);
+
+    border-bottom:
+        1px solid
+        rgba(241, 239, 234, 0.28);
+}
+
+.cinema-stairs span:nth-child(1) {
+    --step-index:
+        1;
+}
+
+.cinema-stairs span:nth-child(2) {
+    --step-index:
+        2;
+}
+
+.cinema-stairs span:nth-child(3) {
+    --step-index:
+        3;
+}
+
+.cinema-stairs span:nth-child(4) {
+    --step-index:
+        4;
+}
+
+.cinema-stairs span:nth-child(5) {
+    --step-index:
+        5;
 }
 
 @media (max-width: 1100px) {
@@ -6306,10 +7386,7 @@ body[data-auth-mode] {
 @media (max-width: 900px) {
 
     .screenings__location,
-    .booking-shell,
-    .screening-ticket,
-    .weekly-ticket,
-    .noir-ticket {
+    .booking-shell {
         grid-template-columns:
             1fr;
     }
@@ -6341,73 +7418,102 @@ body[data-auth-mode] {
 
     .seat-theater {
         overflow-x:
-            auto;
+            hidden;
 
         padding-bottom:
             0.8rem;
     }
 
-    .screening-ticket__stub,
-    .weekly-ticket__stub,
-    .noir-ticket__stub {
-        min-height:
-            112px;
-
-        border-left:
+    .seat-theater > .section__eyebrow,
+    .seat-theater > h1,
+    .seat-theater > p {
+        display:
             none;
-
-        border-top:
-            1px dashed
-            rgba(241, 239, 234, 0.36);
     }
 
-    .screening-ticket__stub::before,
-    .screening-ticket__stub::after,
-    .weekly-ticket__stub::before,
-    .weekly-ticket__stub::after,
-    .noir-ticket__stub::before,
-    .noir-ticket__stub::after {
+    .seat-theater h1 {
+        font-size:
+            clamp(2rem, 9vw, 4rem);
+    }
+
+    .booking-seat-viewport {
+        width:
+            100%;
+
+        overflow-x:
+            auto;
+
+        overflow-y:
+            visible;
+
+        padding:
+            0.15rem 0.4rem 0.9rem;
+
+        scrollbar-gutter:
+            stable;
+    }
+
+    .cinema-layout {
+        margin:
+            0 auto;
+    }
+
+    .cinema-aisle {
+        min-width:
+            72px;
+    }
+
+    .screening-function-layout {
+        grid-template-columns:
+            1fr;
+
+        gap:
+            1.6rem;
+    }
+
+    .screening-summary {
+        grid-template-columns:
+            minmax(0, 1fr) auto;
+    }
+
+    .ticket-list,
+    .weekly-ticket-list {
+        grid-template-columns:
+            repeat(auto-fit, minmax(210px, 270px));
+    }
+
+    .ticket-stack {
+        grid-template-columns:
+            repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+    }
+
+    .ticket-stack:has(.cinema-ticket:only-child) {
+        grid-template-columns:
+            minmax(280px, 320px);
+    }
+
+    .cinema-ticket {
+        height:
+            560px;
+    }
+
+    .cinema-ticket::before,
+    .cinema-ticket::after {
         top:
-            -10px;
-
-        left:
-            auto;
+            calc(65% - 18px);
     }
 
-    .screening-ticket__stub::before,
-    .weekly-ticket__stub::before,
-    .noir-ticket__stub::before {
-        left:
-            -10px;
+    .ticket-modal__content {
+        grid-template-columns:
+            132px minmax(0, 1fr);
+
+        align-items:
+            start;
     }
 
-    .screening-ticket__stub::after,
-    .weekly-ticket__stub::after,
-    .noir-ticket__stub::after {
-        right:
-            -10px;
-
-        bottom:
-            auto;
-    }
-
-    .weekly-ticket__number {
-        min-height:
-            42px;
-
-        border-right:
-            none;
-
-        border-bottom:
-            1px solid
-            var(--color-line);
-    }
-
-    .weekly-ticket__image,
-    .screening-ticket__image,
-    .noir-ticket__image {
-        min-height:
-            148px;
+    .ticket-modal__details dl {
+        grid-template-columns:
+            1fr;
     }
 
 }
@@ -6424,8 +7530,16 @@ body[data-auth-mode] {
         align-items:
             flex-start;
 
-        flex-direction:
-            column;
+        grid-template-columns:
+            1fr;
+    }
+
+    .screening-summary .button {
+        width:
+            100%;
+
+        justify-content:
+            center;
     }
 
     .screening-month strong {
@@ -6435,10 +7549,10 @@ body[data-auth-mode] {
 
     .screening-date {
         flex-basis:
-            70px;
+            74px;
 
         min-height:
-            86px;
+            96px;
     }
 
     .seat-map {
@@ -6446,20 +7560,232 @@ body[data-auth-mode] {
             430px;
     }
 
-    .seat {
-        width:
-            38px;
+    .booking-shell {
+        gap:
+            1.4rem;
+    }
+
+    .booking-poster {
+        grid-template-columns:
+            82px 1fr;
+
+        align-items:
+            center;
+
+        padding-top:
+            0.8rem;
+
+        row-gap:
+            0.25rem;
+    }
+
+    .booking-poster strong {
+        font-size:
+            1rem;
+
+        line-height:
+            1.1;
+    }
+
+    .screen-shape {
+        height:
+            66px;
+
+        margin:
+            1.2rem auto 1.35rem;
+    }
+
+    .screen-shape::after {
+        left:
+            8%;
+
+        right:
+            8%;
 
         height:
-            34px;
+            48px;
+
+        filter:
+            blur(6px);
+    }
+
+    .screen-shape::before {
+        left:
+            6%;
+
+        right:
+            6%;
+
+        height:
+            82px;
+
+        filter:
+            blur(10px);
+
+        opacity:
+            0.52;
+    }
+
+    .cinema-layout {
+        grid-template-columns:
+            auto 64px;
+
+        gap:
+            0.75rem;
+
+        margin:
+            0 auto;
+    }
+
+    .seat {
+        width:
+            40px;
+
+        height:
+            36px;
 
         font-size:
-            0.62rem;
+            0.64rem;
     }
 
     .seat--after-aisle {
         margin-left:
-            0.8rem;
+            0.9rem;
+    }
+
+    .seat-row {
+        gap:
+            0.62rem;
+    }
+
+    .seat-row__seats {
+        gap:
+            0.4rem;
+    }
+
+    .cinema-aisle {
+        min-width:
+            64px;
+
+        padding-top:
+            0;
+    }
+
+    .cinema-exit {
+        font-size:
+            0.58rem;
+
+        letter-spacing:
+            0.12em;
+    }
+
+    .cinema-stairs span {
+        width:
+            calc(18px + (var(--step-index, 0) * 8px));
+
+        height:
+            11px;
+    }
+
+    .seat-legend {
+        display:
+            grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap:
+            0.65rem 0.9rem;
+
+        margin:
+            1.35rem auto 0;
+
+        text-align:
+            left;
+    }
+
+    .seat-legend span {
+        justify-content:
+            flex-start;
+    }
+
+    .booking-summary {
+        gap:
+            0.85rem;
+
+        border-top-color:
+            rgba(var(--movie-color-primary-rgb), 0.42);
+
+        padding-top:
+            1rem;
+    }
+
+    .booking-summary strong {
+        min-height:
+            auto;
+
+        font-size:
+            1.12rem;
+    }
+
+    #bookingTotal {
+        font-size:
+            1.65rem;
+    }
+
+    .booking-summary .button {
+        width:
+            100%;
+
+        min-height:
+            48px;
+    }
+
+    .ticket-stack {
+        grid-template-columns:
+            minmax(0, 1fr);
+
+        justify-items:
+            center;
+    }
+
+    .cinema-ticket {
+        width:
+            min(95%, 320px);
+
+        height:
+            550px;
+    }
+
+    .cinema-ticket__info h3 {
+        font-size:
+            1.65rem;
+    }
+
+    .ticket-modal {
+        padding:
+            1rem;
+    }
+
+    .ticket-modal__content {
+        grid-template-columns:
+            1fr;
+
+        gap:
+            1.2rem;
+
+        padding:
+            4.5rem 1.1rem 1.3rem;
+    }
+
+    .ticket-modal__poster {
+        width:
+            118px;
+    }
+
+    .ticket-modal__details h2 {
+        font-size:
+            2rem;
     }
 
 }
