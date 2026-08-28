@@ -218,6 +218,12 @@ function createInfoList(items) {
         "detail-facts";
 
     items.forEach(([label, value]) => {
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "detail-fact";
+
         const term =
             document.createElement("dt");
 
@@ -230,10 +236,28 @@ function createInfoList(items) {
         description.textContent =
             value || "TBA";
 
-        list.append(term, description);
+        item.append(term, description);
+        list.append(item);
     });
 
     return list;
+
+}
+
+
+function isVisibleMetaValue(value) {
+
+    if (value === undefined || value === null) {
+        return false;
+    }
+
+    const normalized =
+        String(value).trim();
+
+    return normalized !== "" &&
+        normalized.toLowerCase() !== "undefined" &&
+        normalized.toLowerCase() !== "null" &&
+        normalized.toLowerCase() !== "nan";
 
 }
 
@@ -802,15 +826,20 @@ async function loadMovieFunctions(movie, target) {
                 const parts =
                     formatDateParts(selectedFunction.date);
 
+                const metaItems =
+                    [
+                        getRoomLabel(room),
+                        parts.year,
+                        formatCurrency(selectedFunction.price),
+                        `${availabilityByFunction.get(selectedFunction.id) || 0} seats available`
+                    ].filter(isVisibleMetaValue);
+
                 summary.innerHTML =
                     `<div class="screening-summary__details">
                         <span>Your Screening</span>
                         <strong>${parts.month} ${parts.day} / ${selectedFunction.time}</strong>
                         <div class="screening-summary__meta">
-                            <small>${getRoomLabel(room)}</small>
-                            <small>${parts.year}</small>
-                            <small>${formatCurrency(selectedFunction.price)}</small>
-                            <small>${availabilityByFunction.get(selectedFunction.id) || 0} seats available</small>
+                            ${metaItems.map((item) => `<small>${item}</small>`).join("")}
                         </div>
                     </div>
                     <a class="button button--primary" href="./booking.html?functionId=${selectedFunction.id}">
@@ -1197,13 +1226,15 @@ function renderMovieDetail(payload) {
     const similarSection =
         createSection("Similar");
 
-    similarSection.body.classList.add("movies-grid", "movies-grid--rail");
+    similarSection.section.classList.add("detail-section--related");
+    similarSection.body.classList.add("movies-grid", "movies-grid--rail", "detail-related-grid");
     renderRail(similarSection.body, similar.results || []);
 
     const recommendationsSection =
         createSection("Recommendations");
 
-    recommendationsSection.body.classList.add("movies-grid", "movies-grid--rail");
+    recommendationsSection.section.classList.add("detail-section--related");
+    recommendationsSection.body.classList.add("movies-grid", "movies-grid--rail", "detail-related-grid");
     renderRail(recommendationsSection.body, recommendations.results || []);
 
     const screeningsSection =
