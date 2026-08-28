@@ -415,7 +415,7 @@ function renderMonthSelector(container, currentMonth, onMonthChange) {
         document.createElement("strong");
 
     label.textContent =
-        getMonthLabel(currentMonth);
+        getMonthLabel(currentMonth).replace(" ", " / ");
 
     const next =
         document.createElement("button");
@@ -591,7 +591,7 @@ function renderWeeklyReleaseTickets(container, movies, week) {
             document.createElement("a");
 
         link.className =
-            "weekly-ticket";
+            "weekly-ticket cinema-ticket--compact";
 
         link.href =
             `./movie.html?id=${movie.id}`;
@@ -659,7 +659,7 @@ function renderOtherScreenings(container, functions, roomsById, availabilityByFu
             document.createElement("a");
 
         ticket.className =
-            "screening-ticket";
+            "screening-ticket cinema-ticket--compact";
 
         ticket.href =
             `./booking.html?functionId=${movieFunction.id}`;
@@ -765,13 +765,17 @@ async function loadMovieFunctions(movie, target) {
         summary.className =
             "screening-summary";
 
-        const functionLayout =
+        const selector =
             document.createElement("div");
 
-        functionLayout.className =
-            "screening-function-layout";
+        selector.className =
+            "screening-selector";
 
-        functionLayout.append(summary, target.other);
+        const booth =
+            document.createElement("div");
+
+        booth.className =
+            "screening-booth";
 
         let functions =
             [];
@@ -795,12 +799,16 @@ async function loadMovieFunctions(movie, target) {
                 const room =
                     roomsById.get(Number(selectedFunction.roomId));
 
+                const parts =
+                    formatDateParts(selectedFunction.date);
+
                 summary.innerHTML =
                     `<div class="screening-summary__details">
-                        <span>Selected Function</span>
-                        <strong>${formatDateParts(selectedFunction.date).full} / ${selectedFunction.time}</strong>
+                        <span>Your Screening</span>
+                        <strong>${parts.month} ${parts.day} / ${selectedFunction.time}</strong>
                         <div class="screening-summary__meta">
                             <small>${getRoomLabel(room)}</small>
+                            <small>${parts.year}</small>
                             <small>${formatCurrency(selectedFunction.price)}</small>
                             <small>${availabilityByFunction.get(selectedFunction.id) || 0} seats available</small>
                         </div>
@@ -940,7 +948,10 @@ async function loadMovieFunctions(movie, target) {
                 <strong>${rooms.map(getRoomLabel).join(" / ")}</strong>
             </div>`;
 
-        target.body.replaceChildren(location, monthSelector, dates, times, functionLayout);
+        selector.append(monthSelector, dates, times, summary);
+        booth.append(selector, target.other);
+
+        target.body.replaceChildren(location, booth);
         await reloadForSelectedDate();
 
     } catch (error) {
