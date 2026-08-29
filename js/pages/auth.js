@@ -18,6 +18,15 @@ import {
 const EMAIL_PATTERN =
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const PASSAGE_MESSAGES =
+    [
+        "TAKE YOUR SEAT.",
+        "ENTER NOIR.",
+        "THE FILM IS ABOUT TO BEGIN.",
+        "FOLLOW THE LIGHT.",
+        "THE SCREEN IS WAITING."
+    ];
+
 
 function getElement(selector) {
 
@@ -137,6 +146,45 @@ function observeEditorialVideos() {
     videos.forEach((video) => {
         observer.observe(video);
     });
+
+}
+
+
+function initializePassageMessage() {
+
+    if (getAuthMode() !== "login") {
+        return;
+    }
+
+    const message =
+        getElement("[data-passage-message]");
+
+    if (!message) {
+        return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        message.textContent =
+            PASSAGE_MESSAGES[0];
+        return;
+    }
+
+    let messageIndex =
+        0;
+
+    window.setInterval(() => {
+        message.classList.add("is-fading");
+
+        window.setTimeout(() => {
+            messageIndex =
+                (messageIndex + 1) % PASSAGE_MESSAGES.length;
+
+            message.textContent =
+                PASSAGE_MESSAGES[messageIndex];
+
+            message.classList.remove("is-fading");
+        }, 900);
+    }, 5200);
 
 }
 
@@ -330,5 +378,6 @@ function initializeAuthForm() {
 
 loadEditorialMovies();
 observeEditorialVideos();
+initializePassageMessage();
 initializeFilmGrain();
 initializeAuthForm();
