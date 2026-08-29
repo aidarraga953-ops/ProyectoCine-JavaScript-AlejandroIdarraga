@@ -5433,6 +5433,9 @@ body[data-auth-mode] {
 .screenings-section.detail-section {
     padding:
         clamp(3rem, 5vw, 4.75rem) 0;
+
+    border-top:
+        0;
 }
 
 .screenings-section
@@ -5448,11 +5451,14 @@ body[data-auth-mode] {
     position:
         relative;
 
+    isolation:
+        isolate;
+
     overflow:
-        hidden;
+        visible;
 
     background:
-        #080808;
+        transparent;
 
     --movie-color-primary:
         #8a7a68;
@@ -5478,28 +5484,24 @@ body[data-auth-mode] {
         absolute;
 
     inset:
-        -18% calc(50% - 50vw) -10%;
+        0 calc(50% - 50vw);
 
     z-index:
-        0;
+        -1;
 
     background:
+        #080808;
+
+    background-image:
         radial-gradient(
-            ellipse at 32% 40%,
+            ellipse at 30% 35%,
             rgba(var(--movie-color-primary-rgb), 0.16),
-            transparent 48%
+            transparent 68%
         ),
         radial-gradient(
             ellipse at 74% 72%,
             rgba(var(--movie-color-secondary-rgb), 0.095),
-            transparent 46%
-        ),
-        linear-gradient(
-            180deg,
-            var(--color-background) 0%,
-            rgba(8, 8, 8, 0.78) 18%,
-            rgba(8, 8, 8, 0.94) 62%,
-            var(--color-background) 100%
+            transparent 66%
         );
 
     background-size:
@@ -5512,7 +5514,7 @@ body[data-auth-mode] {
         1;
 
     filter:
-        blur(18px) saturate(0.7);
+        saturate(0.7);
 }
 
 .screenings {
@@ -8619,21 +8621,17 @@ body[data-auth-mode] {
 
     .screenings-section::before {
         background:
+            #080808;
+
+        background-image:
             radial-gradient(
                 ellipse at 50% 34%,
                 rgba(var(--movie-color-primary-rgb), 0.09),
-                transparent 58%
-            ),
-            linear-gradient(
-                180deg,
-                var(--color-background) 0%,
-                rgba(8, 8, 8, 0.92) 24%,
-                rgba(8, 8, 8, 0.98) 70%,
-                var(--color-background) 100%
+                transparent 70%
             );
 
         filter:
-            blur(10px) saturate(0.62);
+            saturate(0.62);
     }
 
     .screening-booth {
@@ -9550,26 +9548,22 @@ body[data-auth-mode] {
 
     .screenings-section::before {
         background:
+            #080808;
+
+        background-image:
             radial-gradient(
-                ellipse at 42% 36%,
+                ellipse at 34% 36%,
                 rgba(var(--movie-color-primary-rgb), 0.12),
-                transparent 54%
+                transparent 68%
             ),
             radial-gradient(
                 ellipse at 72% 76%,
                 rgba(var(--movie-color-secondary-rgb), 0.07),
-                transparent 50%
-            ),
-            linear-gradient(
-                180deg,
-                var(--color-background) 0%,
-                rgba(8, 8, 8, 0.86) 22%,
-                rgba(8, 8, 8, 0.96) 66%,
-                var(--color-background) 100%
+                transparent 64%
             );
 
         filter:
-            blur(14px) saturate(0.68);
+            saturate(0.68);
     }
 
     .filters-panel {
