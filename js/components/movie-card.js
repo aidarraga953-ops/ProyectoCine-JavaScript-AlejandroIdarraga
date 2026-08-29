@@ -62,16 +62,13 @@ function getMediaHref(item, mediaType = "movie") {
 }
 
 
-/**
- * Crea una tarjeta compatible con el diseno existente para peliculas o TV.
- */
-export function createMediaCard(item, mediaType = "movie") {
+function renderMediaCardContent(container, item, mediaType = "movie") {
 
-    const article =
-        document.createElement("article");
+    container.replaceChildren();
 
-    article.className =
-        "movie-card";
+    if (!item) {
+        return;
+    }
 
     const imageLink =
         document.createElement("a");
@@ -134,9 +131,123 @@ export function createMediaCard(item, mediaType = "movie") {
 
     info.append(title, year);
 
-    article.append(imageLink, info);
+    container.append(imageLink, info);
 
-    return article;
+}
+
+
+export class MovieCardElement extends HTMLElement {
+
+    constructor() {
+
+        super();
+
+        this._media =
+            null;
+
+        this._mediaType =
+            "movie";
+
+    }
+
+
+    connectedCallback() {
+
+        this.classList.add("movie-card");
+
+        if (!this.hasAttribute("role")) {
+            this.setAttribute("role", "article");
+        }
+
+        if (this._media && !this.hasChildNodes()) {
+            this.render();
+        }
+
+    }
+
+
+    set media(value) {
+
+        this._media =
+            value;
+
+        this.render();
+
+    }
+
+
+    get media() {
+
+        return this._media;
+
+    }
+
+
+    set movie(value) {
+
+        this._mediaType =
+            "movie";
+
+        this.media =
+            value;
+
+    }
+
+
+    get movie() {
+
+        return this._media;
+
+    }
+
+
+    set mediaType(value) {
+
+        this._mediaType =
+            value || "movie";
+
+        this.render();
+
+    }
+
+
+    get mediaType() {
+
+        return this._mediaType;
+
+    }
+
+
+    render() {
+
+        this.classList.add("movie-card");
+        renderMediaCardContent(this, this._media, this._mediaType);
+
+    }
+
+}
+
+
+if (!customElements.get("movie-card")) {
+    customElements.define("movie-card", MovieCardElement);
+}
+
+
+/**
+ * Crea una tarjeta compatible con el diseno existente para peliculas o TV.
+ */
+export function createMediaCard(item, mediaType = "movie") {
+
+    const card =
+        document.createElement("movie-card");
+
+    card.mediaType =
+        mediaType;
+
+    card.media =
+        item;
+
+    return card;
 
 }
 
