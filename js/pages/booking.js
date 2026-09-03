@@ -32,6 +32,32 @@ import {
 const selectedSeats =
     [];
 
+let time = 300;
+let timer;
+function startTimer() {
+    if (timer) return;
+    timer = setInterval(() => {
+        time--;
+
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+document.querySelector("#reservationTimer").textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+        if (time <= 0) {
+            clearInterval(timer);
+            timer = null;
+            time = 300;
+            
+            selectedSeats.splice(0);
+            renderSelectedSeats();
+            renderSeatMap();
+            getElement("#bookingMessage").textContent = "YOUR RESERVATION HAS EXPIRED. PLEASE SELECT AGAIN.";
+        }
+
+document.querySelector("#reservationTimer").textContent = "05:00";
+document.querySelector("#bookingMessage").textContent = "YOUR RESERVATION WILL EXPIRE IN 5 MINUTES. PLEASE COMPLETE YOUR PURCHASE OR RESERVATION.";
+    }, 1000);
+}   
 
 const state =
     {
@@ -143,6 +169,9 @@ function toggleSeat(seat, button) {
         button.setAttribute("aria-pressed", "false");
     } else {
         selectedSeats.push(seat);
+        if (selectedSeats.length === 1) {
+            startTimer();
+        }
         button.classList.add("is-selected");
         button.setAttribute("aria-pressed", "true");
     }
@@ -295,6 +324,10 @@ function renderBooking() {
             </section>
 
             <aside class="booking-summary" aria-live="polite">
+                <div class="booking-timer">
+                    <span>TIME LEFT </span>
+                    <strong id="reservationTimer">05:00</strong>
+                </div>
                 <span>Your Seats</span>
                 <strong id="selectedSeatsList">NO SEATS SELECTED</strong>
                 <div class="selected-seat-detail" id="selectedSeatsDetail"></div>
@@ -304,6 +337,12 @@ function renderBooking() {
                 <button class="button button--secondary" type="button" id="reserveButton">Reserve</button>
                 <button class="button button--primary" type="button" id="purchaseButton">Buy Tickets</button>
             </aside>
+            <dialog id="authModal">
+                <h2>Sign In to Continue</h2>
+                <p>You need to sign in to complete your booking.</p>
+                <a h.ref="./login.html" class="button button--primary">Sign In</a>
+                <button class="button button--primary" type="button" id="authModalClose">Close</button>
+            </dialog>
         </section>`;
 
     renderSeatMap();
@@ -366,6 +405,17 @@ async function completeCheckout(kind) {
 
     const currentUser =
         getCurrentUser();
+
+    if (!currentUser) {
+    document.getElementById("authModal").showModal();
+    return;
+    }
+    document.getElementById("authModalClose").addEventListener("click", () => {
+        document.getElementById("authModal").close();
+    });
+    
+
+    clearInterval(timer);
 
     if (!currentUser) {
         window.location.href =

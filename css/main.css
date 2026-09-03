@@ -10793,3 +10793,96 @@ body[data-auth-mode="login"]
             0.86rem;
     }
 }
+.booking-timer {
+    width: 100%;
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+
+    border-bottom: 1px solid
+        rgba(255, 255, 255, 0.16);
+}
+
+.booking-timer span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+
+    opacity: 0.55;
+}
+
+.booking-timer strong {
+    display: block;
+
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 1;
+
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.04em;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.booking-timer strong.is-ending {
+    animation: reservationWarning 1s infinite;
+}
+
+@keyframes reservationWarning {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.45;
+        transform: scale(0.97);
+    }
+}
+/* ↓ MODAL DE AUTENTICACIÓN */
+
+#authModal {
+    width: min(420px, 90%);
+    padding: 35px;
+
+    background: #111;
+    color: white;
+
+    border: 1px solid #444;
+    text-align: center;
+}
+
+#authModal::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+#authModal h2 {
+    margin-bottom: 10px;
+}
+
+#authModal p {
+    margin-bottom: 25px;
+    opacity: 0.7;
+}
+
+#authModal .button {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#closeAuthModal {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+#closeAuthModal:hover {
+    opacity: 1;
+}
