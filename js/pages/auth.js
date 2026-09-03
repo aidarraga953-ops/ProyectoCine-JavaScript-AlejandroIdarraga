@@ -51,6 +51,31 @@ function getHomeHref() {
 }
 
 
+function getRedirectHref() {
+
+    const redirect =
+        new URLSearchParams(window.location.search).get("redirect");
+
+    if (!redirect) {
+        return getHomeHref();
+    }
+
+    try {
+        const url =
+            new URL(redirect, window.location.origin);
+
+        if (url.origin !== window.location.origin) {
+            return getHomeHref();
+        }
+
+        return `${url.pathname}${url.search}${url.hash}`;
+    } catch {
+        return getHomeHref();
+    }
+
+}
+
+
 async function loadEditorialMovies() {
 
     const frames =
@@ -341,14 +366,14 @@ async function handleAuthSubmit(event) {
             saveCurrentUser(user);
             setFormState("Access created. Entering NOIR.");
             window.location.href =
-                getHomeHref();
+                getRedirectHref();
             return;
         }
 
         await loginUser(result.values);
         setFormState("Access granted.");
         window.location.href =
-            getHomeHref();
+            getRedirectHref();
     } catch (error) {
         console.error("Authentication unavailable.", error);
         setFormState(getAuthErrorMessage(error, mode));

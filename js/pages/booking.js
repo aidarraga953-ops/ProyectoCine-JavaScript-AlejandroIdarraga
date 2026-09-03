@@ -32,32 +32,86 @@ import {
 const selectedSeats =
     [];
 
-let time = 300;
-let timer;
-function startTimer() {
-    if (timer) return;
-    timer = setInterval(() => {
-        time--;
+const RESERVATION_TIME_SECONDS =
+    300;
 
-        const minutes = Math.floor(time / 60);
-        const seconds = time % 60;
-document.querySelector("#reservationTimer").textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+let time =
+    RESERVATION_TIME_SECONDS;
+
+let timer;
+
+
+function updateTimerDisplay() {
+
+    const timerElement =
+        getElement("#reservationTimer");
+
+    if (!timerElement) {
+        return;
+    }
+
+    const minutes =
+        Math.floor(time / 60);
+
+    const seconds =
+        time % 60;
+
+    timerElement.textContent =
+        `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+}
+
+
+function stopTimer(resetTime = true) {
+
+    window.clearInterval(timer);
+    timer =
+        null;
+
+    if (resetTime) {
+        time =
+            RESERVATION_TIME_SECONDS;
+
+        updateTimerDisplay();
+    }
+
+}
+
+
+function startTimer() {
+
+    if (timer) {
+        return;
+    }
+
+    const message =
+        getElement("#bookingMessage");
+
+    if (message) {
+        message.textContent =
+            "YOUR RESERVATION WILL EXPIRE IN 5 MINUTES. PLEASE COMPLETE YOUR PURCHASE OR RESERVATION.";
+    }
+
+    updateTimerDisplay();
+
+    timer =
+        window.setInterval(() => {
+            time -=
+                1;
+
+            updateTimerDisplay();
 
         if (time <= 0) {
-            clearInterval(timer);
-            timer = null;
-            time = 300;
-            
+            stopTimer();
+
             selectedSeats.splice(0);
             renderSelectedSeats();
             renderSeatMap();
             getElement("#bookingMessage").textContent = "YOUR RESERVATION HAS EXPIRED. PLEASE SELECT AGAIN.";
         }
-
-document.querySelector("#reservationTimer").textContent = "05:00";
-document.querySelector("#bookingMessage").textContent = "YOUR RESERVATION WILL EXPIRE IN 5 MINUTES. PLEASE COMPLETE YOUR PURCHASE OR RESERVATION.";
     }, 1000);
-}   
+
+}
 
 const state =
     {
@@ -79,6 +133,16 @@ function getElement(selector) {
 function getFunctionId() {
 
     return new URLSearchParams(window.location.search).get("functionId");
+
+}
+
+
+function getLoginHref() {
+
+    const currentPath =
+        `${window.location.pathname}${window.location.search}`;
+
+    return `./login.html?redirect=${encodeURIComponent(currentPath)}`;
 
 }
 
@@ -167,6 +231,10 @@ function toggleSeat(seat, button) {
         selectedSeats.splice(existingIndex, 1);
         button.classList.remove("is-selected");
         button.setAttribute("aria-pressed", "false");
+
+        if (!selectedSeats.length) {
+            stopTimer();
+        }
     } else {
         selectedSeats.push(seat);
         if (selectedSeats.length === 1) {
@@ -340,13 +408,14 @@ function renderBooking() {
             <dialog id="authModal">
                 <h2>Sign In to Continue</h2>
                 <p>You need to sign in to complete your booking.</p>
-                <a h.ref="./login.html" class="button button--primary">Sign In</a>
+                <a href="${getLoginHref()}" class="button button--primary">Sign In</a>
                 <button class="button button--primary" type="button" id="authModalClose">Close</button>
             </dialog>
         </section>`;
 
     renderSeatMap();
     bindCheckout();
+    bindAuthModal();
     renderSelectedSeats();
 
 }
@@ -407,19 +476,7 @@ async function completeCheckout(kind) {
         getCurrentUser();
 
     if (!currentUser) {
-    document.getElementById("authModal").showModal();
-    return;
-    }
-    document.getElementById("authModalClose").addEventListener("click", () => {
-        document.getElementById("authModal").close();
-    });
-    
-
-    clearInterval(timer);
-
-    if (!currentUser) {
-        window.location.href =
-            "./login.html";
+        getElement("#authModal")?.showModal();
         return;
     }
 
@@ -428,6 +485,8 @@ async function completeCheckout(kind) {
             "SELECT AT LEAST ONE SEAT";
         return;
     }
+
+    stopTimer(false);
 
     const stillAvailable =
         await revalidateSelectedSeats(
@@ -478,6 +537,15 @@ async function completeCheckout(kind) {
 }
 
 
+function bindAuthModal() {
+
+    getElement("#authModalClose")?.addEventListener("click", () => {
+        getElement("#authModal")?.close();
+    });
+
+}
+
+
 function bindCheckout() {
 
     const reserveButton =
@@ -508,19 +576,6 @@ function bindCheckout() {
 async function initializeBooking() {
 
     initializeUserNavigation();
-
-    const currentUser =
-        getCurrentUser();
-
-    if (!currentUser) {
-        getElement("#bookingPage").innerHTML =
-            '<section class="booking-empty"><h1>SIGN IN TO CONTINUE</h1><a class="button button--primary" href="./login.html">Access NOIR</a></section>';
-        window.setTimeout(() => {
-            window.location.href =
-                "./login.html";
-        }, 1200);
-        return;
-    }
 
     const functionId =
         getFunctionId();
