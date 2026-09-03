@@ -6,11 +6,13 @@ import {
 } from "../api/tmdb.js";
 
 import {
-    ensureFunctionsForDate,
+    ensureFunctionSeats,
     formatCurrency,
     formatDateParts,
     getFunctionSeats,
-    getRooms
+    getOrCreateFunctionsForDate,
+    getRooms,
+    getSeatsByRoom
 } from "../api/cinema-api.js";
 
 import {
@@ -39,6 +41,10 @@ import {
 import {
     initializeUserNavigation
 } from "../components/user-navigation.js";
+
+
+let hasInitializedMovieDetail =
+    false;
 
 
 function getElement(selector) {
@@ -369,15 +375,26 @@ function getRoomLabel(room) {
 }
 
 
-async function getAvailabilityByFunction(functions) {
+async function getAvailabilityByFunction(functions, getSeatsForRoom) {
 
     const entries =
         await Promise.all(functions.map(async (movieFunction) => {
-            const functionSeats =
-                await getFunctionSeats(movieFunction.id);
+            const [
+                seats,
+                functionSeats
+            ] =
+                await Promise.all([
+                    getSeatsForRoom(movieFunction.roomId),
+                    getFunctionSeats(movieFunction.id)
+                ]);
+
+            const ensuredFunctionSeats =
+                functionSeats.length === seats.length
+                    ? functionSeats
+                    : await ensureFunctionSeats(movieFunction, seats);
 
             const available =
-                functionSeats.filter((seat) => {
+                ensuredFunctionSeats.filter((seat) => {
                     return seat.status === "available";
                 }).length;
 
@@ -747,6 +764,24 @@ async function loadMovieFunctions(movie, target) {
                 return [Number(room.id), room];
             }));
 
+        const seatsByRoom =
+            new Map();
+
+        const getSeatsForRoom =
+            (roomId) => {
+                const normalizedRoomId =
+                    Number(roomId);
+
+                if (!seatsByRoom.has(normalizedRoomId)) {
+                    seatsByRoom.set(
+                        normalizedRoomId,
+                        getSeatsByRoom(normalizedRoomId)
+                    );
+                }
+
+                return seatsByRoom.get(normalizedRoomId);
+            };
+
         const today =
             toDateValue(new Date());
 
@@ -890,16 +925,12 @@ async function loadMovieFunctions(movie, target) {
 
                 summary.innerHTML =
                     '<p class="section__state">Loading screenings...</p>';
+                times.replaceChildren();
+                target.other.replaceChildren();
 
                 try {
                     functions =
-                        await ensureFunctionsForDate(tmdbId, selectedDate);
-
-                    availabilityByFunction =
-                        await getAvailabilityByFunction(functions);
-
-                    selectedFunctionId =
-                        functions[0]?.id || null;
+                        await getOrCreateFunctionsForDate(tmdbId, selectedDate);
 
                     if (!functions.length) {
                         target.meta.textContent =
@@ -909,6 +940,12 @@ async function loadMovieFunctions(movie, target) {
                             '<p class="section__state">NO SCREENINGS AVAILABLE</p>';
                         return;
                     }
+
+                    availabilityByFunction =
+                        await getAvailabilityByFunction(functions, getSeatsForRoom);
+
+                    selectedFunctionId =
+                        functions[0]?.id || null;
 
                     updateBoard();
                     loadWeeklyReleases(selectedDate, target.weekly);
@@ -1053,7 +1090,8 @@ function renderMovieDetail(payload) {
         similar,
         recommendations,
         watchProviders,
-        releaseDates
+        releaseDates,
+        palette
     } = payload;
 
     const container =
@@ -1080,6 +1118,8 @@ function renderMovieDetail(payload) {
             .join(", ") || "Not listed";
 
     container.replaceChildren();
+
+    applyMoviePalette(container, palette);
 
     const hero =
         document.createElement("section");
@@ -1240,9 +1280,6 @@ function renderMovieDetail(payload) {
     const screeningsSection =
         createScreeningsSection();
 
-    const paletteTarget =
-        container;
-
     container.append(
         hero,
         screeningsSection.section,
@@ -1258,10 +1295,7 @@ function renderMovieDetail(payload) {
 
     bindFavoriteButton(saveButton, movie, "movie");
     loadMovieFunctions(movie, screeningsSection);
-    extractMoviePalette(movie).then((palette) => {
-        applyMoviePalette(paletteTarget, palette);
-        applyMoviePalette(screeningsSection.section, palette);
-    });
+    applyMoviePalette(screeningsSection.section, palette);
 
 }
 
@@ -1315,6 +1349,13 @@ function createSection(titleText) {
 
 async function initializeMovieDetail() {
 
+    if (hasInitializedMovieDetail) {
+        return;
+    }
+
+    hasInitializedMovieDetail =
+        true;
+
     const movieId =
         getMovieId();
 
@@ -1328,8 +1369,10 @@ async function initializeMovieDetail() {
     }
 
     try {
+        const movie =
+            await requestCachedTMDB(`/movie/${movieId}`, { language: "en-US" });
+
         const [
-            movie,
             credits,
             videos,
             images,
@@ -1337,10 +1380,10 @@ async function initializeMovieDetail() {
             similar,
             recommendations,
             watchProviders,
-            releaseDates
+            releaseDates,
+            palette
         ] =
             await Promise.all([
-                requestCachedTMDB(`/movie/${movieId}`, { language: "en-US" }),
                 requestCachedTMDB(`/movie/${movieId}/credits`, { language: "en-US" }),
                 requestCachedTMDB(`/movie/${movieId}/videos`, { language: "en-US" }),
                 requestCachedTMDB(`/movie/${movieId}/images`, {}),
@@ -1348,7 +1391,8 @@ async function initializeMovieDetail() {
                 requestCachedTMDB(`/movie/${movieId}/similar`, { language: "en-US", page: 1 }),
                 requestCachedTMDB(`/movie/${movieId}/recommendations`, { language: "en-US", page: 1 }),
                 requestCachedTMDB(`/movie/${movieId}/watch/providers`, {}),
-                requestCachedTMDB(`/movie/${movieId}/release_dates`, {})
+                requestCachedTMDB(`/movie/${movieId}/release_dates`, {}),
+                extractMoviePalette(movie)
             ]);
 
         renderMovieDetail({
@@ -1360,7 +1404,8 @@ async function initializeMovieDetail() {
             similar,
             recommendations,
             watchProviders,
-            releaseDates
+            releaseDates,
+            palette
         });
     } catch (error) {
         console.error("Movie detail unavailable.", error);

@@ -416,6 +416,3 @@ Ejemplos reales del historial:
 
 NOIR utiliza TMDB como fuente de informacion cinematografica, imagenes, trailers y metadata. Este proyecto no esta afiliado, certificado ni respaldado por TMDB.
 
-## Autor
-
-El repositorio no incluye datos publicos confirmados de autor, correo, LinkedIn o portfolio. Por eso no se documentan enlaces personales.

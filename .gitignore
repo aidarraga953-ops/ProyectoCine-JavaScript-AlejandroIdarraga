@@ -1,5 +1,4 @@
 node_modules/
-db.json
 .~db.json
 db-*.json
 js/api/tmdb.config.js

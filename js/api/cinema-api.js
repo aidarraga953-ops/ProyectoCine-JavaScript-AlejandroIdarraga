@@ -166,6 +166,44 @@ function findMatchingFunction(functions, draft) {
 }
 
 
+function normalizeNumericId(value) {
+
+    const numericId =
+        Number(value);
+
+    return Number.isFinite(numericId)
+        ? numericId
+        : null;
+
+}
+
+
+function matchesNumericId(recordValue, expectedValue) {
+
+    const recordId =
+        normalizeNumericId(recordValue);
+
+    const expectedId =
+        normalizeNumericId(expectedValue);
+
+    return recordId !== null &&
+        expectedId !== null &&
+        recordId === expectedId;
+
+}
+
+
+function sortFunctionsByDateAndTime(functions) {
+
+    return [...functions].sort((first, second) => {
+        return `${first.date || ""}${first.time || ""}`.localeCompare(
+            `${second.date || ""}${second.time || ""}`
+        );
+    });
+
+}
+
+
 export function formatCurrency(value) {
 
     return new Intl.NumberFormat("es-CO", {
@@ -207,14 +245,28 @@ export function formatDateParts(dateValue) {
 
 export async function getMovieFunctions(tmdbId) {
 
-    return requestJson(`/functions?tmdbId=${Number(tmdbId)}&_sort=date,time&_order=asc,asc`);
+    const functions =
+        await requestJson("/functions?_sort=date,time&_order=asc,asc");
+
+    return sortFunctionsByDateAndTime(
+        functions.filter((movieFunction) => {
+            return matchesNumericId(movieFunction.tmdbId, tmdbId);
+        })
+    );
 
 }
 
 
 export async function getMovieFunctionsByDate(tmdbId, dateValue) {
 
-    return requestJson(`/functions?tmdbId=${Number(tmdbId)}&date=${dateValue}&_sort=time&_order=asc`);
+    const functions =
+        await requestJson(`/functions?date=${dateValue}&_sort=time&_order=asc`);
+
+    return sortFunctionsByDateAndTime(
+        functions.filter((movieFunction) => {
+            return matchesNumericId(movieFunction.tmdbId, tmdbId);
+        })
+    );
 
 }
 
@@ -291,13 +343,13 @@ export async function getFunctionSeatsBySeatIds(functionId, seatIds) {
 }
 
 
-export async function ensureFunctionSeats(movieFunction) {
+export async function ensureFunctionSeats(movieFunction, roomSeats = null) {
 
     const existingFunctionSeats =
         await getFunctionSeats(movieFunction.id);
 
     const seats =
-        await getSeatsByRoom(movieFunction.roomId);
+        roomSeats || await getSeatsByRoom(movieFunction.roomId);
 
     const existingSeatIds =
         new Set(existingFunctionSeats.map((functionSeat) => {
@@ -336,7 +388,10 @@ export async function ensureFunctionSeats(movieFunction) {
 }
 
 
-export async function createDefaultFunctionsForMovie(tmdbId, existingFunctions = []) {
+export async function createDefaultFunctionsForMovie(tmdbId, existingFunctions = [], options = {}) {
+
+    const shouldEnsureSeats =
+        options.ensureSeats !== false;
 
     const rooms =
         await getRooms();
@@ -369,7 +424,10 @@ export async function createDefaultFunctionsForMovie(tmdbId, existingFunctions =
                 price: draft.price
             });
 
-        await ensureFunctionSeats(movieFunction);
+        if (shouldEnsureSeats) {
+            await ensureFunctionSeats(movieFunction);
+        }
+
         createdFunctions.push(movieFunction);
     }
 
@@ -378,7 +436,10 @@ export async function createDefaultFunctionsForMovie(tmdbId, existingFunctions =
 }
 
 
-export async function createDefaultFunctionsForDate(tmdbId, dateValue, existingFunctions = []) {
+export async function createDefaultFunctionsForDate(tmdbId, dateValue, existingFunctions = [], options = {}) {
+
+    const shouldEnsureSeats =
+        options.ensureSeats !== false;
 
     const rooms =
         await getRooms();
@@ -411,11 +472,33 @@ export async function createDefaultFunctionsForDate(tmdbId, dateValue, existingF
                 price: draft.price
             });
 
-        await ensureFunctionSeats(movieFunction);
+        if (shouldEnsureSeats) {
+            await ensureFunctionSeats(movieFunction);
+        }
+
         createdFunctions.push(movieFunction);
     }
 
     return createdFunctions;
+
+}
+
+
+export async function getOrCreateFunctionsForDate(tmdbId, dateValue) {
+
+    let functions =
+        await getMovieFunctionsByDate(tmdbId, dateValue);
+
+    if (!functions.length) {
+        await createDefaultFunctionsForDate(tmdbId, dateValue, functions, {
+            ensureSeats: false
+        });
+
+        functions =
+            await getMovieFunctionsByDate(tmdbId, dateValue);
+    }
+
+    return functions;
 
 }
 
@@ -466,6 +549,8 @@ export async function getBookingData(functionId) {
 
     const movieFunction =
         await getFunction(functionId);
+
+    await ensureFunctionSeats(movieFunction);
 
     const [
         room,
